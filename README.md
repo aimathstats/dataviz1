@@ -1,1 +1,1 @@
-# simpleなchatのtestです
+# simpleなダッシュボードです
