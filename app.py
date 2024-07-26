@@ -84,7 +84,7 @@ fig_cont.update_layout(height=300,
                            x=0.99)
                        )
 # Correlation Matrix of kamoku in Content
-df2_corr = df[vars2_multi_selected].corr()
+df2_corr = df2[vars2_multi_selected].corr()
 fig_corr2 = go.Figure([go.Heatmap(z=df2_corr.values,
                                   x=df2_corr.index.values,
                                   y=df2_corr.columns.values)])
