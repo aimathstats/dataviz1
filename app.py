@@ -16,17 +16,15 @@ df = pd.read_csv('data/data_sample.csv')
 vars_cat = [var for var in df.columns if var.startswith('cat')]
 vars_cont = [var for var in df.columns if var.startswith('cont')]
 
-'''
 # Graph (Pie Chart in Sidebar)
-df_target = df[['id', 'target']].groupby('target').count() / len(df)
-fig_target = go.Figure(data=[go.Pie(labels=df_target.index,
-                                    values=df_target['id'],
-                                    hole=.3)])
-fig_target.update_layout(showlegend=False,
-                         height=200,
-                         margin={'l': 20, 'r': 60, 't': 0, 'b': 0})
-fig_target.update_traces(textposition='inside', textinfo='label+percent')
-'''
+#df_target = df[['id', 'target']].groupby('target').count() / len(df)
+#fig_target = go.Figure(data=[go.Pie(labels=df_target.index,
+#                                    values=df_target['id'],
+#                                    hole=.3)])
+#fig_target.update_layout(showlegend=False,
+#                         height=200,
+#                         margin={'l': 20, 'r': 60, 't': 0, 'b': 0})
+#fig_target.update_traces(textposition='inside', textinfo='label+percent')
 
 # Layout (Sidebar)
 st.sidebar.markdown("## Selection in Sidebar")
