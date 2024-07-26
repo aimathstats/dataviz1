@@ -17,15 +17,6 @@ df = pd.read_csv('data/data_sample.csv')
 vars_cat = [var for var in df.columns if var.startswith('cat')]
 vars_cont = [var for var in df.columns if var.startswith('cont')]
 
-# Graph (Pie Chart in Sidebar)
-#df_target = df[['id', 'target']].groupby('target').count() / len(df)
-#fig_target = go.Figure(data=[go.Pie(labels=df_target.index,
-#                                    values=df_target['id'],
-#                                    hole=.3)])
-#fig_target.update_layout(showlegend=False,
-#                         height=200,
-#                         margin={'l': 20, 'r': 60, 't': 0, 'b': 0})
-#fig_target.update_traces(textposition='inside', textinfo='label+percent')
 
 # Layout (Sidebar)
 st.sidebar.markdown("## Selection in Sidebar")
@@ -36,9 +27,6 @@ vars3_selected = st.sidebar.selectbox('日経225系列', vars3)
 cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
 cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
 cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont, default=vars_cont)
-
-#st.sidebar.markdown("## Target Variables")
-#st.sidebar.plotly_chart(fig_target, use_container_width=True)
 
 
 # Categorical Variable Bar Chart in Content
@@ -82,14 +70,15 @@ fig_cont.update_layout(height=300,
                            x=0.99)
                        )
 
-#fig2 = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
 #fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
 fig2 = px.scatter(x=df2['国語'],y=df2[vars2_selected])
 fig2.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
-fig3 = px.line(x=df3['日付'], y=df3['終値'])
+
+#fig3 = px.line(x=df3['日付'], y=df3['終値'])
+fig3 = px.line(x=df3['日付'], y=df3[vars3_selected])
 fig3.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
@@ -113,14 +102,15 @@ fig_corr2.update_layout(height=300,
 #                       width=1000,
 #                       margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
+
 # Layout (Content)
 left_column, right_column = st.columns(2)
 
-left_column.subheader('日経225' + cat_selected)
+left_column.subheader('日経225: ' + vars3_selected)
 #left_column.plotly_chart(fig_cat)
 left_column.plotly_chart(fig3)
 
-right_column.subheader('国語との相関' + vars2_selected)
+right_column.subheader('散布図：国語と' + vars2_selected)
 #right_column.plotly_chart(fig_cont)
 right_column.plotly_chart(fig2)
 
