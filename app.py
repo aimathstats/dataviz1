@@ -5,6 +5,11 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
+df2 = pd.read_csv('data/koukouseiseki.csv')
+df3 = pd.read_csv('data/nikkei225.csv')
+vars2 = [var for var in df2.columns]
+vars3 = [var for var in df3.columns]
+
 # Data
 df = pd.read_csv('data/data_sample.csv')
 vars_cat = [var for var in df.columns if var.startswith('cat')]
@@ -20,14 +25,22 @@ fig_target.update_layout(showlegend=False,
                          margin={'l': 20, 'r': 60, 't': 0, 'b': 0})
 fig_target.update_traces(textposition='inside', textinfo='label+percent')
 
+
 # Layout (Sidebar)
-st.sidebar.markdown("## Settings")
+#st.sidebar.markdown("## Settings")
+st.sidebar.markdown("## Selection in Sidebar")
+vars2_selected = st.sidebar.selectbox('高校科目', vars2)
+vars2_multi_selected = st.sidebar.multiselect('高校科目', vars2, default=vars2)
+vars3_selected = st.sidebar.selectbox('日経225系列', vars3)
+
 cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
 cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
 cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont,
                                              default=vars_cont)
+
 st.sidebar.markdown("## Target Variables")
 st.sidebar.plotly_chart(fig_target, use_container_width=True)
+
 
 # Categorical Variable Bar Chart in Content
 df_cat = df.groupby([cat_selected, 'target']).count()[['id']].reset_index()
