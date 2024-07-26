@@ -42,10 +42,8 @@ cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont, de
 
 # Categorical Variable Bar Chart in Content
 df_cat = df.groupby([cat_selected, 'target']).count()[['id']].reset_index()
-
 cat0 = df_cat[df_cat['target'] == 0]
 cat1 = df_cat[df_cat['target'] == 1]
-
 fig_cat = go.Figure(data=[
     go.Bar(name='target=0', x=cat0[cat_selected], y=cat0['id']),
     go.Bar(name='target=1', x=cat1[cat_selected], y=cat1['id'])
@@ -84,7 +82,8 @@ fig_cont.update_layout(height=300,
                        )
 
 import plotly.express as px
-fig2 = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
+#fig2 = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
+fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
 fig2.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
@@ -97,16 +96,15 @@ fig_corr2 = go.Figure([go.Heatmap(z=df2_corr.values,
 fig_corr2.update_layout(height=300,
                         width=1000,
                         margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
-'''
+
 # Correlation Matrix in Content
-df_corr = df[cont_multi_selected].corr()
-fig_corr = go.Figure([go.Heatmap(z=df_corr.values,
-                                 x=df_corr.index.values,
-                                 y=df_corr.columns.values)])
-fig_corr.update_layout(height=300,
-                       width=1000,
-                       margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
-'''
+#df_corr = df[cont_multi_selected].corr()
+#fig_corr = go.Figure([go.Heatmap(z=df_corr.values,
+#                                 x=df_corr.index.values,
+#                                 y=df_corr.columns.values)])
+#fig_corr.update_layout(height=300,
+#                       width=1000,
+#                       margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
