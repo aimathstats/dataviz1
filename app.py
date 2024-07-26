@@ -25,9 +25,9 @@ vars2_multi_selected = st.sidebar.multiselect('高校科目', vars2, default=var
 vars3_selected = st.sidebar.selectbox('日経225系列', vars3[1:])
 vars3_multi_selected = st.sidebar.multiselect('日経225系列', vars3, default=vars3[1:])
 
-#cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
-#cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
-#cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont, default=vars_cont)
+cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
+cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
+cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont, default=vars_cont)
 
 
 # Categorical Variable Bar Chart in Content
