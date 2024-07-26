@@ -115,8 +115,8 @@ left_column, right_column = st.columns(2)
 
 left_column.subheader('日経225: ' + vars3_selected)
 #left_column.plotly_chart(fig_cat)
-#left_column.plotly_chart(fig3)
-left_column.plotly_chart(fig4)
+left_column.plotly_chart(fig3)
+#left_column.plotly_chart(fig4)
 
 right_column.subheader('散布図：国語と' + vars2_selected)
 #right_column.plotly_chart(fig_cont)
