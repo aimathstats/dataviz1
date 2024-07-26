@@ -28,7 +28,6 @@ fig_target.update_layout(showlegend=False,
 fig_target.update_traces(textposition='inside', textinfo='label+percent')
 '''
 
-
 # Layout (Sidebar)
 st.sidebar.markdown("## Selection in Sidebar")
 vars2_selected = st.sidebar.selectbox('高校科目', vars2)
@@ -39,8 +38,8 @@ cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
 cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
 cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont, default=vars_cont)
 
-st.sidebar.markdown("## Target Variables")
-st.sidebar.plotly_chart(fig_target, use_container_width=True)
+#st.sidebar.markdown("## Target Variables")
+#st.sidebar.plotly_chart(fig_target, use_container_width=True)
 
 
 # Categorical Variable Bar Chart in Content
