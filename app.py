@@ -83,7 +83,8 @@ fig3.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
-fig4 = px.line(df3[vars3_multi_selected])
+#fig4 = px.line(df3[vars3_multi_selected])
+fig4 = px.line(x=df3['日付'], y=df3[vars3_multi_selected])
 
 # Correlation Matrix of kamoku in Content
 df2_corr = df2[vars2_multi_selected].corr()
