@@ -19,14 +19,15 @@ vars_cont = [var for var in df.columns if var.startswith('cont')]
 
 
 # Layout (Sidebar)
-st.sidebar.markdown("## Selection in Sidebar")
+st.sidebar.markdown("## サイドバーの使い方")
 vars2_selected = st.sidebar.selectbox('高校科目', vars2)
 vars2_multi_selected = st.sidebar.multiselect('高校科目', vars2, default=vars2) # デフォルトは全部
 vars3_selected = st.sidebar.selectbox('日経225系列', vars3[1:])
+vars3_multi_selected = st.sidebar.multiselect('日経225系列', vars3, default=vars3[1:])
 
-cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
-cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
-cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont, default=vars_cont)
+#cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
+#cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
+#cont_multi_selected = st.sidebar.multiselect('Correlation Matrix', vars_cont, default=vars_cont)
 
 
 # Categorical Variable Bar Chart in Content
@@ -70,6 +71,7 @@ fig_cont.update_layout(height=300,
                            x=0.99)
                        )
 
+# additional codes
 #fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
 fig2 = px.scatter(x=df2['国語'],y=df2[vars2_selected])
 fig2.update_layout(height=300,
@@ -80,6 +82,11 @@ fig2.update_layout(height=300,
 #fig3 = px.line(x=df3['日付'], y=df3['終値'])
 fig3 = px.line(x=df3['日付'], y=df3[vars3_selected])
 fig3.update_layout(height=300,
+                   width=500,
+                   margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
+
+fig4 = px.line(x=df3['日付'], y=df3[vars3_multi_selected])
+fig4.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
@@ -108,7 +115,8 @@ left_column, right_column = st.columns(2)
 
 left_column.subheader('日経225: ' + vars3_selected)
 #left_column.plotly_chart(fig_cat)
-left_column.plotly_chart(fig3)
+#left_column.plotly_chart(fig3)
+left_column.plotly_chart(fig4)
 
 right_column.subheader('散布図：国語と' + vars2_selected)
 #right_column.plotly_chart(fig_cont)
