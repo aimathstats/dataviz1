@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.figure_factory as ff
 import plotly.graph_objects as go
+import plotly.express as px
 import streamlit as st
 
 st.set_page_config(layout="wide")
@@ -81,7 +82,6 @@ fig_cont.update_layout(height=300,
                            x=0.99)
                        )
 
-import plotly.express as px
 #fig2 = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
 #fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
 fig2 = px.scatter(x=df2['国語'],y=df2[vars2_selected])
