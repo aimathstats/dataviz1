@@ -54,10 +54,8 @@ fig_cat.update_yaxes(title_text='# of samples')
 # Continuous Variable Distribution in Content
 li_cont0 = df[df['target'] == 0][cont_selected].values.tolist()
 li_cont1 = df[df['target'] == 1][cont_selected].values.tolist()
-
 cont_data = [li_cont0, li_cont1]
 group_labels = ['target=0', 'target=1']
-
 fig_cont = ff.create_distplot(cont_data, group_labels,
                               show_hist=False,
                               show_rug=False)
@@ -85,11 +83,7 @@ fig3.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
-fig4 = px.line(df3[vars3_multi_selected])
-fig4.update_layout(height=300,
-                   width=500,
-                   margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
-
+#fig4 = px.line(df3[vars3_multi_selected])
 
 # Correlation Matrix of kamoku in Content
 df2_corr = df2[vars2_multi_selected].corr()
