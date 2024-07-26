@@ -89,6 +89,12 @@ fig2.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
+fig3 = px.line(x=df3['日付'], y=df3['終値'])
+fig3.update_layout(height=300,
+                   width=500,
+                   margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
+
+
 # Correlation Matrix of kamoku in Content
 df2_corr = df2[vars2_multi_selected].corr()
 fig_corr2 = go.Figure([go.Heatmap(z=df2_corr.values,
@@ -110,10 +116,11 @@ fig_corr2.update_layout(height=300,
 # Layout (Content)
 left_column, right_column = st.columns(2)
 
-left_column.subheader('Categorical Variable Distribution: ' + cat_selected)
-left_column.plotly_chart(fig_cat)
+left_column.subheader('日経225' + cat_selected)
+#left_column.plotly_chart(fig_cat)
+left_column.plotly_chart(fig3)
 
-right_column.subheader('Continuous Variable Distribution: ' + cont_selected)
+right_column.subheader('国語との相関' + vars2_selected)
 #right_column.plotly_chart(fig_cont)
 right_column.plotly_chart(fig2)
 
