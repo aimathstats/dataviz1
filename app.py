@@ -83,7 +83,8 @@ fig_cont.update_layout(height=300,
 
 import plotly.express as px
 #fig2 = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
-fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
+#fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
+fig2 = px.scatter(x=df2['国語'],y=df2[vars2_selected])
 fig2.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
