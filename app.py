@@ -16,6 +16,7 @@ df = pd.read_csv('data/data_sample.csv')
 vars_cat = [var for var in df.columns if var.startswith('cat')]
 vars_cont = [var for var in df.columns if var.startswith('cont')]
 
+'''
 # Graph (Pie Chart in Sidebar)
 df_target = df[['id', 'target']].groupby('target').count() / len(df)
 fig_target = go.Figure(data=[go.Pie(labels=df_target.index,
@@ -25,6 +26,7 @@ fig_target.update_layout(showlegend=False,
                          height=200,
                          margin={'l': 20, 'r': 60, 't': 0, 'b': 0})
 fig_target.update_traces(textposition='inside', textinfo='label+percent')
+'''
 
 
 # Layout (Sidebar)
@@ -83,6 +85,13 @@ fig_cont.update_layout(height=300,
                            xanchor="right",
                            x=0.99)
                        )
+
+import plotly.express as px
+fig2 = px.scatter(x=[0, 1, 2, 3, 4], y=[0, 1, 4, 9, 16])
+fig2.update_layout(height=300,
+                   width=500,
+                   margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
+
 # Correlation Matrix of kamoku in Content
 df2_corr = df2[vars2_multi_selected].corr()
 fig_corr2 = go.Figure([go.Heatmap(z=df2_corr.values,
@@ -91,7 +100,7 @@ fig_corr2 = go.Figure([go.Heatmap(z=df2_corr.values,
 fig_corr2.update_layout(height=300,
                         width=1000,
                         margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
-
+'''
 # Correlation Matrix in Content
 df_corr = df[cont_multi_selected].corr()
 fig_corr = go.Figure([go.Heatmap(z=df_corr.values,
@@ -100,18 +109,20 @@ fig_corr = go.Figure([go.Heatmap(z=df_corr.values,
 fig_corr.update_layout(height=300,
                        width=1000,
                        margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
-
+'''
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
 
 left_column.subheader('Categorical Variable Distribution: ' + cat_selected)
-right_column.subheader('Continuous Variable Distribution: ' + cont_selected)
 left_column.plotly_chart(fig_cat)
-right_column.plotly_chart(fig_cont)
 
-st.subheader('Correlation Matrix')
-st.plotly_chart(fig_corr)
+right_column.subheader('Continuous Variable Distribution: ' + cont_selected)
+#right_column.plotly_chart(fig_cont)
+right_column.plotly_chart(fig2)
 
-st.subheader('Correlation Matrix of kamoku')
+st.subheader('高校科目の相関行列')
 st.plotly_chart(fig_corr2)
+
+#st.subheader('Correlation Matrix')
+#st.plotly_chart(fig_corr)
