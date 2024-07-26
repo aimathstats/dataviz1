@@ -22,7 +22,7 @@ vars_cont = [var for var in df.columns if var.startswith('cont')]
 st.sidebar.markdown("## Selection in Sidebar")
 vars2_selected = st.sidebar.selectbox('高校科目', vars2)
 vars2_multi_selected = st.sidebar.multiselect('高校科目', vars2, default=vars2) # デフォルトは全部
-vars3_selected = st.sidebar.selectbox('日経225系列', vars3)
+vars3_selected = st.sidebar.selectbox('日経225系列', vars3[1:])
 
 cat_selected = st.sidebar.selectbox('Categorical Variables', vars_cat)
 cont_selected = st.sidebar.selectbox('Continuous Variables', vars_cont)
