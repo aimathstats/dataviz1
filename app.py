@@ -90,6 +90,7 @@ fig7.update_layout(
 
 # ヒストグラム
 fig8 = px.histogram(df2, x='国語', nbins=10, title='国語の得点分布')
+fig8 = px.histogram(df2, x=vars2_selected, nbins=10)
 fig8.update_layout(
     xaxis_title='得点',
     yaxis_title='頻度')
