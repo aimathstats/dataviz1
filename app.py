@@ -99,6 +99,7 @@ fig8.update_layout(
 #fig9 = px.pie(names=['始値', '高値', '安値', '終値'], values=[final_row['始値'], final_row['高値'], final_row['安値'], final_row['終値']],
 #             title='最終時点の株価')
 final_values = [33193.05, 33299.39, 32693.18, 33288.29]
+final_values = df3[vars3[1:]][:1]
 fig9 = px.pie(values=final_values, names=['始値', '高値', '安値', '終値'], title='最終時点の株価')
 
 # Layout (Content)
