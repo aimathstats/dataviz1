@@ -134,7 +134,7 @@ left.subheader('ウォーターフォール')
 left.plotly_chart(fig6)
 center.subheader('箱ひげ図')
 center.plotly_chart(fig7)
-right.subheader('ヒストグラム')
+right.subheader('ヒストグラム' + vars2_selected)
 right.plotly_chart(fig8)
 
 st.subheader('日経225すべて')
