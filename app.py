@@ -62,6 +62,6 @@ right_column.plotly_chart(fig2)
 
 st.subheader('日経225すべて')
 #st.plotly_chart(fig4)
-st.plotly_chart(fig4)
+st.plotly_chart(fig5)
 st.subheader('高校科目の相関行列')
 st.plotly_chart(fig_corr2)
