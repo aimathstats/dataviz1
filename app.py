@@ -96,7 +96,7 @@ right_column.plotly_chart(fig2)
 
 left, center, right = st.columns(3)
 left.subheader('日経225: ' + vars3_selected)
-left.plotly_chart(fig3)
+left.plotly_chart(fig6)
 center.subheader('日経225: ' + vars3_selected)
 center.plotly_chart(fig3)
 right.subheader('日経225: ' + vars3_selected)
