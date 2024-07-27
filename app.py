@@ -108,7 +108,7 @@ df3['終値'] = pd.to_numeric(df3['終値'].str.replace(',', ''))
 selected_data = df3.iloc[0:2, 1:5]
 fig10 = go.Figure()
 for col in selected_data.columns:
-    fig.add_trace(go.Bar(name=col, x=selected_data.index, y=selected_data[col]))
+    fig10.add_trace(go.Bar(name=col, x=selected_data.index, y=selected_data[col]))
 fig10.update_layout(
     title='指定範囲の株価',
     xaxis_title='インデックス',
