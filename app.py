@@ -30,9 +30,7 @@ with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-c
 import pandas as pd
 df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
                    dtype={"fips": str})
-
 import plotly.express as px
-
 fig11 = px.choropleth(df, geojson=counties, locations='fips', color='unemp',
                            color_continuous_scale="Viridis",
                            range_color=(0, 12),
@@ -53,7 +51,8 @@ fig12 = go.Figure(data=go.Choropleth(
     colorbar_title = "Millions USD",))
 fig12.update_layout(
     title_text = '2011 US Agriculture Exports by State',
-    geo_scope='usa', # limite map scope to USA)
+    geo_scope='usa', # limite map scope to USA
+)
 
 
 # 散布図
@@ -188,6 +187,6 @@ right_column2.plotly_chart(fig10)
 
 st.subheader('Choropleth map using GeoJSON')
 st.plotly_chart(fig11)
-st.subheader('Choropleth Maps with go.Choropleth')
+st.subheader('Choropleth Maps with goChoropleth')
 st.plotly_chart(fig12)
 
