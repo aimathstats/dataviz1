@@ -90,6 +90,11 @@ fig7.update_layout(
     showlegend=False
 )
 
+fig8 = px.histogram(df2, x='国語', nbins=10, title='国語の得点分布')
+fig8.update_layout(
+    xaxis_title='得点',
+    yaxis_title='頻度'
+)
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
@@ -104,7 +109,7 @@ left.plotly_chart(fig6)
 center.subheader('日経225: ' + vars3_selected)
 center.plotly_chart(fig7)
 right.subheader('日経225: ' + vars3_selected)
-right.plotly_chart(fig3)
+right.plotly_chart(fig8)
 
 st.subheader('日経225すべて')
 st.plotly_chart(fig5)
