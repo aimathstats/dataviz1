@@ -21,8 +21,7 @@ vars3_selected = st.sidebar.selectbox('日経225の折れ線グラフ', vars3[1:
 vars3_multi_selected = st.sidebar.multiselect('日経225の折れ線グラフ（複数）', vars3, default=vars3[1:])
 
 
-# additional codes
-#散布図
+# 散布図
 #fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
 fig2 = px.scatter(x=df2['国語'],y=df2[vars2_selected])
 fig2.update_layout(height=300,
@@ -81,20 +80,21 @@ fig_corr2.update_layout(height=300,
                         width=1000,
                         margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
-
-data_melted = df2.melt(var_name='科目', value_name='得点')
-fig7 = px.box(data_melted, x='科目', y='得点', color='科目', title='各科目の得点分布')
+# 箱ひげ図
+df2_melted = df2.melt(var_name='科目', value_name='得点')
+fig7 = px.box(df2_melted, x='科目', y='得点', color='科目', title='各科目の得点分布')
 fig7.update_layout(
     xaxis_title='科目',
     yaxis_title='得点',
-    showlegend=False
-)
+    showlegend=False)
 
+# ヒストグラム
 fig8 = px.histogram(df2, x='国語', nbins=10, title='国語の得点分布')
 fig8.update_layout(
     xaxis_title='得点',
-    yaxis_title='頻度'
-)
+    yaxis_title='頻度')
+
+
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
@@ -104,11 +104,11 @@ right_column.subheader('散布図：国語と' + vars2_selected)
 right_column.plotly_chart(fig2)
 
 left, center, right = st.columns(3)
-left.subheader('日経225: ' + vars3_selected)
+left.subheader('ウォーターフォール')
 left.plotly_chart(fig6)
-center.subheader('日経225: ' + vars3_selected)
+center.subheader('箱ひげ図')
 center.plotly_chart(fig7)
-right.subheader('日経225: ' + vars3_selected)
+right.subheader('ヒストグラム')
 right.plotly_chart(fig8)
 
 st.subheader('日経225すべて')
