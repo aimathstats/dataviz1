@@ -59,7 +59,7 @@ import json
 from io import StringIO
 with open("data/N03-23_25_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
-geojson["features"][1]["properties"]
+#geojson["features"][1]["properties"]
 
 shiga_pop_text = """市区町村名,男,女,計,世帯数
 大津市,160170,169871,330041,130143
@@ -84,7 +84,7 @@ shiga_pop_text = """市区町村名,男,女,計,世帯数
 shiga_pop = pd.read_csv(StringIO(shiga_pop_text))
 shiga_pop.head()
 
-px.choropleth_mapbox(
+fig13 = px.choropleth_mapbox(
     shiga_pop,
     geojson=geojson,
     locations="市区町村名",
@@ -235,4 +235,6 @@ st.subheader('Choropleth map using GeoJSON')
 st.plotly_chart(fig11)
 st.subheader('Choropleth Maps with goChoropleth')
 st.plotly_chart(fig12)
+st.subheader('Choropleth Maps with goChoropleth')
+st.plotly_chart(fig13)
 
