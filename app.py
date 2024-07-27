@@ -33,16 +33,13 @@ df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-
 
 import plotly.express as px
 
-fig = px.choropleth(df, geojson=counties, locations='fips', color='unemp',
+fig11 = px.choropleth(df, geojson=counties, locations='fips', color='unemp',
                            color_continuous_scale="Viridis",
                            range_color=(0, 12),
                            scope="usa",
                            labels={'unemp':'unemployment rate'}
                           )
-fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
-
-st.subheader('a')
-st.plotly_chart(fig)
+fig11.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 
 
@@ -175,3 +172,9 @@ left_column2.subheader('円グラフ')
 left_column2.plotly_chart(fig9)
 right_column2.subheader('棒グラフ')
 right_column2.plotly_chart(fig10)
+
+
+
+st.subheader('a')
+st.plotly_chart(fig11)
+
