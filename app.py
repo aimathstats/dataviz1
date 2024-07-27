@@ -100,8 +100,13 @@ fig8.update_layout(
 #             title='最終時点の株価')
 #final_values = [33193.05, 33299.39, 32693.18, 33288.29]
 #final_values = df3[vars3[1:]][:1]
-final_values = df3.iloc[1][['始値', '高値', '安値', '終値']].values.T
+final_values = df3.iloc[1][['始値', '高値', '安値', '終値']].values
 fig9 = px.pie(values=final_values, names=['始値', '高値', '安値', '終値'], title='最終時点の株価')
+
+final_values = df3.iloc[-1][['始値', '高値', '安値', '終値']].values
+final_values = [float(value) for value in final_values]
+fig9 = px.pie(values=final_values, names=['始値', '高値', '安値', '終値'], title='最終時点の株価')
+
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
