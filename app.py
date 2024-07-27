@@ -83,7 +83,7 @@ fig_corr2.update_layout(height=300,
 # 箱ひげ図
 df2_melted = df2.melt(var_name='科目', value_name='得点')
 fig7 = px.box(df2_melted, x='科目', y='得点', color='科目', title='各科目の得点分布')
-fig7 = px.box(df2_melted, x=vars2_multi_selected, y='得点', color='科目', title='各科目の得点分布')
+#fig7 = px.box(df2_melted, x=vars2_multi_selected, y='得点', color='科目', title='各科目の得点分布')
 fig7.update_layout(
     xaxis_title='科目',
     yaxis_title='得点',
