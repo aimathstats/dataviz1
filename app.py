@@ -82,6 +82,15 @@ fig_corr2.update_layout(height=300,
                         margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
 
+data_melted = df2.melt(var_name='科目', value_name='得点')
+fig7 = px.box(data_melted, x='科目', y='得点', color='科目', title='各科目の得点分布')
+fig7.update_layout(
+    xaxis_title='科目',
+    yaxis_title='得点',
+    showlegend=False
+)
+
+
 # Layout (Content)
 left_column, right_column = st.columns(2)
 left_column.subheader('日経225: ' + vars3_selected)
@@ -93,7 +102,7 @@ left, center, right = st.columns(3)
 left.subheader('日経225: ' + vars3_selected)
 left.plotly_chart(fig6)
 center.subheader('日経225: ' + vars3_selected)
-center.plotly_chart(fig3)
+center.plotly_chart(fig7)
 right.subheader('日経225: ' + vars3_selected)
 right.plotly_chart(fig3)
 
