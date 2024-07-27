@@ -14,10 +14,10 @@ vars3 = [var for var in df3.columns]
 
 # Layout (Sidebar)
 st.sidebar.markdown("## サイドバーの使い方")
-vars2_selected = st.sidebar.selectbox('高校科目', vars2)
-vars2_multi_selected = st.sidebar.multiselect('高校科目', vars2, default=vars2) # デフォルトは全部
-vars3_selected = st.sidebar.selectbox('日経225系列', vars3[1:])
-vars3_multi_selected = st.sidebar.multiselect('日経225系列', vars3, default=vars3[1:])
+vars2_selected = st.sidebar.selectbox('散布図：高校科目', vars2)
+vars2_multi_selected = st.sidebar.multiselect('相関行列：高校科目', vars2, default=vars2) # デフォルトは全部
+vars3_selected = st.sidebar.selectbox('日経225の折れ線グラフ', vars3[1:])
+vars3_multi_selected = st.sidebar.multiselect('日経225の折れ線グラフ（複数）', vars3, default=vars3[1:])
 
 
 # additional codes
