@@ -100,6 +100,22 @@ fig8.update_layout(
 final_values = [33193.05, 33299.39, 32693.18, 33288.29]
 fig9 = px.pie(values=final_values, names=['始値', '高値', '安値', '終値'], title='最終時点の株価')
 
+# 指定範囲のデータを棒グラフで作成
+df3['始値'] = pd.to_numeric(df3['始値'].str.replace(',', ''))
+df3['高値'] = pd.to_numeric(df3['高値'].str.replace(',', ''))
+df3['安値'] = pd.to_numeric(df3['安値'].str.replace(',', ''))
+df3['終値'] = pd.to_numeric(df3['終値'].str.replace(',', ''))
+selected_data = df3.iloc[0:2, 1:5]
+fig10 = go.Figure()
+for col in selected_data.columns:
+    fig.add_trace(go.Bar(name=col, x=selected_data.index, y=selected_data[col]))
+fig10.update_layout(
+    title='指定範囲の株価',
+    xaxis_title='インデックス',
+    yaxis_title='株価（円）',
+    barmode='group'
+)
+
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
@@ -118,6 +134,8 @@ right.plotly_chart(fig8)
 
 st.subheader('円グラフ')
 st.plotly_chart(fig9)
+st.subheader('棒グラフ')
+st.plotly_chart(fig10)
 
 st.subheader('日経225すべて')
 st.plotly_chart(fig5)
