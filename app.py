@@ -29,6 +29,7 @@ fig2.update_layout(height=300,
 
 
 #fig3 = px.line(x=df3['日付'], y=df3['終値'])
+df3['日付'] = pd.to_datetime(df3['日付'], format='%Y年%m月%d日')
 fig3 = px.line(x=df3['日付'], y=df3[vars3_selected])
 fig3.update_layout(height=300,
                    width=500,
