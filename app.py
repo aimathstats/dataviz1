@@ -94,14 +94,15 @@ fig8.update_layout(
     xaxis_title='得点',
     yaxis_title='頻度')
 
+
 # 円グラフを作成
+data = pd.read_csv('data/nikkei225.csv')
 #final_values = df3[vars3[1:]][:1]
-#final_values = df3.iloc[1][['始値', '高値', '安値', '終値']].values
-final_values = [33193.05, 33299.39, 32693.18, 33288.29]
+final_values = data.iloc[1][['始値', '高値', '安値', '終値']].values
+#final_values = [33193.05, 33299.39, 32693.18, 33288.29]
 fig9 = px.pie(values=final_values, names=['始値', '高値', '安値', '終値'], title='最終時点の株価')
 
 # 棒グラフで作成
-data = pd.read_csv('data/nikkei225.csv')
 data['始値'] = pd.to_numeric(data['始値'].str.replace(',', ''))
 data['高値'] = pd.to_numeric(data['高値'].str.replace(',', ''))
 data['安値'] = pd.to_numeric(data['安値'].str.replace(',', ''))
