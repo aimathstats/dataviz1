@@ -100,21 +100,24 @@ fig8.update_layout(
 final_values = [33193.05, 33299.39, 32693.18, 33288.29]
 fig9 = px.pie(values=final_values, names=['始値', '高値', '安値', '終値'], title='最終時点の株価')
 
-# 指定範囲のデータを棒グラフで作成
-df3['始値'] = pd.to_numeric(df3['始値'].str.replace(',', ''))
-df3['高値'] = pd.to_numeric(df3['高値'].str.replace(',', ''))
-df3['安値'] = pd.to_numeric(df3['安値'].str.replace(',', ''))
-df3['終値'] = pd.to_numeric(df3['終値'].str.replace(',', ''))
-selected_data = df3.iloc[0:2, 1:5]
-fig10 = go.Figure()
-for col in selected_data.columns:
-    fig10.add_trace(go.Bar(name=col, x=selected_data.index, y=selected_data[col]))
+# 棒グラフで作成
+data = pd.read_csv('data/nikkei225.csv')
+data['始値'] = pd.to_numeric(data['始値'].str.replace(',', ''))
+data['高値'] = pd.to_numeric(data['高値'].str.replace(',', ''))
+data['安値'] = pd.to_numeric(data['安値'].str.replace(',', ''))
+data['終値'] = pd.to_numeric(data['終値'].str.replace(',', ''))
+final_row = data.iloc[-1]
+final_values = [final_row['始値'], final_row['高値'], final_row['安値'], final_row['終値']]
+fig10 = go.Figure(data=[
+    go.Bar(name='始値', x=['始値'], y=[final_values[0]]),
+    go.Bar(name='高値', x=['高値'], y=[final_values[1]]),
+    go.Bar(name='安値', x=['安値'], y=[final_values[2]]),
+    go.Bar(name='終値', x=['終値'], y=[final_values[3]])])
 fig10.update_layout(
-    title='指定範囲の株価',
-    xaxis_title='インデックス',
+    title='最終時点の株価',
+    xaxis_title='種類',
     yaxis_title='株価（円）',
-    barmode='group'
-)
+    barmode='group')
 
 
 # Layout (Content)
