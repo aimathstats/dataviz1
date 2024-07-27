@@ -94,7 +94,10 @@ fig8.update_layout(
     xaxis_title='得点',
     yaxis_title='頻度')
 
-
+# 円グラフを作成
+final_row = df3.iloc[-1]
+fig9 = px.pie(names=['始値', '高値', '安値', '終値'], values=[final_row['始値'], final_row['高値'], final_row['安値'], final_row['終値']],
+             title='最終時点の株価')
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
@@ -110,6 +113,9 @@ center.subheader('箱ひげ図')
 center.plotly_chart(fig7)
 right.subheader('ヒストグラム')
 right.plotly_chart(fig8)
+
+st.subheader('円グラフ')
+st.plotly_chart(fig9)
 
 st.subheader('日経225すべて')
 st.plotly_chart(fig5)
