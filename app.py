@@ -174,7 +174,6 @@ right_column2.subheader('棒グラフ')
 right_column2.plotly_chart(fig10)
 
 
-
-st.subheader('a')
+st.subheader('Choropleth map using GeoJSON')
 st.plotly_chart(fig11)
 
