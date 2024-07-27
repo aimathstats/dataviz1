@@ -34,18 +34,15 @@ fig3.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
-df3['日付'] = pd.to_datetime(df3['日付'], format='%Y年%m月%d日')
-#fig5 = px.line(df3, x='日付', y=['始値', '高値', '安値', '終値'], 
-#              labels={'value': '株価（円）', 'variable': '株価の種類'},
-#              title="日経225株価の推移")
-fig5 = px.line(df3, x='日付', y=vars3[1:], 
-              labels={'value': '株価（円）', 'variable': '株価の種類'},
-              title="日経225株価の推移")
-
 fig4 = px.line(df3[vars3_multi_selected])
 fig4.update_layout(height=300,
                    width=1000,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
+
+#df3['日付'] = pd.to_datetime(df3['日付'], format='%Y年%m月%d日')
+fig5 = px.line(df3, x='日付', y=vars3[1:], 
+              labels={'value': '株価（円）', 'variable': '株価の種類'},
+              title="日経225株価の推移")
 
 # Correlation Matrix of kamoku in Content
 df2_corr = df2[vars2_multi_selected].corr()
