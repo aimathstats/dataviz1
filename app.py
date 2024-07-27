@@ -47,7 +47,7 @@ df3['日付'] = pd.to_datetime(df3['日付'], format='%Y年%m月%d日')
 fig5 = px.line(df3, x='日付', y=vars3_multi_selected, 
               labels={'value': '株価（円）', 'variable': '株価の種類'},
               title="日経225株価の推移")
-fig5.update_layout(height=300,
+fig5.update_layout(height=350,
                    width=1000,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
