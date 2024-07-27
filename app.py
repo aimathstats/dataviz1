@@ -48,6 +48,36 @@ fig5 = px.line(df3, x='日付', y=vars3_multi_selected,
               labels={'value': '株価（円）', 'variable': '株価の種類'},
               title="日経225株価の推移")
 
+import plotly.graph_objs as go
+
+# Ensure the '終値' column is in numeric format
+df3['終値'] = pd.to_numeric(df3['終値'].str.replace(',', ''))
+
+# Calculate the changes for Waterfall chart
+df3['変化'] = df3['終値'].diff()
+df3.at[0, '変化'] = df3.at[0, '終値']
+
+# Create the Waterfall chart
+fig6 = go.Figure(go.Waterfall(
+    name="株価の変化",
+    orientation="v",
+    x=df3['日付'],
+    y=df3['変化'],
+    connector={"line":{"color":"rgb(63, 63, 63)"}},
+    decreasing={"marker":{"color":"red"}},
+    increasing={"marker":{"color":"green"}},
+    totals={"marker":{"color":"blue"}},
+))
+
+# Update layout
+fig6.update_layout(
+    title="日経225株価のウォーターフォール図",
+    xaxis_title="日付",
+    yaxis_title="株価の変化（円）",
+    showlegend=True
+)
+
+
 # Correlation Matrix of kamoku in Content
 df2_corr = df2[vars2_multi_selected].corr()
 fig_corr2 = go.Figure([go.Heatmap(z=df2_corr.values,
