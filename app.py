@@ -21,6 +21,32 @@ vars3_selected = st.sidebar.selectbox('日経225の折れ線グラフ', vars3[1:
 vars3_multi_selected = st.sidebar.multiselect('日経225の折れ線グラフ（複数）', vars3, default=vars3[1:])
 
 
+# map graph
+from urllib.request import urlopen
+import json
+with urlopen('https://raw.githubusercontent.com/plotly/datasets/master/geojson-counties-fips.json') as response:
+    counties = json.load(response)
+
+import pandas as pd
+df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/fips-unemp-16.csv",
+                   dtype={"fips": str})
+
+import plotly.express as px
+
+fig = px.choropleth(df, geojson=counties, locations='fips', color='unemp',
+                           color_continuous_scale="Viridis",
+                           range_color=(0, 12),
+                           scope="usa",
+                           labels={'unemp':'unemployment rate'}
+                          )
+fig.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
+
+st.subheader('a')
+st.plotly_chart(fig)
+
+
+
+
 # 散布図
 #fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
 fig2 = px.scatter(x=df2['国語'],y=df2[vars2_selected])
