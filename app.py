@@ -42,6 +42,18 @@ fig11 = px.choropleth(df, geojson=counties, locations='fips', color='unemp',
 fig11.update_layout(margin={"r":0,"t":0,"l":0,"b":0})
 
 
+# 
+import plotly.graph_objects as go
+df4 = pd.read_csv('https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv')
+fig12 = go.Figure(data=go.Choropleth(
+    locations=df4['code'], # Spatial coordinates
+    z = df4['total exports'].astype(float), # Data to be color-coded
+    locationmode = 'USA-states', # set of locations match entries in `locations`
+    colorscale = 'Reds',
+    colorbar_title = "Millions USD",))
+fig12.update_layout(
+    title_text = '2011 US Agriculture Exports by State',
+    geo_scope='usa', # limite map scope to USA)
 
 
 # 散布図
@@ -176,4 +188,6 @@ right_column2.plotly_chart(fig10)
 
 st.subheader('Choropleth map using GeoJSON')
 st.plotly_chart(fig11)
+st.subheader('Choropleth Maps with go.Choropleth')
+st.plotly_chart(fig12)
 
