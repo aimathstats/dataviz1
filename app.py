@@ -136,13 +136,13 @@ center.plotly_chart(fig7)
 right.subheader('ヒストグラム')
 right.plotly_chart(fig8)
 
+st.subheader('日経225すべて')
+st.plotly_chart(fig5)
+st.subheader('高校科目の相関行列')
+st.plotly_chart(fig_corr2)
+
 left_column2, right_column2 = st.columns(2)
 left_column2.subheader('円グラフ')
 left_column2.plotly_chart(fig9)
 right_column2.subheader('棒グラフ')
 right_column2.plotly_chart(fig10)
-
-st.subheader('日経225すべて')
-st.plotly_chart(fig5)
-st.subheader('高校科目の相関行列')
-st.plotly_chart(fig_corr2)
