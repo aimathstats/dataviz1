@@ -216,7 +216,7 @@ fig10.update_layout(
     barmode='group')
 
 # bar chart
-import numpy 
+import numpy as np
 np.random.seed(42) 
 random_x= np.random.randint(1,101,100) 
 random_y= np.random.randint(1,101,100) 
