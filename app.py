@@ -215,6 +215,12 @@ fig10.update_layout(
     yaxis_title='株価（円）',
     barmode='group')
 
+# bar chart
+import numpy 
+np.random.seed(42) 
+random_x= np.random.randint(1,101,100) 
+random_y= np.random.randint(1,101,100) 
+fig16 = px.bar(random_x, random_y)
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
@@ -252,5 +258,7 @@ st.plotly_chart(fig13)
 
 st.subheader('treemap')
 st.plotly_chart(fig14)
-st.subheader('area map')
+st.subheader('filled area chart')
 st.plotly_chart(fig15)
+st.subheader('bar chart')
+st.plotly_chart(fig16)
