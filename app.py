@@ -106,8 +106,9 @@ fig14 = px.treemap(df5, path=[px.Constant("all"), 'day', 'time', 'sex'], values=
 fig14.update_traces(root_color="lightgrey")
 #fig14.update_layout(margin = dict(t=50, l=25, r=25, b=25))
 
+# area map
 df6 = px.data.iris()
-fig15 = px.area(df, x="sepal_width", y="sepal_length",
+fig15 = px.area(df6, x="sepal_width", y="sepal_length",
             color="species",
             hover_data=['petal_width'],)
 
