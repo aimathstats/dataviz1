@@ -106,6 +106,11 @@ fig14 = px.treemap(df5, path=[px.Constant("all"), 'day', 'time', 'sex'], values=
 fig14.update_traces(root_color="lightgrey")
 #fig14.update_layout(margin = dict(t=50, l=25, r=25, b=25))
 
+df6 = px.data.iris()
+fig15 = px.area(df, x="sepal_width", y="sepal_length",
+            color="species",
+            hover_data=['petal_width'],)
+
 
 # 散布図
 #fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
@@ -246,3 +251,5 @@ st.plotly_chart(fig13)
 
 st.subheader('treemap')
 st.plotly_chart(fig14)
+st.subheader('area map')
+st.plotly_chart(fig15)
