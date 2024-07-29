@@ -100,6 +100,12 @@ fig13 = px.choropleth_mapbox(
     height=800,
 )
 
+# treemap
+df5 = px.data.tips()
+fig14 = px.treemap(df5, path=[px.Constant("all"), 'day', 'time', 'sex'], values='total_bill')
+fig14.update_traces(root_color="lightgrey")
+#fig14.update_layout(margin = dict(t=50, l=25, r=25, b=25))
+
 
 # 散布図
 #fig2 = px.scatter(x=df2['国語'],y=df2['数学'])
@@ -238,3 +244,5 @@ st.plotly_chart(fig12)
 st.subheader('Choropleth Maps with goChoropleth')
 st.plotly_chart(fig13)
 
+st.subheader('treemap')
+st.plotly_chart(fig14)
