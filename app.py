@@ -224,6 +224,9 @@ fig16 = px.bar(random_x, random_y)
 
 df7 = px.data.iris()
 fig17 = px.bar(df7, x="sepal_width", y="sepal_length")
+fig18 = px.bar(df7, x="sepal_width", y="sepal_length", color="species",
+            hover_data=['petal_width'], barmode = 'stack')
+
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
@@ -267,3 +270,5 @@ st.subheader('bar chart')
 st.plotly_chart(fig16)
 st.subheader('bar chart with dataframe')
 st.plotly_chart(fig17)
+st.subheader('stack bar chart with dataframe')
+st.plotly_chart(fig18)
