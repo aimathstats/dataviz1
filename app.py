@@ -243,12 +243,16 @@ fig18 = px.bar(df7, x="sepal_width", y="sepal_length", color="species",
 
 # 日付を基に週番号と曜日を計算
 data3 = pd.read_csv('data/kisho_data.csv')
+vars3_2 = [var for var in data3.columns]
+vars3_2_selected = st.sidebar.selectbox('気象データの貢献グラフ', vars3_2[2:])
+
 data3['年月日'] = pd.to_datetime(data3['年月日'])
 data3['week'] = data3['年月日'].apply(lambda x: x.isocalendar()[1])
 data3['day_of_week'] = data3['年月日'].dt.dayofweek
 
 # ピボットテーブルを作成して行列を転置
-temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+temperature_matrix = data3.pivot_table(values=vars3_2_selected, index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+#temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 #temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 temperature_matrix = temperature_matrix.T
 custom_colorscale = [[0, 'black'],[1, 'green']]
