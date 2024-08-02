@@ -318,7 +318,7 @@ fig20.update_layout(
     xaxis_title='Week',
     xaxis=dict(
         tickmode='array',
-        tickvals=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 1),
+        tickvals=np.arange(0.5, len(temperature_matrix.columns) + 0.5, 1),
         ticktext=[str(i) for i in range(1, 53)]
     ),
     yaxis=dict(
