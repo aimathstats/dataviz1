@@ -235,7 +235,7 @@ fig18 = px.bar(df7, x="sepal_width", y="sepal_length", color="species",
 
 # contribution graph
 def load_data():
-    file_path = 'kisho_data.csv'  # CSVファイルのパスを指定
+    file_path = 'data/kisho_data.csv'  # CSVファイルのパスを指定
     data = pd.read_csv(file_path)
     data['年月日'] = pd.to_datetime(data['年月日'])
     return data
