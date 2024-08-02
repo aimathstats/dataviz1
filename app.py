@@ -232,6 +232,44 @@ fig17 = px.bar(df7, x="sepal_width", y="sepal_length")
 fig18 = px.bar(df7, x="sepal_width", y="sepal_length", color="species",
             hover_data=['petal_width'], barmode = 'stack')
 
+# contribution graph
+def load_data():
+    file_path = 'data/kisho_data.csv'  # CSVファイルのパスを指定
+    data = pd.read_csv(file_path)
+    data['年月日'] = pd.to_datetime(data['年月日'])
+    return data
+
+# データを読み込む
+data3 = load_data()
+
+# 日付を基に週番号と曜日を計算
+data3['week'] = data3['年月日'].apply(lambda x: x.isocalendar()[1])
+data3['day_of_week'] = data3['年月日'].dt.dayofweek
+
+# データを集計
+data_aggregated = data3.groupby(['week', 'day_of_week']).mean().reset_index()
+
+# ピボットテーブルを作成して行列を転置
+temperature_matrix = data_aggregated.pivot(index='week', columns='day_of_week', values='最高気温(℃)').fillna(0)
+temperature_matrix_transposed = temperature_matrix.T
+
+# Plotlyでヒートマップを作成（色を反転）
+fig19 = go.Figure(data=go.Heatmap(
+    z=temperature_matrix_transposed.values,
+    x=np.arange(1, 53),
+    y=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    colorscale='Greens_r'
+))
+
+fig19.update_layout(
+    title='Weekly Temperature Heatmap (Transposed and Color Reversed)',
+    xaxis_nticks=52,
+    yaxis_nticks=7,
+    yaxis_title='Day of the Week',
+    xaxis_title='Week'
+)
+st.subheader('Weekly Temperature Heatmap (Transposed and Color Reversed)')
+st.plotly_chart(fig19)
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
