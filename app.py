@@ -290,11 +290,11 @@ fig19.update_layout(
 # ピボットテーブルを作成して行列を転置
 temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 #temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
-temperature_matrix = temperature_matrix.T
+temperature_matrix_t = temperature_matrix.T
 custom_colorscale = [[0, 'black'],[1, 'green']]
 
 # Create the heatmap with gaps
-z_values = temperature_matrix.values
+z_values = temperature_matrix_t.values
 z_with_gaps = np.zeros((z_values.shape[0] * 2, z_values.shape[1] * 2)) * np.nan
 z_with_gaps[::2, ::2] = z_values
 
@@ -306,8 +306,8 @@ fig20 = go.Figure(data=go.Heatmap(
     dy=1,
     colorscale=custom_colorscale,
     showscale=True,
-    zmin=temperature_matrix.values.min(),
-    zmax=temperature_matrix.values.max()
+    zmin=temperature_matrix_t.values.min(),
+    zmax=temperature_matrix_t.values.max()
 ))
 
 fig20.update_layout(
