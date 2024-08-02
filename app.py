@@ -261,7 +261,7 @@ fig19 = go.Figure(data=go.Heatmap(
 
 fig19.update_layout(
     title='Weekly Temperature Heatmap',
-    xaxis_nticks=52,
+    xaxis_nticks=53,
     yaxis_nticks=7,
     yaxis_title='Day of the Week',
     xaxis_title='Week'
