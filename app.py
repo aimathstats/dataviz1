@@ -286,6 +286,56 @@ fig19.update_layout(
     height=300
 )
 
+# 2
+# ピボットテーブルを作成して行列を転置
+temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+#temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+temperature_matrix = temperature_matrix.T
+custom_colorscale = [[0, 'black'],[1, 'green']]
+
+# Create the heatmap with gaps
+z_values = rainfall_matrix_transposed.values
+z_with_gaps = np.zeros((z_values.shape[0] * 2, z_values.shape[1] * 2)) * np.nan
+z_with_gaps[::2, ::2] = z_values
+
+fig20 = go.Figure(data=go.Heatmap(
+    z=z_with_gaps,
+    x0=0.5,
+    dx=1,
+    y0=0.5,
+    dy=1,
+    colorscale=custom_colorscale,
+    showscale=True,
+    zmin=rainfall_matrix_transposed.values.min(),
+    zmax=rainfall_matrix_transposed.values.max()
+))
+
+fig20.update_layout(
+    title='Weekly Rainfall Heatmap (Transposed and Color Reversed)',
+    xaxis_nticks=52,
+    yaxis_nticks=7,
+    yaxis_title='Day of the Week',
+    xaxis_title='Week',
+    xaxis=dict(
+        tickmode='array',
+        tickvals=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 1),
+        ticktext=[str(i) for i in range(1, 53)]
+    ),
+    yaxis=dict(
+        tickmode='array',
+        tickvals=np.arange(0.5, 7 + 0.5, 1),
+        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+        scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
+        scaleratio=1     # Ensure the ratio is 1 to make cells square
+    ),
+    autosize=False,
+    width=1400,
+    height=400
+)
+
+
+
 # Layout (Content)
 left_column, right_column = st.columns(2)
 left_column.subheader('日経225: ' + vars3_selected)
@@ -333,3 +383,5 @@ st.plotly_chart(fig18)
 
 st.subheader('Weekly Temperature Heatmap')
 st.plotly_chart(fig19)
+st.subheader('Weekly Temperature Heatmap')
+st.plotly_chart(fig20)
