@@ -331,6 +331,47 @@ fig20.update_layout(
     height=400
 )
 
+# another contribution graph
+# 元の行列を拡張し、値が入る場所に元のデータを配置し、それ以外の場所はNaNで埋める
+gap = 0.05  # 隙間のサイズを調整
+expanded_matrix = np.full((rainfall_matrix_transposed.shape[0] * 2 - 1, rainfall_matrix_transposed.shape[1] * 2 - 1), np.nan)
+expanded_matrix[::2, ::2] = rainfall_matrix_transposed.values
+
+# Plotlyでヒートマップを作成（カスタムカラースケール）
+fig21 = go.Figure(data=go.Heatmap(
+    z=expanded_matrix,
+    x=np.arange(0.5, len(rainfall_matrix.columns), 0.5) * (1 + gap),
+    y=np.arange(0.5, 7, 0.5) * (1 + gap),
+    colorscale=custom_colorscale,
+    zmin=rainfall_matrix_transposed.values.min(),
+    zmax=rainfall_matrix_transposed.values.max(),
+    showscale=True
+))
+
+fig21.update_layout(
+    title='Weekly Rainfall Heatmap (Transposed and Color Reversed)',
+    xaxis_nticks=52,
+    yaxis_nticks=7,
+    yaxis_title='Day of the Week',
+    xaxis_title='Week',
+    xaxis=dict(
+        tickmode='array',
+        tickvals=np.arange(0.5, len(rainfall_matrix.columns) * (1 + gap), 1 + gap),
+        ticktext=[str(i) for i in range(1, 53)]
+    ),
+    yaxis=dict(
+        tickmode='array',
+        tickvals=np.arange(0.5, 7 * (1 + gap), 1 + gap),
+        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+        scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
+        scaleratio=1     # Ensure the ratio is 1 to make cells square
+    ),
+    autosize=False,
+    width=1400,
+    height=400
+)
+
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
@@ -380,6 +421,5 @@ st.plotly_chart(fig18)
 st.subheader('Weekly Temperature Heatmap')
 st.plotly_chart(fig19)
 st.subheader('Weekly Temperature Heatmap')
-st.plotly_chart(fig20)
-
+st.plotly_chart(fig21)
 
