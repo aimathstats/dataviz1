@@ -233,34 +233,28 @@ fig18 = px.bar(df7, x="sepal_width", y="sepal_length", color="species",
             hover_data=['petal_width'], barmode = 'stack')
 
 
-# contribution graph
+# (green) contribution graph
 def load_data():
-    file_path = 'data/kisho_data.csv'  # CSVファイルのパスを指定
-    data = pd.read_csv(file_path)
+    data = pd.read_csv('data/kisho_data.csv')
     data['年月日'] = pd.to_datetime(data['年月日'])
     return data
 
-# データを読み込む
-data3 = load_data()
-
 # 日付を基に週番号と曜日を計算
+data3 = load_data()
 data3['week'] = data3['年月日'].apply(lambda x: x.isocalendar()[1])
 data3['day_of_week'] = data3['年月日'].dt.dayofweek
 
 # ピボットテーブルを作成して行列を転置
 temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
-temperature_matrix_transposed = temperature_matrix.T
-
-custom_colorscale = [
-    [0, 'black'],
-    [1, 'green']
-]
+temperature_matrix = temperature_matrix.T
+custom_colorscale = [[0, 'black'],[1, 'green']]
 
 # Plotlyでヒートマップを作成（色を反転）
 fig19 = go.Figure(data=go.Heatmap(
-    z=temperature_matrix_transposed.values,
-    x=temperature_matrix_transposed.columns,
-    y=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    z=temperature_matrix.values,
+    x=temperature_matrix.columns,
+    y=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+    #y=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     colorscale=custom_colorscale
     #colorscale='Greens_r'
 ))
