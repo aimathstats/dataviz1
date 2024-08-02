@@ -287,56 +287,40 @@ fig19.update_layout(
 )
 
 # 2
+# ピボットテーブルを作成して行列を転置
 rainfall_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 rainfall_matrix_transposed = rainfall_matrix.T
 
-# カスタムカラースケールを定義（低い値をグレーに、高い値を明るい緑に）
-custom_colorscale = [
-    [0, 'grey'],
-    [1, 'lightgreen']
-]
+# 元の行列を拡張し、値が入る場所に元のデータを配置し、それ以外の場所はNaNで埋める
+expanded_matrix = np.full((rainfall_matrix_transposed.shape[0] * 2, rainfall_matrix_transposed.shape[1] * 2), np.nan)
+expanded_matrix[::2, ::2] = rainfall_matrix_transposed.values
 
-# ヒートマップの隙間を設定するためのデータ準備
-x = []
-y = []
-z = []
-
-gap = 0.1  # 隙間のサイズ
-
-for i in range(rainfall_matrix_transposed.shape[0]):
-    for j in range(rainfall_matrix_transposed.shape[1]):
-        x.extend([j + gap/2, j + 1 - gap/2])
-        y.extend([i + gap/2, i + 1 - gap/2])
-        z.append(rainfall_matrix_transposed.iloc[i, j])
-        z.append(rainfall_matrix_transposed.iloc[i, j])
-
-fig20 = go.Figure(data=go.Scatter(
-    x=x,
-    y=y,
-    mode='markers',
-    marker=dict(
-        size=40,
-        color=z,
-        colorscale=custom_colorscale,
-        showscale=True,
-        colorbar=dict(
-            title='Rainfall'
-        )
-    )
+# Plotlyでヒートマップを作成（カスタムカラースケール）
+fig20 = go.Figure(data=go.Heatmap(
+    z=expanded_matrix,
+    x=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 0.5),
+    y=np.arange(0.5, 7 + 0.5, 0.5),
+    colorscale=custom_colorscale,
+    zmin=rainfall_matrix_transposed.values.min(),
+    zmax=rainfall_matrix_transposed.values.max(),
+    showscale=True
 ))
 
 fig20.update_layout(
     title='Weekly Rainfall Heatmap (Transposed and Color Reversed)',
+    xaxis_nticks=52,
+    yaxis_nticks=7,
+    yaxis_title='Day of the Week',
+    xaxis_title='Week',
     xaxis=dict(
         tickmode='array',
-        tickvals=np.arange(len(rainfall_matrix.columns)),
+        tickvals=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 1),
         ticktext=[str(i) for i in range(1, 53)]
     ),
     yaxis=dict(
         tickmode='array',
-        tickvals=np.arange(7),
-        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+        tickvals=np.arange(0.5, 7 + 0.5, 1),
+        ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
     ),
