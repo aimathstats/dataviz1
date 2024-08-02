@@ -120,9 +120,9 @@ fig2.update_layout(height=300,
                    width=500,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
+
 # contribution graph
 df8 = pd.read_csv('data/kisho_data.csv')
-df8['年月日'] = pd.to_datetime(df8['年月日'], format='%Y年%m月%d日')
 
 
 #（単一）折れ線グラフ
