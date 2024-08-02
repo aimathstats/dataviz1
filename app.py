@@ -422,7 +422,7 @@ st.plotly_chart(fig17)
 st.subheader('stack bar chart with dataframe')
 st.plotly_chart(fig18)
 
-st.subheader('Weekly Temperature Heatmap')
+st.subheader('Weekly Temperature Heatmap' + vars3_2_selected)
 st.plotly_chart(fig19)
 st.subheader('Weekly Temperature Heatmap')
 st.plotly_chart(fig21)
