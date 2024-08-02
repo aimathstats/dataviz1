@@ -270,7 +270,7 @@ fig19 = go.Figure(data=go.Heatmap(
 
 # グラフのレイアウトを設定して、セルを正方形にする
 fig19.update_layout(
-    title='Weekly Temperature Heatmap',
+    title='Weekly Rainfall Heatmap (Transposed and Color Reversed)',
     xaxis_nticks=52,
     yaxis_nticks=7,
     yaxis_title='Day of the Week',
@@ -278,20 +278,21 @@ fig19.update_layout(
     xaxis=dict(
         tickmode='array',
         tickvals=list(range(1, 53)),
-        ticktext=[str(i) for i in range(1, 53)],
-        scaleanchor='y',
-        scaleratio=1
+        ticktext=[str(i) for i in range(1, 53)]
     ),
     yaxis=dict(
         tickmode='array',
         tickvals=list(range(7)),
-        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun']
+        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+        scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
+        scaleratio=1     # Ensure the ratio is 1 to make cells square
     ),
     autosize=False,
-    width=700,
-    height=700
+    width=1400,
+    height=400
 )
+
 
 
 # Layout (Content)
