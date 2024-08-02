@@ -294,7 +294,7 @@ temperature_matrix = temperature_matrix.T
 custom_colorscale = [[0, 'black'],[1, 'green']]
 
 # Create the heatmap with gaps
-z_values = temperature_matrixd.values
+z_values = temperature_matrix.values
 z_with_gaps = np.zeros((z_values.shape[0] * 2, z_values.shape[1] * 2)) * np.nan
 z_with_gaps[::2, ::2] = z_values
 
