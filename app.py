@@ -290,7 +290,7 @@ fig19.update_layout(
     ),
     autosize=False,
     width=1400,
-    height=200
+    height=300
 )
 
 
