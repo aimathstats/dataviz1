@@ -246,7 +246,7 @@ data3['day_of_week'] = data3['年月日'].dt.dayofweek
 
 # ピボットテーブルを作成して行列を転置
 temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
-temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+#temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 temperature_matrix = temperature_matrix.T
 custom_colorscale = [[0, 'black'],[1, 'green']]
 #custom_colorscale = [[0, 'black'],[1, 'lightgreen']]
@@ -261,18 +261,10 @@ fig19 = go.Figure(data=go.Heatmap(
     showscale=True
 ))
 
-#fig19.update_layout(
-#    title='Weekly Temperature Heatmap',
-#    xaxis_nticks=53,
-#    yaxis_nticks=7,
-#    yaxis_title='Day of the Week',
-#    xaxis_title='Week'
-#)
-
 # グラフのレイアウトを設定して、セルを正方形にする
 fig19.update_layout(
     title='Weekly Temperature Heatmap',
-    xaxis_nticks=53,
+    xaxis_nticks=52,
     yaxis_nticks=7,
     yaxis_title='Day of the Week',
     xaxis_title='Week',
@@ -293,8 +285,6 @@ fig19.update_layout(
     width=1400,
     height=300
 )
-
-
 
 # Layout (Content)
 left_column, right_column = st.columns(2)
