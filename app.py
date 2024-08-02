@@ -287,14 +287,15 @@ fig19.update_layout(
 )
 
 # 2
-# ピボットテーブルを作成して行列を転置
-temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
-#temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
-temperature_matrix_t = temperature_matrix.T
-custom_colorscale = [[0, 'black'],[1, 'green']]
+rainfall_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+rainfall_matrix_transposed = rainfall_matrix.T
+custom_colorscale = [
+    [0, 'grey'],
+    [1, 'lightgreen']
+]
 
 # Create the heatmap with gaps
-z_values = temperature_matrix_t.values
+z_values = rainfall_matrix_transposed.values
 z_with_gaps = np.zeros((z_values.shape[0] * 2, z_values.shape[1] * 2)) * np.nan
 z_with_gaps[::2, ::2] = z_values
 
@@ -306,8 +307,8 @@ fig20 = go.Figure(data=go.Heatmap(
     dy=1,
     colorscale=custom_colorscale,
     showscale=True,
-    zmin=temperature_matrix_t.values.min(),
-    zmax=temperature_matrix_t.values.max()
+    zmin=rainfall_matrix_transposed.values.min(),
+    zmax=rainfall_matrix_transposed.values.max()
 ))
 
 fig20.update_layout(
@@ -318,14 +319,13 @@ fig20.update_layout(
     xaxis_title='Week',
     xaxis=dict(
         tickmode='array',
-        tickvals=np.arange(0.5, len(temperature_matrix.columns) + 0.5, 1),
+        tickvals=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 1),
         ticktext=[str(i) for i in range(1, 53)]
     ),
     yaxis=dict(
         tickmode='array',
         tickvals=np.arange(0.5, 7 + 0.5, 1),
-        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+        ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
     ),
@@ -333,7 +333,6 @@ fig20.update_layout(
     width=1400,
     height=400
 )
-
 
 
 # Layout (Content)
