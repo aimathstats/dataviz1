@@ -234,13 +234,16 @@ fig18 = px.bar(df7, x="sepal_width", y="sepal_length", color="species",
 
 
 # (green) contribution graph
-def load_data():
-    data = pd.read_csv('data/kisho_data.csv')
-    data['年月日'] = pd.to_datetime(data['年月日'])
-    return data
+
+#def load_data():
+#    data = pd.read_csv('data/kisho_data.csv')
+#    data['年月日'] = pd.to_datetime(data['年月日'])
+#    return data
+#data3 = load_data()
 
 # 日付を基に週番号と曜日を計算
-data3 = load_data()
+data3 = pd.read_csv('data/kisho_data.csv')
+data3['年月日'] = pd.to_datetime(data3['年月日'])
 data3['week'] = data3['年月日'].apply(lambda x: x.isocalendar()[1])
 data3['day_of_week'] = data3['年月日'].dt.dayofweek
 
@@ -249,7 +252,6 @@ temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week',
 #temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 temperature_matrix = temperature_matrix.T
 custom_colorscale = [[0, 'black'],[1, 'green']]
-#custom_colorscale = [[0, 'black'],[1, 'lightgreen']]
 
 # Plotlyでヒートマップを作成（色を反転）
 fig19 = go.Figure(data=go.Heatmap(
@@ -276,7 +278,6 @@ fig19.update_layout(
     yaxis=dict(
         tickmode='array',
         tickvals=list(range(7)),
-        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
@@ -286,7 +287,7 @@ fig19.update_layout(
     height=300
 )
 
-# 2
+# contribution graph (with gap)
 # ピボットテーブルを作成して行列を転置
 rainfall_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 rainfall_matrix_transposed = rainfall_matrix.T
@@ -307,7 +308,7 @@ fig20 = go.Figure(data=go.Heatmap(
 ))
 
 fig20.update_layout(
-    title='Weekly Rainfall Heatmap (Transposed and Color Reversed)',
+    title='Weekly Rainfall Heatmap',
     xaxis_nticks=52,
     yaxis_nticks=7,
     yaxis_title='Day of the Week',
@@ -320,7 +321,8 @@ fig20.update_layout(
     yaxis=dict(
         tickmode='array',
         tickvals=np.arange(0.5, 7 + 0.5, 1),
-        ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
     ),
@@ -379,3 +381,5 @@ st.subheader('Weekly Temperature Heatmap')
 st.plotly_chart(fig19)
 st.subheader('Weekly Temperature Heatmap')
 st.plotly_chart(fig20)
+
+
