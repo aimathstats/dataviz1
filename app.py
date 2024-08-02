@@ -255,16 +255,42 @@ fig19 = go.Figure(data=go.Heatmap(
     z=temperature_matrix.values,
     x=temperature_matrix.columns,
     y=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
-    colorscale=custom_colorscale
+    colorscale=custom_colorscale,
     #colorscale='Greens_r'
+    showscale=True
 ))
 
+#fig19.update_layout(
+#    title='Weekly Temperature Heatmap',
+#    xaxis_nticks=53,
+#    yaxis_nticks=7,
+#    yaxis_title='Day of the Week',
+#    xaxis_title='Week'
+#)
+
+# グラフのレイアウトを設定して、セルを正方形にする
 fig19.update_layout(
     title='Weekly Temperature Heatmap',
-    xaxis_nticks=53,
+    xaxis_nticks=52,
     yaxis_nticks=7,
     yaxis_title='Day of the Week',
-    xaxis_title='Week'
+    xaxis_title='Week',
+    xaxis=dict(
+        tickmode='array',
+        tickvals=list(range(1, 53)),
+        ticktext=[str(i) for i in range(1, 53)],
+        scaleanchor='y',
+        scaleratio=1
+    ),
+    yaxis=dict(
+        tickmode='array',
+        tickvals=list(range(7)),
+        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun']
+    ),
+    autosize=False,
+    width=700,
+    height=700
 )
 
 
