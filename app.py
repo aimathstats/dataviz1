@@ -294,7 +294,7 @@ temperature_matrix = temperature_matrix.T
 custom_colorscale = [[0, 'black'],[1, 'green']]
 
 # Create the heatmap with gaps
-z_values = rainfall_matrix_transposed.values
+z_values = temperature_matrixd.values
 z_with_gaps = np.zeros((z_values.shape[0] * 2, z_values.shape[1] * 2)) * np.nan
 z_with_gaps[::2, ::2] = z_values
 
@@ -306,8 +306,8 @@ fig20 = go.Figure(data=go.Heatmap(
     dy=1,
     colorscale=custom_colorscale,
     showscale=True,
-    zmin=rainfall_matrix_transposed.values.min(),
-    zmax=rainfall_matrix_transposed.values.max()
+    zmin=temperature_matrix.values.min(),
+    zmax=temperature_matrix.values.max()
 ))
 
 fig20.update_layout(
