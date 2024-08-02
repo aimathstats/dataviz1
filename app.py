@@ -335,7 +335,8 @@ fig20.update_layout(
     yaxis=dict(
         tickmode='array',
         tickvals=np.arange(7),
-        ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        #ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
     ),
