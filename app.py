@@ -289,42 +289,52 @@ fig19.update_layout(
 # 2
 rainfall_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 rainfall_matrix_transposed = rainfall_matrix.T
+
+# カスタムカラースケールを定義（低い値をグレーに、高い値を明るい緑に）
 custom_colorscale = [
     [0, 'grey'],
     [1, 'lightgreen']
 ]
 
-# Create the heatmap with gaps
-z_values = rainfall_matrix_transposed.values
-z_with_gaps = np.zeros((z_values.shape[0] * 2, z_values.shape[1] * 2)) * np.nan
-z_with_gaps[::2, ::2] = z_values
+# ヒートマップの隙間を設定するためのデータ準備
+x = []
+y = []
+z = []
 
-fig20 = go.Figure(data=go.Heatmap(
-    z=z_with_gaps,
-    x0=0.5,
-    dx=1,
-    y0=0.5,
-    dy=1,
-    colorscale=custom_colorscale,
-    showscale=True,
-    zmin=rainfall_matrix_transposed.values.min(),
-    zmax=rainfall_matrix_transposed.values.max()
+gap = 0.1  # 隙間のサイズ
+
+for i in range(rainfall_matrix_transposed.shape[0]):
+    for j in range(rainfall_matrix_transposed.shape[1]):
+        x.extend([j + gap/2, j + 1 - gap/2])
+        y.extend([i + gap/2, i + 1 - gap/2])
+        z.append(rainfall_matrix_transposed.iloc[i, j])
+        z.append(rainfall_matrix_transposed.iloc[i, j])
+
+fig20 = go.Figure(data=go.Scatter(
+    x=x,
+    y=y,
+    mode='markers',
+    marker=dict(
+        size=40,
+        color=z,
+        colorscale=custom_colorscale,
+        showscale=True,
+        colorbar=dict(
+            title='Rainfall'
+        )
+    )
 ))
 
 fig20.update_layout(
     title='Weekly Rainfall Heatmap (Transposed and Color Reversed)',
-    xaxis_nticks=52,
-    yaxis_nticks=7,
-    yaxis_title='Day of the Week',
-    xaxis_title='Week',
     xaxis=dict(
         tickmode='array',
-        tickvals=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 1),
+        tickvals=np.arange(len(rainfall_matrix.columns)),
         ticktext=[str(i) for i in range(1, 53)]
     ),
     yaxis=dict(
         tickmode='array',
-        tickvals=np.arange(0.5, 7 + 0.5, 1),
+        tickvals=np.arange(7),
         ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
