@@ -246,6 +246,7 @@ data3['day_of_week'] = data3['年月日'].dt.dayofweek
 
 # ピボットテーブルを作成して行列を転置
 temperature_matrix = data3.pivot_table(values='最高気温(℃)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+temperature_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 temperature_matrix = temperature_matrix.T
 custom_colorscale = [[0, 'black'],[1, 'green']]
 
@@ -254,7 +255,6 @@ fig19 = go.Figure(data=go.Heatmap(
     z=temperature_matrix.values,
     x=temperature_matrix.columns,
     y=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
-    #y=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     colorscale=custom_colorscale
     #colorscale='Greens_r'
 ))
