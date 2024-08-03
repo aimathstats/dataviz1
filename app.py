@@ -55,7 +55,7 @@ fig01.update_layout(
 )
 
 # Create frames
-fig01.frames = [go.Frame(data=[go.Scatter3d(x=x[i, :k+1], y=y[i, :k+1], z=z[i, :k+1], mode='lines+markers', marker=dict(color=colors[i], size=3), line=dict(color=colors[i], width=2)) for i in range(n_points)]) for k in range(n_steps)]
+fig01.frames = [go.Frame(data=[go.Scatter3d(x=x[i, :k+1], y=y[i, :k+1], z=z[i, :k+1], mode='lines', line=dict(color=colors[i], width=1)) for i in range(n_points)]) for k in range(n_steps)]
 
 # Initialize the figure
 fig02 = go.Figure()
