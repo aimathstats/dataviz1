@@ -8,9 +8,8 @@ st.set_page_config(layout="wide")
 
 # 2D Brownian motion
 import numpy as np
-import matplotlib.pyplot as plt
 # Parameters for the Brownian motion
-n_points = 1000
+n_points = 100
 n_steps = 100
 delta_t = 0.1
 
@@ -24,16 +23,16 @@ for i in range(1, n_steps):
     y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
 
 # Create a colormap
-colors = [f'rgba({int(r*255)}, {int(g*255)}, {int(b*255)}, 0.8)' for r, g, b, _ in plt.cm.rainbow(np.linspace(0, 1, n_points))]
+colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
 
-# Create the figure
+# Initialize the figure
 fig0 = go.Figure()
 
-# Add traces for each point
+# Add initial traces for each point
 for i in range(n_points):
     fig0.add_trace(go.Scatter(
-        x=x[i, :],
-        y=y[i, :],
+        x=[x[i, 0]],
+        y=[y[i, 0]],
         mode='lines',
         line=dict(color=colors[i], width=1),
         showlegend=False
@@ -57,8 +56,9 @@ frames = [go.Frame(data=[go.Scatter(x=x[i, :k+1], y=y[i, :k+1]) for i in range(n
 fig0.frames = frames
 
 # Display with Streamlit
-st.subheader("2D Brownian Motion Animation")
+st.title("2D Brownian Motion Animation")
 st.plotly_chart(fig0)
+
 
 
 # additional codes
