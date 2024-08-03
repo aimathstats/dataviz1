@@ -55,10 +55,8 @@ fig0.update_layout(
 # Create frames
 frames = [go.Frame(data=[go.Scatter(x=x[i, :k+1], y=y[i, :k+1]) for i in range(n_points)]) for k in range(n_steps)]
 fig0.frames = frames
-
-# Display with Streamlit
-st.subheader("2D Brownian Motion Animation")
-st.plotly_chart(fig0)
+#st.subheader("2D Brownian Motion Animation")
+#st.plotly_chart(fig0)
 
 ###　another visulization
 fig00 = go.Figure()
@@ -85,8 +83,14 @@ fig00.update_layout(
 )
 
 fig00.frames = [go.Frame(data=[go.Scatter(x=[x[i, k]], y=[y[i, k]], mode='markers', marker=dict(color=colors[i], size=5)) for i in range(n_points)]) for k in range(n_steps)]
-st.subheader("2D Brownian Motion Animation (without trace)")
-st.plotly_chart(fig00)
+#st.subheader("2D Brownian Motion Animation (without trace)")
+#st.plotly_chart(fig00)
+
+left_column3, right_column3 = st.columns(2)
+left_column3.subheader('2D Brownian Motion Animation')
+left_column3.plotly_chart(fig0)
+right_column3.subheader('2D Brownian Motion Animation (w/o trace)')
+right_column3.plotly_chart(fig00)
 
 
 # additional codes
