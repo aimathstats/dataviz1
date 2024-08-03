@@ -60,22 +60,23 @@ fig0.frames = frames
 st.subheader("2D Brownian Motion Animation")
 st.plotly_chart(fig0)
 
+
 ###　another visulization
-n_points = 3
-n_steps = 1000
-delta_t = 0.1
+#n_points = 3
+#n_steps = 1000
+#delta_t = 0.1
 
 # Generate Brownian motion paths
-np.random.seed(42)  # For reproducibility
-x = np.zeros((n_points, n_steps))
-y = np.zeros((n_points, n_steps))
+#np.random.seed(42)  # For reproducibility
+#x = np.zeros((n_points, n_steps))
+#y = np.zeros((n_points, n_steps))
 
-for i in range(1, n_steps):
-    x[:, i] = x[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
-    y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
+#for i in range(1, n_steps):
+#    x[:, i] = x[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
+#    y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
 
 # Create a colormap
-colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
+#colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
 
 # Initialize the figure
 fig00 = go.Figure()
