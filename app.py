@@ -37,9 +37,8 @@ for i in range(n_points):
         x=[x[i, 0]],
         y=[y[i, 0]],
         z=[z[i, 0]],
-        mode='lines+markers',
-        marker=dict(color=colors[i], size=3),
-        line=dict(color=colors[i], width=2),
+        mode='lines',
+        line=dict(color=colors[i], width=1),
         showlegend=False
     ))
 
