@@ -29,7 +29,7 @@ colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, s
 
 fig01 = go.Figure()
 for i in range(n_points):
-    fig02.add_trace(go.Scatter3d(
+    fig01.add_trace(go.Scatter3d(
         x=[x[i, 0]],
         y=[y[i, 0]],
         z=[z[i, 0]],
@@ -60,7 +60,7 @@ fig01.frames = [go.Frame(data=[go.Scatter3d(x=x[i, :k+1], y=y[i, :k+1], z=z[i, :
 # Initialize the figure
 fig02 = go.Figure()
 for i in range(n_points):
-    fig01.add_trace(go.Scatter3d(
+    fig02.add_trace(go.Scatter3d(
         x=[x[i, 0]],
         y=[y[i, 0]],
         z=[z[i, 0]],
