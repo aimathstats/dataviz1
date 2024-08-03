@@ -3,15 +3,14 @@ import plotly.figure_factory as ff
 import plotly.graph_objects as go
 import plotly.express as px
 import streamlit as st
+import numpy as np
 
 st.set_page_config(layout="wide")
 
 
 # 3D Brownian motion
-import numpy as np
-# Parameters for the Brownian motion
 n_points = 3
-n_steps = 100
+n_steps = 1000
 delta_t = 0.1
 
 # Generate Brownian motion paths
@@ -28,10 +27,7 @@ for i in range(1, n_steps):
 # Create a colormap
 colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
 
-# Initialize the figure
-fig02 = go.Figure()
-
-# Add initial traces for each point
+fig01 = go.Figure()
 for i in range(n_points):
     fig02.add_trace(go.Scatter3d(
         x=[x[i, 0]],
@@ -39,64 +35,6 @@ for i in range(n_points):
         z=[z[i, 0]],
         mode='lines',
         line=dict(color=colors[i], width=1),
-        showlegend=False
-    ))
-
-# Update the layout
-fig02.update_layout(
-    scene=dict(
-        xaxis=dict(range=[-10, 10], autorange=False),
-        yaxis=dict(range=[-10, 10], autorange=False),
-        zaxis=dict(range=[-10, 10], autorange=False)
-    ),
-    title="3D Brownian Motion",
-    updatemenus=[dict(
-        type="buttons",
-        buttons=[dict(label="Play",
-                      method="animate",
-                      args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
-    )]
-)
-
-# Create frames
-frames = [go.Frame(data=[go.Scatter3d(x=x[i, :k+1], y=y[i, :k+1], z=z[i, :k+1], mode='lines+markers', marker=dict(color=colors[i], size=3), line=dict(color=colors[i], width=2)) for i in range(n_points)]) for k in range(n_steps)]
-fig02.frames = frames
-
-# Display with Streamlit
-#st.subheader("3D Brownian Motion Animation with Traces")
-#st.plotly_chart(fig02)
-
-
-# Parameters for the Brownian motion
-n_points = 3
-n_steps = 100
-delta_t = 0.1
-
-# Generate Brownian motion paths
-np.random.seed(42)  # For reproducibility
-x = np.zeros((n_points, n_steps))
-y = np.zeros((n_points, n_steps))
-z = np.zeros((n_points, n_steps))
-
-for i in range(1, n_steps):
-    x[:, i] = x[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
-    y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
-    z[:, i] = z[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
-
-# Create a colormap
-colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
-
-# Initialize the figure
-fig01 = go.Figure()
-
-# Add initial traces for each point
-for i in range(n_points):
-    fig01.add_trace(go.Scatter3d(
-        x=[x[i, 0]],
-        y=[y[i, 0]],
-        z=[z[i, 0]],
-        mode='markers',
-        marker=dict(color=colors[i], size=5),
         showlegend=False
     ))
 
@@ -117,23 +55,47 @@ fig01.update_layout(
 )
 
 # Create frames
-frames = [go.Frame(data=[go.Scatter3d(x=[x[i, k]], y=[y[i, k]], z=[z[i, k]], mode='markers', marker=dict(color=colors[i], size=5)) for i in range(n_points)]) for k in range(n_steps)]
-fig01.frames = frames
+fig01.frames = [go.Frame(data=[go.Scatter3d(x=x[i, :k+1], y=y[i, :k+1], z=z[i, :k+1], mode='lines+markers', marker=dict(color=colors[i], size=3), line=dict(color=colors[i], width=2)) for i in range(n_points)]) for k in range(n_steps)]
 
-# Display with Streamlit
-#st.title("3D Brownian Motion Animation")
-#st.plotly_chart(fig01)
+# Initialize the figure
+fig02 = go.Figure()
+for i in range(n_points):
+    fig01.add_trace(go.Scatter3d(
+        x=[x[i, 0]],
+        y=[y[i, 0]],
+        z=[z[i, 0]],
+        mode='markers',
+        marker=dict(color=colors[i], size=5),
+        showlegend=False
+    ))
+
+# Update the layout
+fig02.update_layout(
+    scene=dict(
+        xaxis=dict(range=[-10, 10], autorange=False),
+        yaxis=dict(range=[-10, 10], autorange=False),
+        zaxis=dict(range=[-10, 10], autorange=False)
+    ),
+    title="3D Brownian Motion",
+    updatemenus=[dict(
+        type="buttons",
+        buttons=[dict(label="Play",
+                      method="animate",
+                      args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
+    )]
+)
+
+# Create frames
+fig02.frames = [go.Frame(data=[go.Scatter3d(x=[x[i, k]], y=[y[i, k]], z=[z[i, k]], mode='markers', marker=dict(color=colors[i], size=5)) for i in range(n_points)]) for k in range(n_steps)]
 
 left_column4, right_column4 = st.columns(2)
 left_column4.subheader('3D Brownian Motion Animation')
-left_column4.plotly_chart(fig02)
+left_column4.plotly_chart(fig01)
 right_column4.subheader('3D Brownian Motion Animation (w/o trace)')
-right_column4.plotly_chart(fig01)
+right_column4.plotly_chart(fig02)
 
 
 # 2D Brownian motion
-import numpy as np
-# Parameters for the Brownian motion
 n_points = 3
 n_steps = 1000
 delta_t = 0.1
@@ -179,8 +141,6 @@ fig0.update_layout(
 # Create frames
 frames = [go.Frame(data=[go.Scatter(x=x[i, :k+1], y=y[i, :k+1]) for i in range(n_points)]) for k in range(n_steps)]
 fig0.frames = frames
-#st.subheader("2D Brownian Motion Animation")
-#st.plotly_chart(fig0)
 
 ###　another visulization
 fig00 = go.Figure()
@@ -207,8 +167,6 @@ fig00.update_layout(
 )
 
 fig00.frames = [go.Frame(data=[go.Scatter(x=[x[i, k]], y=[y[i, k]], mode='markers', marker=dict(color=colors[i], size=5)) for i in range(n_points)]) for k in range(n_steps)]
-#st.subheader("2D Brownian Motion Animation (without trace)")
-#st.plotly_chart(fig00)
 
 left_column3, right_column3 = st.columns(2)
 left_column3.subheader('2D Brownian Motion Animation')
