@@ -60,6 +60,57 @@ fig0.frames = frames
 st.subheader("2D Brownian Motion Animation")
 st.plotly_chart(fig0)
 
+###　another visulization
+n_points = 3
+n_steps = 1000
+delta_t = 0.1
+
+# Generate Brownian motion paths
+np.random.seed(42)  # For reproducibility
+x = np.zeros((n_points, n_steps))
+y = np.zeros((n_points, n_steps))
+
+for i in range(1, n_steps):
+    x[:, i] = x[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
+    y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
+
+# Create a colormap
+colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
+
+# Initialize the figure
+fig00 = go.Figure()
+
+# Add initial traces for each point
+for i in range(n_points):
+    fig00.add_trace(go.Scatter(
+        x=[x[i, 0]],
+        y=[y[i, 0]],
+        mode='markers',
+        marker=dict(color=colors[i], size=5),
+        showlegend=False
+    ))
+
+# Update the layout
+fig00.update_layout(
+    xaxis=dict(range=[-10, 10], autorange=False),
+    yaxis=dict(range=[-10, 10], autorange=False),
+    title="2D Brownian Motion",
+    updatemenus=[dict(
+        type="buttons",
+        buttons=[dict(label="Play",
+                      method="animate",
+                      args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
+    )]
+)
+
+# Create frames
+frames = [go.Frame(data=[go.Scatter(x=[x[i, k]], y=[y[i, k]], mode='markers', marker=dict(color=colors[i], size=5)) for i in range(n_points)]) for k in range(n_steps)]
+fig00.frames = frames
+
+# Display with Streamlit
+st.subheader("2D Brownian Motion Animation")
+st.plotly_chart(fig00)
+
 
 
 # additional codes
