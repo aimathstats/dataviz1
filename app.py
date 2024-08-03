@@ -10,8 +10,8 @@ st.set_page_config(layout="wide")
 # 2D Brownian motion
 import numpy as np
 # Parameters for the Brownian motion
-n_points = 2
-n_steps = 200
+n_points = 1
+n_steps = 1000
 delta_t = 0.1
 
 # Generate Brownian motion paths
