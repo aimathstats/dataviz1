@@ -11,7 +11,7 @@ st.set_page_config(layout="wide")
 import numpy as np
 # Parameters for the Brownian motion
 n_points = 3
-n_steps = 1000
+n_steps = 100
 delta_t = 0.1
 
 # Generate Brownian motion paths
@@ -63,7 +63,7 @@ frames = [go.Frame(data=[go.Scatter3d(x=[x[i, k]], y=[y[i, k]], z=[z[i, k]], mod
 fig01.frames = frames
 
 # Display with Streamlit
-st.subheader("3D Brownian Motion Animation")
+st.title("3D Brownian Motion Animation")
 st.plotly_chart(fig01)
 
 
