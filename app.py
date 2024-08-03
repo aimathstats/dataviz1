@@ -6,10 +6,11 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
+
 # 2D Brownian motion
 import numpy as np
 # Parameters for the Brownian motion
-n_points = 100
+n_points = 10
 n_steps = 100
 delta_t = 0.1
 
@@ -56,7 +57,7 @@ frames = [go.Frame(data=[go.Scatter(x=x[i, :k+1], y=y[i, :k+1]) for i in range(n
 fig0.frames = frames
 
 # Display with Streamlit
-st.title("2D Brownian Motion Animation")
+st.subheader("2D Brownian Motion Animation")
 st.plotly_chart(fig0)
 
 
