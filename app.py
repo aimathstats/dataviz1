@@ -10,7 +10,7 @@ st.set_page_config(layout="wide")
 # 2D Brownian motion
 import numpy as np
 # Parameters for the Brownian motion
-n_points = 1
+n_points = 3
 n_steps = 1000
 delta_t = 0.1
 
