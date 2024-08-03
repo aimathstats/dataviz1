@@ -6,6 +6,60 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
+# 2D Brownian motion
+import numpy as np
+# Parameters for the Brownian motion
+n_points = 1000
+n_steps = 100
+delta_t = 0.1
+
+# Generate Brownian motion paths
+np.random.seed(42)  # For reproducibility
+x = np.zeros((n_points, n_steps))
+y = np.zeros((n_points, n_steps))
+
+for i in range(1, n_steps):
+    x[:, i] = x[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
+    y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
+
+# Create a colormap
+colors = [f'rgba({int(r*255)}, {int(g*255)}, {int(b*255)}, 0.8)' for r, g, b, _ in plt.cm.rainbow(np.linspace(0, 1, n_points))]
+
+# Create the figure
+fig0 = go.Figure()
+
+# Add traces for each point
+for i in range(n_points):
+    fig0.add_trace(go.Scatter(
+        x=x[i, :],
+        y=y[i, :],
+        mode='lines',
+        line=dict(color=colors[i], width=1),
+        showlegend=False
+    ))
+
+# Update the layout
+fig0.update_layout(
+    xaxis=dict(range=[-10, 10], autorange=False),
+    yaxis=dict(range=[-10, 10], autorange=False),
+    title="2D Brownian Motion",
+    updatemenus=[dict(
+        type="buttons",
+        buttons=[dict(label="Play",
+                      method="animate",
+                      args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
+    )]
+)
+
+# Create frames
+frames = [go.Frame(data=[go.Scatter(x=x[i, :k+1], y=y[i, :k+1]) for i in range(n_points)]) for k in range(n_steps)]
+fig0.frames = frames
+
+# Display with Streamlit
+st.subheader("2D Brownian Motion Animation")
+st.plotly_chart(fig0)
+
+
 # additional codes
 df2 = pd.read_csv('data/koukouseiseki.csv')
 df3 = pd.read_csv('data/nikkei225.csv')
