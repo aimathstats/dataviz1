@@ -8,6 +8,7 @@ st.set_page_config(layout="wide")
 
 # 2D Brownian motion
 import numpy as np
+import matplotlib.pyplot as plt
 # Parameters for the Brownian motion
 n_points = 1000
 n_steps = 100
