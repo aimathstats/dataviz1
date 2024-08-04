@@ -1,5 +1,6 @@
 # 5分ごとのスタンプ（日本時間）
 # ユーザ名、パスワード、sqlite3なし
+# 
 import streamlit as st
 from datetime import datetime, timedelta
 import pytz
