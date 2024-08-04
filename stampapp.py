@@ -83,7 +83,6 @@ if formatted_time not in st.session_state.stamps:
     try:
         df = pd.DataFrame(st.session_state.stamps, columns=['datetime'])
         df.to_csv(CSV_FILE, index=False)
-        df.to_csv(, index=False)
         st.success(f"{CSV_FILE} にスタンプを保存しました。")
     except Exception as e:
         st.error(f"CSVファイルの保存に失敗しました: {e}")
