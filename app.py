@@ -12,70 +12,54 @@ st.set_page_config(layout="wide")
 import streamlit as st
 import plotly.graph_objects as go
 import numpy as np
+import time
 
-# 一次元データを生成
-data = np.random.normal(loc=0, scale=1, size=100)
+# サンプルデータの生成
+data = np.random.normal(0, 1, 1000)
 
-# ヒストグラムのビン数を設定
-num_bins = 10
+# ヒストグラムの設定
+hist_values, bin_edges = np.histogram(data, bins=20)
+bin_centers = 0.5 * (bin_edges[1:] + bin_edges[:-1])
 
-# 各ビンにカウンタを用意
-bin_counts = np.zeros(num_bins)
+# Streamlitのセットアップ
+st.title("Falling Blocks Histogram")
 
-# ヒストグラムの範囲を設定
-bin_edges = np.linspace(-4, 4, num_bins + 1)
-x = (bin_edges[:-1] + bin_edges[1:]) / 2
+# プロットのセットアップ
+fig = go.Figure()
 
-# スライダーを作成してアニメーション速度を制御
-speed = st.slider("アニメーション速度 (ミリ秒)", 10, 1000, 100)
+# 軸の範囲設定
+fig.update_xaxes(range=[bin_edges[0], bin_edges[-1]])
+fig.update_yaxes(range=[0, max(hist_values)])
 
-# 初期設定
-frames = []
-# 各ビンの現在の高さを記録
-heights = np.zeros(num_bins)
-for i in range(len(data)):
-    new_value = data[i]
-    bin_index = np.digitize(new_value, bin_edges) - 1
-    heights[bin_index] += 1
+# 初期のブロックの表示
+blocks = []
+for i in range(len(bin_centers)):
+    blocks.append(go.Scatter(
+        x=[bin_centers[i]], 
+        y=[max(hist_values)], 
+        mode='markers', 
+        marker=dict(size=20, color='blue')
+    ))
 
-    # 各ブロックが落ちてくるアニメーションをフレームごとに作成
-    for height in range(int(heights[bin_index])):
-        frame_data = bin_counts.copy()
-        frame_data[bin_index] = height
-        frame = go.Frame(
-            data=[go.Bar(x=x, y=frame_data, width=0.7, marker_color='blue')],
-            name=f"frame_{i}_{height}"
-        )
-        frames.append(frame)
+for block in blocks:
+    fig.add_trace(block)
+
+plot = st.plotly_chart(fig)
+
+# ブロックを上から落とすアニメーション
+for step in range(max(hist_values) + 1):
+    for i, value in enumerate(hist_values):
+        if step <= value:
+            blocks[i].update(y=[max(hist_values) - step])
     
-    bin_counts[bin_index] += 1
+    # プロットの更新
+    fig.data = blocks
+    plot.plotly_chart(fig)
+    
+    # ウェイト
+    time.sleep(0.1)
 
-# 初期フレーム
-initial_frame = go.Frame(data=[go.Bar(x=x, y=np.zeros(num_bins), width=0.7, marker_color='blue')])
-
-# プロットの設定
-fig = go.Figure(
-    data=initial_frame.data,
-    layout=go.Layout(
-        xaxis=dict(range=[-4, 4]),
-        yaxis=dict(range=[0, max(heights) + 1]),
-        updatemenus=[dict(
-            type="buttons",
-            showactive=False,
-            buttons=[dict(label="Play",
-                          method="animate",
-                          args=[None, dict(frame=dict(duration=speed, redraw=True), fromcurrent=True)])]
-        )]
-    ),
-    frames=frames
-)
-
-# Streamlitのタイトルを設定
-st.title("テトリス風ヒストグラムアニメーション")
-
-# アニメーションを表示
-st.plotly_chart(fig)
-
+st.write("Histogram completed!")
 
 
 
