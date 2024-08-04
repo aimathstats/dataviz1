@@ -55,10 +55,9 @@ if start_button:
     for step in range(max(hist_values) + 1):
         for i, value in enumerate(hist_values):
             if step <= value:
-                blocks[i].update(y=[max(hist_values) - step])
+                fig.data[i].update(y=[max(hist_values) - step])
         
         # プロットの更新
-        fig.data = blocks
         plot.plotly_chart(fig)
         
         # ウェイト
