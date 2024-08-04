@@ -1,3 +1,51 @@
+#
+import streamlit as st
+import pandas as pd
+from datetime import datetime, timedelta
+import pytz
+import os
+
+# 日本のタイムゾーンを設定
+JST = pytz.timezone('Asia/Tokyo')
+
+# CSVファイルのパス
+CSV_FILE = 'data/stamps.csv'
+
+# CSVファイルを読み込んでセッションステートに保存
+if 'stamps' not in st.session_state:
+    if os.path.exists(CSV_FILE):
+        st.session_state.stamps = pd.read_csv(CSV_FILE)['datetime'].tolist()
+    else:
+        st.session_state.stamps = []
+
+st.title("スタンプカードアプリ")
+
+# 現在の時刻（日本時間）
+now = datetime.now(JST)
+
+# 5分単位に切り捨て
+rounded_now = now - timedelta(minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond)
+formatted_time = rounded_now.strftime('%Y-%m-%d %H:%M')
+
+# 5分ごとのスタンプが既に存在するか確認
+if formatted_time not in st.session_state.stamps:
+    # 新しいスタンプを追加
+    st.session_state.stamps.append(formatted_time)
+    st.info(f"{formatted_time} のスタンプを押しました！")
+
+    # CSVファイルに保存
+    df = pd.DataFrame(st.session_state.stamps, columns=['datetime'])
+    df.to_csv(CSV_FILE, index=False)
+else:
+    st.warning(f"{formatted_time} のスタンプは既に押しています。")
+
+# 全てのスタンプを表示
+st.subheader("これまでのスタンプ")
+for stamp in st.session_state.stamps:
+    st.write(stamp)
+
+
+
 # 5分ごとのスタンプ（日本時間）
 # ユーザ名、パスワード、sqlite3なし
 # 
