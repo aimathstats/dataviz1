@@ -1,5 +1,9 @@
 import streamlit as st
 from datetime import datetime, timedelta
+import pytz
+
+# 日本のタイムゾーンを設定
+JST = pytz.timezone('Asia/Tokyo')
 
 # セッションステートにスタンプを保存
 if 'stamps' not in st.session_state:
@@ -7,8 +11,8 @@ if 'stamps' not in st.session_state:
 
 st.title("スタンプカードアプリ")
 
-# 現在の時刻
-now = datetime.now()
+# 現在の時刻（日本時間）
+now = datetime.now(JST)
 
 # 5分単位に切り捨て
 rounded_now = now - timedelta(minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond)
