@@ -1,3 +1,4 @@
+# 5分ごとのスタンプ（日本時間）
 import streamlit as st
 from datetime import datetime, timedelta
 import pytz
@@ -34,6 +35,7 @@ for stamp in st.session_state.stamps:
 
 
 ######################################
+# 一日ごとのスタンプ
 import streamlit as st
 from datetime import date
 
