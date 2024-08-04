@@ -1,42 +1,3 @@
-import streamlit as st
-import pandas as pd
-
-st.title("CSVファイルとしてデータフレームを保存")
-
-# サンプルデータフレームの作成
-data = {
-    '名前': ['太郎', '花子', '次郎'],
-    '年齢': [23, 21, 25],
-    '職業': ['学生', '会社員', 'フリーランス']
-}
-df = pd.DataFrame(data)
-
-st.write("データフレームの内容:")
-st.write(df)
-
-# CSVファイルとして保存する関数
-def save_df_to_csv(df, file_name):
-    df.to_csv(file_name, index=False)
-    st.success(f"データフレームを {file_name} として保存しました。")
-
-# ボタンを押してCSVとして保存
-if st.button("CSVとして保存"):
-    save_df_to_csv(df, "data/saved_data.csv")
-
-# ファイルのダウンロードリンクを作成
-def convert_df_to_csv(df):
-    return df.to_csv(index=False).encode('utf-8')
-
-csv = convert_df_to_csv(df)
-
-st.download_button(
-    label="CSVファイルをダウンロード",
-    data=csv,
-    file_name='downloaded_data.csv',
-    mime='text/csv',
-)
-
-
 #########################
 import streamlit as st
 import pandas as pd
@@ -93,7 +54,6 @@ else:
 st.subheader("これまでのスタンプ")
 for stamp in st.session_state.stamps:
     st.write(stamp)
-
 
 
 #
