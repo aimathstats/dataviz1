@@ -18,8 +18,8 @@ if 'stamps' not in st.session_state:
     else:
         st.session_state.stamps = []
 
-st.write(pd.read_csv(CSV_FILE)['datetime'].tolist())
 st.title("スタンプカードアプリ")
+st.write(pd.read_csv(CSV_FILE)['datetime'].tolist())
 
 # 現在の時刻（日本時間）
 now = datetime.now(JST)
@@ -27,7 +27,6 @@ now = datetime.now(JST)
 # 5分単位に切り捨て
 rounded_now = now - timedelta(minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond)
 formatted_time = rounded_now.strftime('%Y-%m-%d %H:%M')
-
 
 # 5分ごとのスタンプが既に存在するか確認
 if formatted_time not in st.session_state.stamps:
@@ -38,6 +37,8 @@ if formatted_time not in st.session_state.stamps:
     # CSVファイルに保存
     df = pd.DataFrame(st.session_state.stamps, columns=['datetime'])
     df.to_csv(CSV_FILE, index=False)
+    
+    st.write(st.session_state.stamps)
 else:
     st.warning(f"{formatted_time} のスタンプは既に押しています。")
 
