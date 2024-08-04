@@ -27,6 +27,7 @@ now = datetime.now(JST)
 rounded_now = now - timedelta(minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond)
 formatted_time = rounded_now.strftime('%Y-%m-%d %H:%M')
 
+
 # 5分ごとのスタンプが既に存在するか確認
 if formatted_time not in st.session_state.stamps:
     # 新しいスタンプを追加
