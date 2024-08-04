@@ -18,6 +18,7 @@ if 'stamps' not in st.session_state:
     else:
         st.session_state.stamps = []
 
+st.write(pd.read_csv(CSV_FILE)['datetime'].tolist())
 st.title("スタンプカードアプリ")
 
 # 現在の時刻（日本時間）
