@@ -15,15 +15,11 @@ hist_values = [5, 8, 4]
 max_height = max(hist_values)
 
 # Streamlitのセットアップ
-st.title("Falling Blocks Histogram")
-
-# ボタンの配置
+st.subheader("Falling Blocks Histogram")
 start_button = st.button("Start Animation")
 
 # 初期のプロットの設定
 fig = go.Figure()
-
-# 軸の範囲設定
 fig.update_xaxes(range=[0, 3], tickvals=[0.5, 1.5, 2.5], ticktext=["0-1", "1-2", "2-3"])
 fig.update_yaxes(range=[0, max_height])
 
@@ -54,9 +50,9 @@ if start_button:
         new_fig.update_xaxes(range=[0, 3], tickvals=[0.5, 1.5, 2.5], ticktext=["0-1", "1-2", "2-3"])
         new_fig.update_yaxes(range=[0, max_height])
         plot.plotly_chart(new_fig)
-        time.sleep(0.5)
-        
+        time.sleep(0.5)    
     st.write("Histogram completed!")
+
 
 # histogram animation (from bottom)
 data = np.random.normal(loc=0, scale=1, size=100)
