@@ -8,6 +8,11 @@ import numpy as np
 st.set_page_config(layout="wide")
 
 
+# histogram animation
+import streamlit as st
+import plotly.graph_objects as go
+import numpy as np
+
 # 一次元データを生成
 data = np.random.normal(loc=0, scale=1, size=100)
 
@@ -20,9 +25,6 @@ bin_counts = np.zeros(num_bins)
 # ヒストグラムの範囲を設定
 bin_edges = np.linspace(-4, 4, num_bins + 1)
 x = (bin_edges[:-1] + bin_edges[1:]) / 2
-
-# スライダーを作成してアニメーション速度を制御
-speed = st.slider("アニメーション速度 (ミリ秒)", 10, 1000, 100)
 
 # 初期設定
 frames = []
@@ -51,7 +53,7 @@ fig = go.Figure(
             showactive=False,
             buttons=[dict(label="Play",
                           method="animate",
-                          args=[None, dict(frame=dict(duration=speed, redraw=True), fromcurrent=True)])]
+                          args=[None, dict(frame=dict(duration=100, redraw=True), fromcurrent=True)])]
         )]
     ),
     frames=frames
@@ -62,6 +64,7 @@ st.title("テトリス風ヒストグラムアニメーション")
 
 # アニメーションを表示
 st.plotly_chart(fig)
+
 
 
 
