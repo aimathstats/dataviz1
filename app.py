@@ -9,6 +9,9 @@ st.set_page_config(layout="wide")
 
 
 #
+import streamlit as st
+import plotly.graph_objects as go
+import numpy as np
 import time
 
 # サンプルデータの生成
@@ -21,7 +24,10 @@ bin_centers = 0.5 * (bin_edges[1:] + bin_edges[:-1])
 # Streamlitのセットアップ
 st.title("Falling Blocks Histogram")
 
-# プロットのセットアップ
+# ボタンの配置
+start_button = st.button("Start Animation")
+
+# 初期のプロットの設定
 fig = go.Figure()
 
 # 軸の範囲設定
@@ -43,20 +49,22 @@ for block in blocks:
 
 plot = st.plotly_chart(fig)
 
-# ブロックを上から落とすアニメーション
-for step in range(max(hist_values) + 1):
-    for i, value in enumerate(hist_values):
-        if step <= value:
-            blocks[i].update(y=[max(hist_values) - step])
-    
-    # プロットの更新
-    fig.data = blocks
-    plot.plotly_chart(fig)
-    
-    # ウェイト
-    time.sleep(0.1)
+# ボタンが押されたか確認
+if start_button:
+    # ブロックを上から落とすアニメーション
+    for step in range(max(hist_values) + 1):
+        for i, value in enumerate(hist_values):
+            if step <= value:
+                blocks[i].update(y=[max(hist_values) - step])
+        
+        # プロットの更新
+        fig.data = blocks
+        plot.plotly_chart(fig)
+        
+        # ウェイト
+        time.sleep(0.1)
 
-st.write("Histogram completed!")
+    st.write("Histogram completed!")
 
 
 
