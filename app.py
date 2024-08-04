@@ -14,7 +14,7 @@ import plotly.graph_objects as go
 import time
 
 # 度数分布の設定
-bin_centers = [0.5, 1.5, 2.5]
+bins = [0, 1, 2, 3]
 hist_values = [5, 8, 4]
 max_height = max(hist_values)
 
@@ -28,21 +28,18 @@ start_button = st.button("Start Animation")
 fig = go.Figure()
 
 # 軸の範囲設定
-fig.update_xaxes(range=[0, 3])
+fig.update_xaxes(range=[0, 3], tickvals=[0.5, 1.5, 2.5], ticktext=["0-1", "1-2", "2-3"])
 fig.update_yaxes(range=[0, max_height])
 
 # 初期のブロックの表示
-blocks = []
-for i in range(len(bin_centers)):
-    blocks.append(go.Scatter(
-        x=[bin_centers[i]] * hist_values[i], 
-        y=[max_height] * hist_values[i],
-        mode='markers', 
-        marker=dict(size=20, color='blue')
-    ))
-
-for block in blocks:
-    fig.add_trace(block)
+for i in range(len(bins) - 1):
+    for _ in range(hist_values[i]):
+        fig.add_trace(go.Scatter(
+            x=[bins[i] + 0.5],
+            y=[max_height],
+            mode='markers',
+            marker=dict(size=20, color='blue')
+        ))
 
 plot = st.plotly_chart(fig)
 
@@ -50,19 +47,20 @@ plot = st.plotly_chart(fig)
 if start_button:
     # ブロックを上から落とすアニメーション
     for step in range(max_height):
-        for i in range(len(bin_centers)):
-            if step < hist_values[i]:
-                blocks[i].update(y=[max_height - step - 1] + blocks[i].y[1:])
-        
-        # プロットの更新
-        fig = go.Figure(data=blocks)
-        fig.update_xaxes(range=[0, 3])
-        fig.update_yaxes(range=[0, max_height])
-        plot.plotly_chart(fig)
-        
-        # ウェイト
+        new_fig = go.Figure()
+        for i in range(len(bins) - 1):
+            count = min(step + 1, hist_values[i])
+            new_fig.add_trace(go.Scatter(
+                x=[bins[i] + 0.5] * count,
+                y=[max_height - j for j in range(count)],
+                mode='markers',
+                marker=dict(size=20, color='blue')
+            ))
+        new_fig.update_xaxes(range=[0, 3], tickvals=[0.5, 1.5, 2.5], ticktext=["0-1", "1-2", "2-3"])
+        new_fig.update_yaxes(range=[0, max_height])
+        plot.plotly_chart(new_fig)
         time.sleep(0.5)
-
+        
     st.write("Histogram completed!")
 
 
