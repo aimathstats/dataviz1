@@ -9,7 +9,7 @@ st.set_page_config(layout="wide")
 
 # 2D Brownian motion
 n_points = 3
-n_steps = 1000
+n_steps = 100
 delta_t = 0.1
 
 np.random.seed(42)  # For reproducibility
