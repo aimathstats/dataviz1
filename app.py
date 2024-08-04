@@ -7,6 +7,65 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+
+# 3
+import streamlit as st
+import plotly.graph_objects as go
+import time
+
+# 度数分布の設定
+bin_centers = [0.5, 1.5, 2.5]
+hist_values = [5, 8, 4]
+max_height = max(hist_values)
+
+# Streamlitのセットアップ
+st.title("Falling Blocks Histogram")
+
+# ボタンの配置
+start_button = st.button("Start Animation")
+
+# 初期のプロットの設定
+fig = go.Figure()
+
+# 軸の範囲設定
+fig.update_xaxes(range=[0, 3])
+fig.update_yaxes(range=[0, max_height])
+
+# 初期のブロックの表示
+blocks = []
+for i in range(len(bin_centers)):
+    blocks.append(go.Scatter(
+        x=[bin_centers[i]] * hist_values[i], 
+        y=[max_height] * hist_values[i],
+        mode='markers', 
+        marker=dict(size=20, color='blue')
+    ))
+
+for block in blocks:
+    fig.add_trace(block)
+
+plot = st.plotly_chart(fig)
+
+# ボタンが押されたか確認
+if start_button:
+    # ブロックを上から落とすアニメーション
+    for step in range(max_height):
+        for i in range(len(bin_centers)):
+            if step < hist_values[i]:
+                blocks[i].update(y=[max_height - step - 1] + blocks[i].y[1:])
+        
+        # プロットの更新
+        fig = go.Figure(data=blocks)
+        fig.update_xaxes(range=[0, 3])
+        fig.update_yaxes(range=[0, max_height])
+        plot.plotly_chart(fig)
+        
+        # ウェイト
+        time.sleep(0.5)
+
+    st.write("Histogram completed!")
+
+
 #2
 import streamlit as st
 import plotly.graph_objects as go
