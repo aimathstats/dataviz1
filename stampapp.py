@@ -32,6 +32,7 @@ for stamp in st.session_state.stamps:
     st.write(stamp)
 
 
+
 ######################################
 import streamlit as st
 from datetime import date
