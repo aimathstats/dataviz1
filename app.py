@@ -7,8 +7,82 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+#2
+import streamlit as st
+import plotly.graph_objects as go
+import numpy as np
 
-#
+# サンプルデータの生成
+data = np.random.normal(0, 1, 1000)
+
+# ヒストグラムの設定
+hist_values, bin_edges = np.histogram(data, bins=20)
+bin_centers = 0.5 * (bin_edges[1:] + bin_edges[:-1])
+
+# Streamlitのセットアップ
+st.title("Falling Blocks Histogram")
+
+# ボタンの配置
+start_button = st.button("Start Animation")
+
+# 初期のプロットの設定
+fig = go.Figure()
+
+# 軸の範囲設定
+fig.update_xaxes(range=[bin_edges[0], bin_edges[-1]])
+fig.update_yaxes(range=[0, max(hist_values)])
+
+# 初期のブロックの表示
+for i in range(len(bin_centers)):
+    fig.add_trace(go.Scatter(
+        x=[bin_centers[i]], 
+        y=[max(hist_values)], 
+        mode='markers', 
+        marker=dict(size=20, color='blue')
+    ))
+
+plot = st.plotly_chart(fig)
+
+# アニメーションフレームの作成
+frames = []
+for step in range(max(hist_values) + 1):
+    frame_data = []
+    for i, value in enumerate(hist_values):
+        if step <= value:
+            frame_data.append(go.Scatter(
+                x=[bin_centers[i]], 
+                y=[max(hist_values) - step],
+                mode='markers', 
+                marker=dict(size=20, color='blue')
+            ))
+    frames.append(go.Frame(data=frame_data))
+
+fig.frames = frames
+
+# アニメーション設定
+animation_settings = dict(
+    frame=dict(duration=100, redraw=True),
+    fromcurrent=True,
+    transition=dict(duration=0)
+)
+
+# ボタンが押された場合の処理
+if start_button:
+    fig.update_layout(updatemenus=[{
+        "buttons": [
+            {
+                "args": [None, animation_settings],
+                "label": "Play",
+                "method": "animate"
+            }
+        ],
+        "type": "buttons"
+    }])
+
+    plot.plotly_chart(fig)
+
+
+#1
 import streamlit as st
 import plotly.graph_objects as go
 import numpy as np
