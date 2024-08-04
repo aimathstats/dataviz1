@@ -33,13 +33,12 @@ fig.update_yaxes(range=[0, max_height])
 
 # 初期のブロックの表示
 for i in range(len(bins) - 1):
-    for _ in range(hist_values[i]):
-        fig.add_trace(go.Scatter(
-            x=[bins[i] + 0.5],
-            y=[max_height],
-            mode='markers',
-            marker=dict(size=20, color='blue')
-        ))
+    fig.add_trace(go.Scatter(
+        x=[bins[i] + 0.5] * hist_values[i],
+        y=[0] * hist_values[i],
+        mode='markers',
+        marker=dict(size=20, color='blue')
+    ))
 
 plot = st.plotly_chart(fig)
 
@@ -49,10 +48,10 @@ if start_button:
     for step in range(max_height):
         new_fig = go.Figure()
         for i in range(len(bins) - 1):
-            count = min(step + 1, hist_values[i])
+            y_vals = [j for j in range(hist_values[i]) if j <= step]
             new_fig.add_trace(go.Scatter(
-                x=[bins[i] + 0.5] * count,
-                y=[max_height - j for j in range(count)],
+                x=[bins[i] + 0.5] * len(y_vals),
+                y=y_vals,
                 mode='markers',
                 marker=dict(size=20, color='blue')
             ))
