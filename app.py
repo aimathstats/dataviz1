@@ -7,6 +7,61 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+#4
+import streamlit as st
+import plotly.graph_objects as go
+import time
+
+# 度数分布の設定
+bins = [0, 1, 2, 3]
+hist_values = [5, 8, 4]
+max_height = max(hist_values)
+
+# Streamlitのセットアップ
+st.title("Falling Blocks Histogram")
+
+# ボタンの配置
+start_button = st.button("Start Animation")
+
+# 初期のプロットの設定
+fig = go.Figure()
+
+# 軸の範囲設定
+fig.update_xaxes(range=[0, 3], tickvals=[0.5, 1.5, 2.5], ticktext=["0-1", "1-2", "2-3"])
+fig.update_yaxes(range=[0, max_height])
+
+plot = st.plotly_chart(fig)
+
+# ボタンが押されたか確認
+if start_button:
+    # ブロックを上から落とすアニメーション
+    current_heights = [0, 0, 0]
+    
+    for step in range(max(hist_values)):
+        for bin_idx in range(len(bins) - 1):
+            if current_heights[bin_idx] < hist_values[bin_idx]:
+                current_heights[bin_idx] += 1
+                break
+        
+        # 各ビンに対応するブロックを更新
+        new_fig = go.Figure()
+        for i in range(len(bins) - 1):
+            x_vals = [bins[i] + 0.5] * current_heights[i]
+            y_vals = list(range(current_heights[i]))
+            new_fig.add_trace(go.Scatter(
+                x=x_vals,
+                y=y_vals,
+                mode='markers',
+                marker=dict(size=20, color='blue')
+            ))
+        
+        new_fig.update_xaxes(range=[0, 3], tickvals=[0.5, 1.5, 2.5], ticktext=["0-1", "1-2", "2-3"])
+        new_fig.update_yaxes(range=[0, max_height])
+        plot.plotly_chart(new_fig)
+        time.sleep(0.5)
+        
+    st.write("Histogram completed!")
+
 
 # 3
 import streamlit as st
