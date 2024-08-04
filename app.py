@@ -8,6 +8,77 @@ import numpy as np
 st.set_page_config(layout="wide")
 
 
+#
+import streamlit as st
+import plotly.graph_objects as go
+import numpy as np
+
+# 一次元データを生成
+data = np.random.normal(loc=0, scale=1, size=100)
+
+# ヒストグラムのビン数を設定
+num_bins = 10
+
+# 各ビンにカウンタを用意
+bin_counts = np.zeros(num_bins)
+
+# ヒストグラムの範囲を設定
+bin_edges = np.linspace(-4, 4, num_bins + 1)
+x = (bin_edges[:-1] + bin_edges[1:]) / 2
+
+# スライダーを作成してアニメーション速度を制御
+speed = st.slider("アニメーション速度 (ミリ秒)", 10, 1000, 100)
+
+# 初期設定
+frames = []
+# 各ビンの現在の高さを記録
+heights = np.zeros(num_bins)
+for i in range(len(data)):
+    new_value = data[i]
+    bin_index = np.digitize(new_value, bin_edges) - 1
+    heights[bin_index] += 1
+
+    # 各ブロックが落ちてくるアニメーションをフレームごとに作成
+    for height in range(int(heights[bin_index])):
+        frame_data = bin_counts.copy()
+        frame_data[bin_index] = height
+        frame = go.Frame(
+            data=[go.Bar(x=x, y=frame_data, width=0.7, marker_color='blue')],
+            name=f"frame_{i}_{height}"
+        )
+        frames.append(frame)
+    
+    bin_counts[bin_index] += 1
+
+# 初期フレーム
+initial_frame = go.Frame(data=[go.Bar(x=x, y=np.zeros(num_bins), width=0.7, marker_color='blue')])
+
+# プロットの設定
+fig = go.Figure(
+    data=initial_frame.data,
+    layout=go.Layout(
+        xaxis=dict(range=[-4, 4]),
+        yaxis=dict(range=[0, max(heights) + 1]),
+        updatemenus=[dict(
+            type="buttons",
+            showactive=False,
+            buttons=[dict(label="Play",
+                          method="animate",
+                          args=[None, dict(frame=dict(duration=speed, redraw=True), fromcurrent=True)])]
+        )]
+    ),
+    frames=frames
+)
+
+# Streamlitのタイトルを設定
+st.title("テトリス風ヒストグラムアニメーション")
+
+# アニメーションを表示
+st.plotly_chart(fig)
+
+
+
+
 # histogram animation
 data = np.random.normal(loc=0, scale=1, size=100)
 num_bins = 10
