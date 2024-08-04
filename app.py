@@ -7,100 +7,11 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
-
-# 3D Brownian motion
-#n_points = 3
-#n_steps = 1000
-#delta_t = 0.1
-
-# Generate Brownian motion paths
-#np.random.seed(42)  # For reproducibility
-#x = np.zeros((n_points, n_steps))
-#y = np.zeros((n_points, n_steps))
-#z = np.zeros((n_points, n_steps))
-
-#for i in range(1, n_steps):
-#    x[:, i] = x[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
-#    y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
-#    z[:, i] = z[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
-
-# Create a colormap
-#colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
-
-#fig01 = go.Figure()
-#for i in range(n_points):
-#    fig01.add_trace(go.Scatter3d(
-#        x=[x[i, 0]],
-#        y=[y[i, 0]],
-#        z=[z[i, 0]],
-#        mode='lines',
-#        line=dict(color=colors[i], width=1),
-#        showlegend=False
-#    ))
-
-# Update the layout
-#fig01.update_layout(
-#    scene=dict(
-#        xaxis=dict(range=[-10, 10], autorange=False),
-#        yaxis=dict(range=[-10, 10], autorange=False),
-#        zaxis=dict(range=[-10, 10], autorange=False)
-#    ),
-#    title="3D Brownian Motion",
-#    updatemenus=[dict(
-#        type="buttons",
-#        buttons=[dict(label="Play",
-#                      method="animate",
-#                      args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
-#    )]
-#)
-
-# Create frames
-#fig01.frames = [go.Frame(data=[go.Scatter3d(x=x[i, :k+1], y=y[i, :k+1], z=z[i, :k+1], mode='lines', line=dict(color=colors[i], width=1)) for i in range(n_points)]) for k in range(n_steps)]
-
-# Initialize the figure
-#fig02 = go.Figure()
-#for i in range(n_points):
-#    fig02.add_trace(go.Scatter3d(
-#        x=[x[i, 0]],
-#        y=[y[i, 0]],
-#        z=[z[i, 0]],
-#        mode='markers',
-#        marker=dict(color=colors[i], size=5),
-#        showlegend=False
-#    ))
-
-# Update the layout
-#fig02.update_layout(
-#    scene=dict(
-#        xaxis=dict(range=[-10, 10], autorange=False),
-#        yaxis=dict(range=[-10, 10], autorange=False),
-#        zaxis=dict(range=[-10, 10], autorange=False)
-#    ),
-#    title="3D Brownian Motion",
-#    updatemenus=[dict(
-#        type="buttons",
-#        buttons=[dict(label="Play",
-#                      method="animate",
-#                      args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
-#    )]
-#)
-
-# Create frames
-#fig02.frames = [go.Frame(data=[go.Scatter3d(x=[x[i, k]], y=[y[i, k]], z=[z[i, k]], mode='markers', marker=dict(color=colors[i], size=5)) for i in range(n_points)]) for k in range(n_steps)]
-
-#left_column4, right_column4 = st.columns(2)
-#left_column4.subheader('3D Brownian Motion Animation')
-#left_column4.plotly_chart(fig01)
-#right_column4.subheader('3D Brownian Motion Animation (w/o trace)')
-#right_column4.plotly_chart(fig02)
-
-
 # 2D Brownian motion
 n_points = 3
-n_steps = 1000
+n_steps = 100
 delta_t = 0.1
 
-# Generate Brownian motion paths
 np.random.seed(42)  # For reproducibility
 x = np.zeros((n_points, n_steps))
 y = np.zeros((n_points, n_steps))
@@ -109,13 +20,9 @@ for i in range(1, n_steps):
     x[:, i] = x[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
     y[:, i] = y[:, i-1] + np.sqrt(delta_t) * np.random.randn(n_points)
 
-# Create a colormap
 colors = [f'rgba({r}, {g}, {b}, 0.8)' for r, g, b in np.random.randint(0, 255, size=(n_points, 3))]
 
-# Initialize the figure
 fig0 = go.Figure()
-
-# Add initial traces for each point
 for i in range(n_points):
     fig0.add_trace(go.Scatter(
         x=[x[i, 0]],
@@ -125,7 +32,6 @@ for i in range(n_points):
         showlegend=False
     ))
 
-# Update the layout
 fig0.update_layout(
     xaxis=dict(range=[-10, 10], autorange=False),
     yaxis=dict(range=[-10, 10], autorange=False),
@@ -137,14 +43,9 @@ fig0.update_layout(
                       args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
     )]
 )
+fig0.frames = [go.Frame(data=[go.Scatter(x=x[i, :k+1], y=y[i, :k+1]) for i in range(n_points)]) for k in range(n_steps)]
 
-# Create frames
-frames = [go.Frame(data=[go.Scatter(x=x[i, :k+1], y=y[i, :k+1]) for i in range(n_points)]) for k in range(n_steps)]
-fig0.frames = frames
-
-###　another visulization
 fig00 = go.Figure()
-
 for i in range(n_points):
     fig00.add_trace(go.Scatter(
         x=[x[i, 0]],
@@ -165,7 +66,6 @@ fig00.update_layout(
                       args=[None, {"frame": {"duration": 50, "redraw": True}, "fromcurrent": True, "mode": "immediate"}])]
     )]
 )
-
 fig00.frames = [go.Frame(data=[go.Scatter(x=[x[i, k]], y=[y[i, k]], mode='markers', marker=dict(color=colors[i], size=5)) for i in range(n_points)]) for k in range(n_steps)]
 
 left_column3, right_column3 = st.columns(2)
@@ -175,7 +75,7 @@ right_column3.subheader('2D Brownian Motion Animation (w/o trace)')
 right_column3.plotly_chart(fig00)
 
 
-# additional codes
+# data
 df2 = pd.read_csv('data/koukouseiseki.csv')
 df3 = pd.read_csv('data/nikkei225.csv')
 vars2 = [var for var in df2.columns]
