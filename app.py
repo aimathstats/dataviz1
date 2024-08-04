@@ -7,6 +7,63 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+#
+import streamlit as st
+import plotly.graph_objects as go
+import numpy as np
+
+# 一次元データを生成
+data = np.random.normal(loc=0, scale=1, size=100)
+
+# ヒストグラムのビン数を設定
+num_bins = 10
+
+# 各ビンにカウンタを用意
+bin_counts = np.zeros(num_bins)
+
+# ヒストグラムの範囲を設定
+bin_edges = np.linspace(-4, 4, num_bins + 1)
+x = (bin_edges[:-1] + bin_edges[1:]) / 2
+
+# 初期設定
+frames = []
+for i in range(len(data)):
+    new_value = data[i]
+    bin_index = np.digitize(new_value, bin_edges) - 1
+    bin_counts[bin_index] += 1
+    
+    frame = go.Frame(
+        data=[go.Bar(x=x, y=bin_counts, width=0.7, marker_color='blue')],
+        name=str(i)
+    )
+    frames.append(frame)
+
+# 初期フレーム
+initial_frame = frames[0]
+
+# プロットの設定
+fig = go.Figure(
+    data=initial_frame.data,
+    layout=go.Layout(
+        xaxis=dict(range=[-4, 4]),
+        yaxis=dict(range=[0, max(bin_counts) + 1]),
+        updatemenus=[dict(
+            type="buttons",
+            showactive=False,
+            buttons=[dict(label="Play",
+                          method="animate",
+                          args=[None, dict(frame=dict(duration=100, redraw=True), fromcurrent=True)])]
+        )]
+    ),
+    frames=frames
+)
+
+# Streamlitのタイトルを設定
+st.title("テトリス風ヒストグラムアニメーション")
+
+# アニメーションを表示
+st.plotly_chart(fig)
+
 
 # histogram animation
 import time
