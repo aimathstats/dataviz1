@@ -9,17 +9,8 @@ st.set_page_config(layout="wide")
 
 
 # histogram animation
-import streamlit as st
-import plotly.graph_objects as go
-import numpy as np
-
-# 一次元データを生成
 data = np.random.normal(loc=0, scale=1, size=100)
-
-# ヒストグラムのビン数を設定
 num_bins = 10
-
-# 各ビンにカウンタを用意
 bin_counts = np.zeros(num_bins)
 
 # ヒストグラムの範囲を設定
@@ -59,10 +50,7 @@ fig = go.Figure(
     frames=frames
 )
 
-# Streamlitのタイトルを設定
-st.title("テトリス風ヒストグラムアニメーション")
-
-# アニメーションを表示
+st.subheader("テトリス風ヒストグラムアニメーション")
 st.plotly_chart(fig)
 
 
