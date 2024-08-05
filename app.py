@@ -417,7 +417,8 @@ fig19 = go.Figure(data=go.Heatmap(
     z=temperature_matrix.values,
     x=temperature_matrix.columns,
     #y=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
-    y=list(range(7)),
+    #y=list(range(7)),
+    y=list(range(6,-1,-1)),
     colorscale=custom_colorscale,
     #colorscale='Greens_r'
     showscale=True
@@ -438,7 +439,7 @@ fig19.update_layout(
     yaxis=dict(
         tickmode='array',
         #tickvals=list(range(7)),
-        tickvals=list(range(6,-1,-1))
+        tickvals=list(range(6,-1,-1)),
         ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
