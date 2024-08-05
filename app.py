@@ -7,6 +7,24 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+# ridgeline plot
+from plotly.colors import n_colors
+# 12 sets of normal distributed random data, with increasing mean and standard deviation
+np.random.seed(1)
+data = (np.linspace(1, 2, 12)[:, np.newaxis] * np.random.randn(12, 200) +
+            (np.arange(12) + 2 * np.random.random(12))[:, np.newaxis])
+colors = n_colors('rgb(5, 200, 200)', 'rgb(200, 10, 10)', 12, colortype='rgb')
+
+fig26 = go.Figure()
+for data_line, color in zip(data, colors):
+    fig26.add_trace(go.Violin(x=data_line, line_color=color))
+
+fig26.update_traces(orientation='h', side='positive', width=3, points=False)
+fig26.update_layout(xaxis_showgrid=False, xaxis_zeroline=False)
+st.subheader('ridgeline plot')
+st.plotly_chart(fig26)
+
+
 # violin plot
 df = px.data.tips()
 fig23 = px.violin(df, y="total_bill")
