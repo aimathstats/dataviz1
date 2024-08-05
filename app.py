@@ -7,6 +7,13 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+# funnel plot
+fig22 = go.Figure(go.Funnel(
+    y = ["Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent"],
+    x = [39, 27.4, 20.6, 11, 2]))
+
+st.subheader('funnel plot')
+st.plotly_chart(fig22)
 
 # histogram animation
 import time
