@@ -437,7 +437,8 @@ fig19.update_layout(
     ),
     yaxis=dict(
         tickmode='array',
-        tickvals=list(range(7)),
+        #tickvals=list(range(7)),
+        tickvals=list(range(6,-1,-1))
         ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
