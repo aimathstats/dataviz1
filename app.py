@@ -464,9 +464,10 @@ expanded_matrix[::2, ::2] = rainfall_matrix_transposed.values
 # Plotlyでヒートマップを作成（カスタムカラースケール）
 fig20 = go.Figure(data=go.Heatmap(
     z=expanded_matrix,
-    x=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 0.5),
+    x=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 1),
     #y=np.arange(0.5, 7 + 0.5, 0.5),
-    y=np.arange(7, 0, -0.5),
+    #y=np.arange(7, 0, -0.5),
+    y=np.arange(6.5, 0, -1),
     colorscale=custom_colorscale,
     zmin=rainfall_matrix_transposed.values.min(),
     zmax=rainfall_matrix_transposed.values.max(),
@@ -488,7 +489,8 @@ fig20.update_layout(
         tickmode='array',
         #tickvals=np.arange(0.5, 7 + 0.5, 1),
         #ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
-        tickvals=np.arange(7, 0, -0.5),
+        #tickvals=np.arange(7.5, 0.5, -1),
+        tickvals=np.arange(6.5, 0, -1),
         ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
