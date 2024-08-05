@@ -28,7 +28,7 @@ st.title("スタンプカードアプリ")
 now = datetime.now(JST)
 
 # 5分単位に切り捨て
-rounded_now = now - timedelta(minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond)
+rounded_now = now - timedelta(minutes=now.minute % 10, seconds=now.second, microseconds=now.microsecond)
 formatted_time = rounded_now.strftime('%Y-%m-%d %H:%M')
 
 # 5分ごとのスタンプが既に存在するか確認
@@ -83,7 +83,7 @@ st.write(pd.read_csv(CSV_FILE)['datetime'].tolist())
 now = datetime.now(JST)
 
 # 5分単位に切り捨て
-rounded_now = now - timedelta(minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond)
+rounded_now = now - timedelta(minutes=now.minute % 10, seconds=now.second, microseconds=now.microsecond)
 formatted_time = rounded_now.strftime('%Y-%m-%d %H:%M')
 
 # 5分ごとのスタンプが既に存在するか確認
@@ -127,7 +127,7 @@ st.title("スタンプカードアプリ")
 now = datetime.now(JST)
 
 # 5分単位に切り捨て
-rounded_now = now - timedelta(minutes=now.minute % 5, seconds=now.second, microseconds=now.microsecond)
+rounded_now = now - timedelta(minutes=now.minute % 10, seconds=now.second, microseconds=now.microsecond)
 formatted_time = rounded_now.strftime('%Y-%m-%d %H:%M')
 
 # 5分ごとのスタンプが既に存在するか確認
