@@ -416,7 +416,8 @@ custom_colorscale = [[0, 'black'],[1, 'green']]
 fig19 = go.Figure(data=go.Heatmap(
     z=temperature_matrix.values,
     x=temperature_matrix.columns,
-    y=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+    #y=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+    y=list(range(7)),
     colorscale=custom_colorscale,
     #colorscale='Greens_r'
     showscale=True
@@ -488,6 +489,7 @@ fig20.update_layout(
     width=1400,
     height=400
 )
+
 
 # another contribution graph
 # 元の行列を拡張し、値が入る場所に元のデータを配置し、それ以外の場所はNaNで埋める
