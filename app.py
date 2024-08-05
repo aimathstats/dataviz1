@@ -10,9 +10,13 @@ st.set_page_config(layout="wide")
 # violin plot
 df = px.data.tips()
 fig23 = px.violin(df, y="total_bill")
+fig24 = px.violin(df, y="total_bill", box=True, # draw box plot inside the violin
+                points='all', # can be 'outliers', or False
+               )
 
 st.subheader('violin plot')
 st.plotly_chart(fig23)
+st.plotly_chart(fig24)
 
 # funnel plot
 fig22 = go.Figure(go.Funnel(
