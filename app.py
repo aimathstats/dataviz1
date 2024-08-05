@@ -451,9 +451,10 @@ fig19.update_layout(
     height=300
 )
 
+
 # contribution graph (with gap)
 # ピボットテーブルを作成して行列を転置
-rainfall_matrix = data3.pivot_table(values='降水量の合計(mm)', index='week', columns='day_of_week', aggfunc='mean').fillna(0)
+rainfall_matrix = data3.pivot_table(values=vars3_2_selected, index='week', columns='day_of_week', aggfunc='mean').fillna(0)
 rainfall_matrix_transposed = rainfall_matrix.T
 
 # 元の行列を拡張し、値が入る場所に元のデータを配置し、それ以外の場所はNaNで埋める
@@ -464,7 +465,8 @@ expanded_matrix[::2, ::2] = rainfall_matrix_transposed.values
 fig20 = go.Figure(data=go.Heatmap(
     z=expanded_matrix,
     x=np.arange(0.5, len(rainfall_matrix.columns) + 0.5, 0.5),
-    y=np.arange(0.5, 7 + 0.5, 0.5),
+    #y=np.arange(0.5, 7 + 0.5, 0.5),
+    y=np.arange(7, 0, -0.5),
     colorscale=custom_colorscale,
     zmin=rainfall_matrix_transposed.values.min(),
     zmax=rainfall_matrix_transposed.values.max(),
@@ -484,8 +486,10 @@ fig20.update_layout(
     ),
     yaxis=dict(
         tickmode='array',
-        tickvals=np.arange(0.5, 7 + 0.5, 1),
-        ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+        #tickvals=np.arange(0.5, 7 + 0.5, 1),
+        #ticktext=['Sat', 'Fri', 'Thu', 'Wed', 'Tue', 'Mon', 'Sun'],
+        tickvals=np.arange(7, 0, -0.5),
+        ticktext=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         scaleanchor='x',  # Make y-axis scale anchor to x-axis to make cells square
         scaleratio=1     # Ensure the ratio is 1 to make cells square
     ),
