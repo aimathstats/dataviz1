@@ -7,6 +7,13 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+# violin plot
+df = px.data.tips()
+fig23 = px.violin(df, y="total_bill")
+
+st.subheader('violin plot')
+st.plotly_chart(fig23)
+
 # funnel plot
 fig22 = go.Figure(go.Funnel(
     y = ["Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent"],
