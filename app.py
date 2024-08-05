@@ -18,6 +18,47 @@ st.subheader('violin plot')
 st.plotly_chart(fig23)
 st.plotly_chart(fig24)
 
+# another violin plot
+df = pd.read_csv("https://raw.githubusercontent.com/plotly/datasets/master/violin_data.csv")
+pointpos_male = [-0.9,-1.1,-0.6,-0.3]
+pointpos_female = [0.45,0.55,1,0.4]
+show_legend = [True,False,False,False]
+
+fig25 = go.Figure()
+for i in range(0,len(pd.unique(df['day']))):
+    fig25.add_trace(go.Violin(x=df['day'][(df['sex'] == 'Male') &
+                                        (df['day'] == pd.unique(df['day'])[i])],
+                            y=df['total_bill'][(df['sex'] == 'Male')&
+                                               (df['day'] == pd.unique(df['day'])[i])],
+                            legendgroup='M', scalegroup='M', name='M',
+                            side='negative',
+                            pointpos=pointpos_male[i], # where to position points
+                            line_color='lightseagreen',
+                            showlegend=show_legend[i])
+             )
+    fig25.add_trace(go.Violin(x=df['day'][(df['sex'] == 'Female') &
+                                        (df['day'] == pd.unique(df['day'])[i])],
+                            y=df['total_bill'][(df['sex'] == 'Female')&
+                                               (df['day'] == pd.unique(df['day'])[i])],
+                            legendgroup='F', scalegroup='F', name='F',
+                            side='positive',
+                            pointpos=pointpos_female[i],
+                            line_color='mediumpurple',
+                            showlegend=show_legend[i])
+             )
+
+# update characteristics shared by all traces
+fig25.update_traces(meanline_visible=True,
+                  points='all', # show all points
+                  jitter=0.05,  # add some jitter on points for better visibility
+                  scalemode='count') #scale violin plot area with total count
+fig25.update_layout(
+    title_text="Total bill distribution<br><i>scaled by number of bills per gender",
+    violingap=0, violingroupgap=0, violinmode='overlay')
+
+st.subheader('Another violin plot')
+st.plotly_chart(fig25)
+
 # funnel plot
 fig22 = go.Figure(go.Funnel(
     y = ["Website visit", "Downloads", "Potential customers", "Requested price", "invoice sent"],
