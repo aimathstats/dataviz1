@@ -3,23 +3,25 @@ import fitz
 import requests
  
 # PDFファイルのURL
-url = 'https://www.zaimu.metro.tokyo.lg.jp/syukei1/zaisei/20231207hutuukaikeikessann.pdf'
-#https://www.mhlw.go.jp/content/001282915.pdf
+#url = 'https://www.zaimu.metro.tokyo.lg.jp/syukei1/zaisei/20231207hutuukaikeikessann.pdf'
+url = 'https://www.mhlw.go.jp/content/001282915.pdf'
  
 # requestsを使用してPDFをダウンロード
 response = requests.get(url)
 response.raise_for_status() # エラーになった時用
  
 # ローカルにPDFファイルを保存
-with open('settlement_reiwa4.pdf', 'wb') as f:
-    f.write(response.content)
+#with open('settlement_reiwa4.pdf', 'wb') as f:
+#    f.write(response.content) 
+#pdf_document = fitz.open('settlement_reiwa4.pdf', filetype="pdf")  
+
+with open('covid.pdf', 'wb') as f:
+    f.write(response.content) 
+pdf_document = fitz.open('covid.pdf', filetype="pdf")  
  
-pdf_document = fitz.open('settlement_reiwa4.pdf', filetype="pdf")  
-  
 pdf_page_1 = pdf_document[0]
 # テキストを抽出
 pdf_text_1 = pdf_page_1.get_text("text")
-print(pdf_text_1)
 st.markdown(pdf_text_1)
 
 #########################
