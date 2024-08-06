@@ -4,3 +4,4 @@ scipy
 streamlit
 networkx
 PyMuPDF
+bs4
