@@ -19,7 +19,6 @@ page_1 = doc[2]
 pdf_text_1 = page_1.get_text("text")
 #st.markdown(pdf_text_1)
 
-#from pprint import pprint
 # ページ上にあるテーブルを検出する
 tabs = page_1.find_tables()
 
@@ -30,24 +29,23 @@ st.markdown(f"{len(tabs.tables)}個のテーブルが{page_1}上に見つかり�
 # 少なくとも1つのテーブルが見つかった場合
 if tabs.tables:
     # 最初のテーブルの内容を表示する
-    #pprint(tabs[0].extract())
     table_data = tabs[0].extract()
-    st.markdown(tabs[0].extract())
-
-    st.write(table_data[1])
-    st.write(table_data[2:])
+    #st.markdown(tabs[0].extract())
+    #st.write(table_data[1])
+    #st.write(table_data[2:])
 
     # 列名を取得
+    columns0 = table_data[0] 
     columns = table_data[1]
     columns[0] = "都道府県" 
-    st.write(columns)
+    #st.write(columns)
 
     # データ行を取得
     data_rows = table_data[2:]
 
     # Pandasデータフレームを作成
     df = pd.DataFrame(data_rows, columns=columns)
-    st.markdown(df)
+    #st.markdown(df)
     st.table(df)
 
 #########################
