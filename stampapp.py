@@ -23,8 +23,8 @@ pdf_text_1 = page_1.get_text("text")
 tabs = page_1.find_tables()
 
 # 検出されたテーブルの数を表示する
-print(f"{len(tabs.tables)}個のテーブルが{page_1}上に見つかりました")
-st.markdown(f"{len(tabs.tables)}個のテーブルが{page_1}上に見つかりました")
+#print(f"{len(tabs.tables)}個のテーブルが{page_1}上に見つかりました")
+#st.markdown(f"{len(tabs.tables)}個のテーブルが{page_1}上に見つかりました")
 
 # 少なくとも1つのテーブルが見つかった場合
 if tabs.tables:
