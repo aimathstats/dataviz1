@@ -7,6 +7,44 @@ import numpy as np
 
 st.set_page_config(layout="wide")
 
+
+import fitz
+import requests
+
+# PDFファイルのURL
+#https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00461.html
+url = 'https://www.mhlw.go.jp/content/001282915.pdf'
+ 
+# requestsを使用してPDFをダウンロード
+response = requests.get(url)
+response.raise_for_status() # エラーになった時用
+ 
+# ローカルにPDFファイルを保存
+with open('covid.pdf', 'wb') as f:
+    f.write(response.content) 
+
+doc = fitz.open('covid.pdf', filetype="pdf")  
+page_1 = doc[2]
+pdf_text_1 = page_1.get_text("text")
+tabs = page_1.find_tables()
+
+if tabs.tables:
+    table_data = tabs[0].extract()
+    columns0 = table_data[0] 
+    columns = table_data[1]
+    columns[0] = "都道府県" 
+    data_rows = table_data[2:]
+    df = pd.DataFrame(data_rows, columns=columns)
+    st.table(df)
+
+    prefectures = df["都道府県"].unique().tolist()
+    selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures)    
+    prefecture_data = df[df["都道府県"] == selected_prefecture]
+    prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
+    fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
+    st.subheader('Web上のPDFからの自動プロット：新型コロナ定点観測:' ＋ selected_prefecture)
+    st.plotly_chart(fig29)
+
 # network graph
 import networkx as nx
 G = nx.random_geometric_graph(200, 0.125)
