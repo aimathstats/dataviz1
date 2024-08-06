@@ -1,6 +1,7 @@
 import streamlit as st
 import fitz
 import requests
+import pandas as pd
  
 # PDFファイルのURL
 url = 'https://www.mhlw.go.jp/content/001282915.pdf'
