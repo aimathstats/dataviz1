@@ -542,16 +542,15 @@ fig5.update_layout(height=300,
 
 # 折れ線
 df = px.data.stocks()
-st.write(df.head())
 fig31 = px.line(df, x='date', y="GOOG")
 st.subheader('折れ線')
 st.plotly_chart(fig31)
+st.write(df.head())
 
 df = px.data.gapminder().query("continent=='Oceania'")
-st.write(df.head())
 fig32 = px.line(df, x="year", y="lifeExp", color='country')
-st.subheader('折れ線')
 st.plotly_chart(fig32)
+st.write(df.head())
 
 #ウォーターフォール図
 df3['終値'] = pd.to_numeric(df3['終値'].str.replace(',', ''))
