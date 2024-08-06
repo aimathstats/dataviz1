@@ -59,6 +59,7 @@ prefecture_data["対前期変化率"] = prefecture_data["値"].pct_change() * 10
 # Plotlyを使った可視化
 fig30 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
 fig30.add_trace(px.line(prefecture_data, x="週", y="対前期変化率", title=f"{selected_prefecture}の対前期変化率").data[0])
+st.plotly_chart(fig30)
 
 
 # network graph
