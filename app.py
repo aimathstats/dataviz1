@@ -38,14 +38,13 @@ df = pd.DataFrame(data_rows, columns=columns)
 st.write(df)
 
 prefectures = df["都道府県"].unique().tolist()
-#selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures)    
-selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures, index=prefectures.index("京 都 府"))
 
-prefecture_data = df[df["都道府県"] == selected_prefecture]
-prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
-fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
-st.subheader('新型コロナ定点観測 ' + selected_prefecture)
-st.plotly_chart(fig29)
+#selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures, index=prefectures.index("京 都 府"))
+#prefecture_data = df[df["都道府県"] == selected_prefecture]
+#prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
+#fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
+#st.subheader('新型コロナ定点観測 ' + selected_prefecture)
+#st.plotly_chart(fig29)
 
 
 # 選択された都道府県のデータを抽出
