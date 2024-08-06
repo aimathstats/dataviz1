@@ -3,7 +3,6 @@ import fitz
 import requests
  
 # PDFファイルのURL
-#url = 'https://www.zaimu.metro.tokyo.lg.jp/syukei1/zaisei/20231207hutuukaikeikessann.pdf'
 url = 'https://www.mhlw.go.jp/content/001282915.pdf'
  
 # requestsを使用してPDFをダウンロード
@@ -11,18 +10,27 @@ response = requests.get(url)
 response.raise_for_status() # エラーになった時用
  
 # ローカルにPDFファイルを保存
-#with open('settlement_reiwa4.pdf', 'wb') as f:
-#    f.write(response.content) 
-#pdf_document = fitz.open('settlement_reiwa4.pdf', filetype="pdf")  
-
 with open('covid.pdf', 'wb') as f:
     f.write(response.content) 
-pdf_document = fitz.open('covid.pdf', filetype="pdf")  
- 
-pdf_page_1 = pdf_document[0]
-# テキストを抽出
-pdf_text_1 = pdf_page_1.get_text("text")
+
+doc = fitz.open('covid.pdf', filetype="pdf")  
+page_1 = doc[1]
+pdf_text_1 = page_1.get_text("text")
 st.markdown(pdf_text_1)
+
+from pprint import pprint
+
+# ページ上にあるテーブルを検出する
+tabs = page_1.find_tables()
+
+# 検出されたテーブルの数を表示する
+print(f"{len(tabs.tables)}個のテーブルが{page_1}上に見つかりました")
+
+# 少なくとも1つのテーブルが見つかった場合
+if tabs.tables:
+    # 最初のテーブルの内容を表示する
+    pprint(tabs[0].extract())
+
 
 #########################
 import streamlit as st
