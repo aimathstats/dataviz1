@@ -8,14 +8,11 @@ import numpy as np
 st.set_page_config(layout="wide")
 
 
+# PDFからのテーブル取得と可視化：都道府県別コロナ定点観測の折れ線
 import fitz
 import requests
-
-# PDFファイルのURL
 #https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00461.html
 url = 'https://www.mhlw.go.jp/content/001282915.pdf'
- 
-# requestsを使用してPDFをダウンロード
 response = requests.get(url)
 response.raise_for_status() # エラーになった時用
  
@@ -38,12 +35,12 @@ df = pd.DataFrame(data_rows, columns=columns)
 st.write(df)
 
 prefectures = df["都道府県"].unique().tolist()
-
 selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures, index=prefectures.index("京 都 府"))
 prefecture_data = df[df["都道府県"] == selected_prefecture]
-prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
+prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")
+
 fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
-st.subheader('新型コロナ定点観測 ' + selected_prefecture)
+st.subheader('2024年コロナ都道府県別定点観測:  ' + selected_prefecture)
 st.plotly_chart(fig29)
 
 
