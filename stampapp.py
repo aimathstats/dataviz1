@@ -48,6 +48,7 @@ if tabs.tables:
     # Pandasデータフレームを作成
     df = pd.DataFrame(data_rows, columns=columns)
     st.markdown(df)
+    st.table(df)
 
 #########################
 import streamlit as st
