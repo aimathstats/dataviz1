@@ -12,6 +12,7 @@ st.set_page_config(layout="wide")
 import fitz
 import requests
 from bs4 import BeautifulSoup
+from urllib.parse import urljoin
 
 # 対象ページのURL
 url = "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00461.html"
