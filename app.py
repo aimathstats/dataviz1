@@ -34,7 +34,8 @@ columns = table_data[1]
 columns[0] = "都道府県" 
 data_rows = table_data[2:]
 df = pd.DataFrame(data_rows, columns=columns)
-st.table(df)
+#st.table(df)
+st.write(df)
 
 prefectures = df["都道府県"].unique().tolist()
 #selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures)    
