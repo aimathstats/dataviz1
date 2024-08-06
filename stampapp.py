@@ -39,6 +39,7 @@ if tabs.tables:
 
     # 列名を取得
     columns = table_data[1]
+    columns[0] = "都道府県" 
     st.write(columns)
 
     # データ行を取得
