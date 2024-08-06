@@ -17,7 +17,7 @@ with open('covid.pdf', 'wb') as f:
 doc = fitz.open('covid.pdf', filetype="pdf")  
 page_1 = doc[1]
 pdf_text_1 = page_1.get_text("text")
-st.markdown(pdf_text_1)
+#st.markdown(pdf_text_1)
 
 #from pprint import pprint
 # ページ上にあるテーブルを検出する
@@ -33,7 +33,10 @@ if tabs.tables:
     #pprint(tabs[0].extract())
     table_data = tabs[0].extract()
     st.markdown(tabs[0].extract())
-    
+
+    st.write(table_data[0])
+    st.write(table_data[1:])
+
     # 列名を取得
     columns = table_data[0]
 
