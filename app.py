@@ -36,10 +36,9 @@ latest_pdf_url = absolute_pdf_urls[0] if absolute_pdf_urls else None
 #latest_pdf_url = pdf_urls[0] if pdf_urls else None
 st.write(f"最新のPDFのURL: {latest_pdf_url}")
 
-
-
-#https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00461.html
-url = 'https://www.mhlw.go.jp/content/001282915.pdf'
+# 取得したPDFアドレスからテーブル取得
+#url = 'https://www.mhlw.go.jp/content/001282915.pdf'
+url = latest_pdf_url
 response = requests.get(url)
 response.raise_for_status() # エラーになった時用
  
