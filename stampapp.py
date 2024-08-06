@@ -35,13 +35,13 @@ if tabs.tables:
     st.markdown(tabs[0].extract())
 
     #st.write(table_data[0])
-    st.write(table_data[2:])
+    #st.write(table_data[2:])
 
     # 列名を取得
-    columns = table_data[0]
+    columns = table_data[1]
 
     # データ行を取得
-    data_rows = table_data[1:]
+    data_rows = table_data[2:]
 
     # Pandasデータフレームを作成
     df = pd.DataFrame(data_rows, columns=columns)
