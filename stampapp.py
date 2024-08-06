@@ -39,6 +39,7 @@ if tabs.tables:
 
     # 列名を取得
     columns = table_data[1]
+    st.write(columns)
 
     # データ行を取得
     data_rows = table_data[2:]
