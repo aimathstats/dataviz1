@@ -540,6 +540,17 @@ fig5.update_layout(height=300,
                    width=1000,
                    margin={'l': 20, 'r': 20, 't': 0, 'b': 0})
 
+# 折れ線
+df = px.data.stocks()
+fig31 = px.line(df, x='date', y="GOOG")
+st.subheader('折れ線')
+st.plotly_chart(fig31)
+
+df = px.data.gapminder().query("continent=='Oceania'")
+fig32 = px.line(df, x="year", y="lifeExp", color='country')
+st.subheader('折れ線')
+st.plotly_chart(fig32)
+
 #ウォーターフォール図
 df3['終値'] = pd.to_numeric(df3['終値'].str.replace(',', ''))
 df3['変化'] = df3['終値'].diff()
