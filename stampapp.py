@@ -2,7 +2,7 @@ import streamlit as st
 import fitz
 import requests
 import pandas as pd
- import plotly.express as px
+import plotly.express as px
 
 # PDFファイルのURL
 #https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00461.html
