@@ -11,6 +11,27 @@ st.set_page_config(layout="wide")
 # PDFからのテーブル取得と可視化：都道府県別コロナ定点観測の折れ線
 import fitz
 import requests
+from bs4 import BeautifulSoup
+
+# 対象ページのURL
+url = "https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00461.html"
+response = requests.get(url)
+response.raise_for_status()  # エラーが発生した場合、例外を投げる
+
+# BeautifulSoupでHTMLを解析
+soup = BeautifulSoup(response.text, "html.parser")
+
+# すべてのリンクを検索
+links = soup.find_all("a")
+
+# PDFファイルのURLを抽出
+pdf_urls = [link.get("href") for link in links if link.get("href") and ".pdf" in link.get("href")]
+
+# 最新のPDFのURLを取得
+latest_pdf_url = pdf_urls[0] if pdf_urls else None
+#print(f"最新のPDFのURL: {latest_pdf_url}")
+st.write(f"最新のPDFのURL: {latest_pdf_url}")
+
 #https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/0000121431_00461.html
 url = 'https://www.mhlw.go.jp/content/001282915.pdf'
 response = requests.get(url)
