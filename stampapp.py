@@ -15,7 +15,7 @@ with open('covid.pdf', 'wb') as f:
     f.write(response.content) 
 
 doc = fitz.open('covid.pdf', filetype="pdf")  
-page_1 = doc[1]
+page_1 = doc[2]
 pdf_text_1 = page_1.get_text("text")
 #st.markdown(pdf_text_1)
 
