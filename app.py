@@ -28,22 +28,22 @@ page_1 = doc[2]
 pdf_text_1 = page_1.get_text("text")
 tabs = page_1.find_tables()
 
-if tabs.tables:
-    table_data = tabs[0].extract()
-    columns0 = table_data[0] 
-    columns = table_data[1]
-    columns[0] = "都道府県" 
-    data_rows = table_data[2:]
-    df = pd.DataFrame(data_rows, columns=columns)
-    st.table(df)
+table_data = tabs[0].extract()
+columns0 = table_data[0] 
+columns = table_data[1]
+columns[0] = "都道府県" 
+data_rows = table_data[2:]
+df = pd.DataFrame(data_rows, columns=columns)
+st.table(df)
 
-    prefectures = df["都道府県"].unique().tolist()
-    selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures)    
-    prefecture_data = df[df["都道府県"] == selected_prefecture]
-    prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
-    fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
-    st.subheader('Web上のPDFからの自動プロット：新型コロナ定点観測:' ＋ selected_prefecture)
-    st.plotly_chart(fig29)
+prefectures = df["都道府県"].unique().tolist()
+selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures)    
+prefecture_data = df[df["都道府県"] == selected_prefecture]
+prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
+fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
+st.subheader('新型コロナ定点観測 ' + selected_prefecture)
+st.plotly_chart(fig29)
+
 
 # network graph
 import networkx as nx
