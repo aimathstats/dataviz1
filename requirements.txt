@@ -3,4 +3,4 @@ plotly
 scipy
 streamlit
 networkx
-fitz
+PyMuPDF
