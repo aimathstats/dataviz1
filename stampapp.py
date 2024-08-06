@@ -49,12 +49,17 @@ if tabs.tables:
     #st.markdown(df)
     st.table(df)
 
-# 折れ線グラフ
-st.write(df)
-df_melt = df.melt(id_vars=["都道府県"], var_name="週", value_name="値")
-fig = px.line(df_melt, x="週", y="値", color="都道府県", markers=True, title="都道府県別の値の推移")
-st.subheader("都道府県別の週ごとのデータ")
-st.plotly_chart(fig)
+    # 都道府県リストの作成
+    prefectures = df["都道府県"].unique().tolist()    
+    # ユーザーが選択する都道府県の選択
+    selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures)    
+    # 選択された都道府県のデータを抽出
+    prefecture_data = df[df["都道府県"] == selected_prefecture]
+    # データの整形
+    prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
+    # Plotlyを使った可視化
+    fig = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
+    st.plotly_chart(fig)
 
 #########################
 import streamlit as st
