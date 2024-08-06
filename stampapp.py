@@ -31,8 +31,8 @@ st.markdown(f"{len(tabs.tables)}個のテーブルが{page_1}上に見つかり�
 if tabs.tables:
     # 最初のテーブルの内容を表示する
     pprint(tabs[0].extract())
+    st.markdown(tabs[0].extract())
 
-S
 #########################
 import streamlit as st
 import pandas as pd
