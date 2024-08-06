@@ -20,7 +20,7 @@ pdf_page_1 = pdf_document[0]
 # テキストを抽出
 pdf_text_1 = pdf_page_1.get_text("text")
 print(pdf_text_1)
-
+st.markdown(pdf_text_1)
 
 #########################
 import streamlit as st
