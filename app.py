@@ -39,67 +39,12 @@ st.write(df)
 
 prefectures = df["都道府県"].unique().tolist()
 
-#selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures, index=prefectures.index("京 都 府"))
-#prefecture_data = df[df["都道府県"] == selected_prefecture]
-#prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
-#fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
-#st.subheader('新型コロナ定点観測 ' + selected_prefecture)
-#st.plotly_chart(fig29)
-
-
-# 選択された都道府県のデータを抽出
-#prefecture_data = df[df["都道府県"] == selected_prefecture].iloc[:, 1:].T
-#prefecture_data.columns = ["値"]
-#prefecture_data.index.name = "週"
-#prefecture_data.reset_index(inplace=True)
-
-# 対前期変化率の計算
-#prefecture_data["対前期変化率"] = prefecture_data["値"].pct_change() * 100
-
-# Plotlyを使った可視化
-#fig30 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
-#fig30.add_trace(px.line(prefecture_data, x="週", y="対前期変化率", title=f"{selected_prefecture}の対前期変化率").data[0])
-#st.plotly_chart(fig30)
-
-
-# 都道府県リストの作成
-prefectures = df["都道府県"].unique().tolist()
-
-# ユーザーが選択する都道府県の選択、デフォルトは「京 都 府」
 selected_prefecture = st.selectbox("都道府県を選択してください:", prefectures, index=prefectures.index("京 都 府"))
-
-# 選択された都道府県のデータを抽出
-prefecture_data = df[df["都道府県"] == selected_prefecture].iloc[:, 1:].T
-prefecture_data.columns = ["値"]
-prefecture_data.index.name = "週"
-prefecture_data.reset_index(inplace=True)
-
-# 対前期変化率の計算
-prefecture_data["対前期変化率"] = prefecture_data["値"].pct_change() * 100
-
-# Plotlyを使った可視化
-fig30 = go.Figure()
-
-fig30.add_trace(go.Scatter(x=prefecture_data["週"], y=prefecture_data["値"],
-                         mode='lines+markers', name='値'))
-
-fig30.add_trace(go.Scatter(x=prefecture_data["週"], y=prefecture_data["対前期変化率"],
-                         mode='lines+markers', name='対前期変化率',
-                         yaxis='y2'))
-
-# レイアウトの設定
-fig30.update_layout(
-    title=f"{selected_prefecture}の週ごとのデータと対前期変化率",
-    xaxis_title="週",
-    yaxis_title="値",
-    yaxis2=dict(
-        title="対前期変化率",
-        overlaying='y',
-        side='right'
-    )
-)
-
-st.plotly_chart(fig30)
+prefecture_data = df[df["都道府県"] == selected_prefecture]
+prefecture_data = prefecture_data.melt(id_vars=["都道府県"], var_name="週", value_name="値").drop(columns="都道府県")    
+fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}の週ごとのデータ")
+st.subheader('新型コロナ定点観測 ' + selected_prefecture)
+st.plotly_chart(fig29)
 
 
 # network graph
