@@ -18,6 +18,7 @@ df.reset_index(inplace=True)
 st.dataframe(df)
 
 fig33 = px.line(df, x='date', y=kw_list)
+st.subheader('google trend': kwlist)
 st.plotly_chart(fig33)
 
 pytrends = TrendReq(hl='ja-JP', tz=360)
@@ -26,10 +27,12 @@ pytrends.build_payload(kw_list, timeframe='2023-06-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
 df.reset_index(inplace=True)
-st.dataframe(df)
+#st.dataframe(df)
 
 fig34 = px.line(df, x='date', y=kw_list)
+st.subheader('google trend': kwlist)
 st.plotly_chart(fig34)
+
 
 # PDFからのテーブル取得と可視化：都道府県別コロナ定点観測の折れ線
 import fitz
@@ -64,7 +67,7 @@ st.write(f"最新のPDFのURL: {latest_pdf_url}")
 url = latest_pdf_url
 response = requests.get(url)
 response.raise_for_status() # エラーになった時用
- 
+
 # ローカルにPDFファイルを保存
 with open('covid.pdf', 'wb') as f:
     f.write(response.content) 
@@ -81,6 +84,7 @@ columns[0] = "都道府県"
 data_rows = table_data[2:]
 df = pd.DataFrame(data_rows, columns=columns)
 #st.table(df)
+st.subheader('PDFからのデータフレーム')
 st.write(df)
 
 prefectures = df["都道府県"].unique().tolist()
