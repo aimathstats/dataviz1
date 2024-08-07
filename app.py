@@ -4,15 +4,14 @@ import plotly.graph_objects as go
 import plotly.express as px
 import streamlit as st
 import numpy as np
+from pytrends.request import TrendReq
 
 st.set_page_config(layout="wide")
 
 # google trend
-from pytrends.request import TrendReq
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["Python"]
-
-pytrends.build_payload(kw_list, timeframe='2014-01-01 2018-09-30', geo='JP')
+pytrends.build_payload(kw_list, timeframe='2023-06-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
 df.reset_index(inplace=True)
@@ -20,6 +19,17 @@ st.dataframe(df)
 
 fig33 = px.line(df, x='date', y=kw_list)
 st.plotly_chart(fig33)
+
+pytrends = TrendReq(hl='ja-JP', tz=360)
+kw_list = ["コロナ"]
+pytrends.build_payload(kw_list, timeframe='2023-06-01 2024-08-05', geo='JP')
+df = pytrends.interest_over_time()
+df.drop(columns=['isPartial'], inplace=True)
+df.reset_index(inplace=True)
+st.dataframe(df)
+
+fig34 = px.line(df, x='date', y=kw_list)
+st.plotly_chart(fig34)
 
 # PDFからのテーブル取得と可視化：都道府県別コロナ定点観測の折れ線
 import fitz
