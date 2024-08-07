@@ -5,3 +5,4 @@ streamlit
 networkx
 PyMuPDF
 bs4
+pytrends
