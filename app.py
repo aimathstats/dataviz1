@@ -18,7 +18,7 @@ df.reset_index(inplace=True)
 st.dataframe(df)
 
 fig33 = px.line(df, x='date', y=kw_list)
-st.subheader('google trend:' + kwlist)
+st.subheader('google trend:' + kwlist[0])
 st.plotly_chart(fig33)
 
 pytrends = TrendReq(hl='ja-JP', tz=360)
@@ -30,7 +30,7 @@ df.reset_index(inplace=True)
 #st.dataframe(df)
 
 fig34 = px.line(df, x='date', y=kw_list)
-st.subheader('google trend:' + kwlist)
+st.subheader('google trend:' + kwlist[0])
 st.plotly_chart(fig34)
 
 
