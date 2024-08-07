@@ -10,8 +10,8 @@ st.set_page_config(layout="wide")
 
 # google trend
 pytrends = TrendReq(hl='ja-JP', tz=360)
-kw_list = ["Python"]
-pytrends.build_payload(kw_list, timeframe='2023-06-01 2024-08-05', geo='JP')
+kw_list = ["AI"]
+pytrends.build_payload(kw_list, timeframe='2013-01-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
 df.reset_index(inplace=True)
