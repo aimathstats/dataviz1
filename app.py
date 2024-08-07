@@ -18,7 +18,7 @@ df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
 df.reset_index(inplace=True)
 #df.plot(figsize=(15, 3), lw=.7)
-st.markdown(df.head())
+st.markdown(df)
 
 # PDFからのテーブル取得と可視化：都道府県別コロナ定点観測の折れ線
 import fitz
