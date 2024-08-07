@@ -18,7 +18,7 @@ df.drop(columns=['isPartial'], inplace=True)
 df.reset_index(inplace=True)
 st.dataframe(df)
 
-fig33 = px.line(df, x=date, y=kw_list)
+fig33 = px.line(df, x='date', y=kw_list)
 st.plotly_chart(fig33)
 
 # PDFからのテーブル取得と可視化：都道府県別コロナ定点観測の折れ線
