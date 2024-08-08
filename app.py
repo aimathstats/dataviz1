@@ -10,7 +10,7 @@ st.set_page_config(layout="wide")
 
 # google trend
 pytrends = TrendReq(hl='ja-JP', tz=360)
-kw_list = ["AI"]
+kw_list = ["AI","データサイエンス","ChatGPT"]
 pytrends.build_payload(kw_list, timeframe='2013-01-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
