@@ -9,9 +9,14 @@ from pytrends.request import TrendReq
 st.set_page_config(layout="wide")
 
 # google trend
-from datetime import datetime
+#from datetime import datetime
+#now = datetime.now()
+#date_str = now.strftime('%Y-%m-%d')
+
+from datetime import datetime, timedelta
 now = datetime.now()
-date_str = now.strftime('%Y-%m-%d')
+yesterday = now - timedelta(days=1)
+date_str = yesterday.strftime('%Y-%m-%d')
 
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["AI","ChatGPT"]
