@@ -9,6 +9,10 @@ from pytrends.request import TrendReq
 st.set_page_config(layout="wide")
 
 # google trend
+from datetime import datetime
+now = datetime.now()
+date_str = now.strftime('%Y-%m-%d')
+
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["AI","ChatGPT"]
 #kw_list = ["データサイエンス"]
@@ -23,7 +27,9 @@ st.plotly_chart(fig33)
 
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["コロナ"]
-pytrends.build_payload(kw_list, timeframe='2024-06-01 2024-08-07', geo='JP')
+start_date = '2024-06-01'
+date_range = f'{start_date} {date_str}'
+pytrends.build_payload(kw_list, timeframe=data_range, geo='JP')
 df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
 df.reset_index(inplace=True)
