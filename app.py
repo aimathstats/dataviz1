@@ -8,45 +8,6 @@ from pytrends.request import TrendReq
 
 st.set_page_config(layout="wide")
 
-# google trend
-#from datetime import datetime
-#now = datetime.now()
-#date_str = now.strftime('%Y-%m-%d')
-
-from datetime import datetime, timedelta
-now = datetime.now()
-yesterday = now - timedelta(days=1)
-date_str = yesterday.strftime('%Y-%m-%d')
-
-pytrends = TrendReq(hl='ja-JP', tz=360)
-kw_list = ["AI","ChatGPT"]
-#kw_list = ["データサイエンス"]
-pytrends.build_payload(kw_list, timeframe='2020-01-01 2024-08-05', geo='JP')
-df = pytrends.interest_over_time().drop(columns=['isPartial'])
-df.reset_index(inplace=True)
-st.dataframe(df)
-
-fig33 = px.line(df, x='date', y=kw_list)
-st.subheader('google trend')
-st.plotly_chart(fig33)
-
-pytrends = TrendReq(hl='ja-JP', tz=360)
-kw_list = ["コロナ"]
-start_date = '2024-06-01'
-date_range = f'{start_date} {date_str}'
-#pytrends.build_payload(kw_list, timeframe=date_range, geo='JP')
-pytrends.build_payload(kw_list, timeframe='2024-06-01 2024-08-05', geo='JP')
-
-df = pytrends.interest_over_time()
-df.drop(columns=['isPartial'], inplace=True)
-df.reset_index(inplace=True)
-#st.dataframe(df)
-
-fig34 = px.line(df, x='date', y=kw_list)
-st.subheader('google trend')
-st.plotly_chart(fig34)
-
-
 # PDFからのテーブル取得と可視化：都道府県別コロナ定点観測の折れ線
 import fitz
 import requests
@@ -871,4 +832,45 @@ st.subheader('Weekly Temperature Heatmap: ' + vars3_2_selected)
 st.plotly_chart(fig19)
 st.subheader('Weekly Temperature Heatmap')
 st.plotly_chart(fig20)
+
+
+
+#### google trend visualization
+
+#from datetime import datetime
+#now = datetime.now()
+#date_str = now.strftime('%Y-%m-%d')
+
+from datetime import datetime, timedelta
+now = datetime.now()
+yesterday = now - timedelta(days=1)
+date_str = yesterday.strftime('%Y-%m-%d')
+
+pytrends = TrendReq(hl='ja-JP', tz=360)
+kw_list = ["AI","ChatGPT"]
+#kw_list = ["データサイエンス"]
+pytrends.build_payload(kw_list, timeframe='2020-01-01 2024-08-05', geo='JP')
+df = pytrends.interest_over_time().drop(columns=['isPartial'])
+df.reset_index(inplace=True)
+st.dataframe(df)
+
+fig33 = px.line(df, x='date', y=kw_list)
+st.subheader('google trend')
+st.plotly_chart(fig33)
+
+pytrends = TrendReq(hl='ja-JP', tz=360)
+kw_list = ["コロナ"]
+start_date = '2024-06-01'
+date_range = f'{start_date} {date_str}'
+#pytrends.build_payload(kw_list, timeframe=date_range, geo='JP')
+pytrends.build_payload(kw_list, timeframe='2024-06-01 2024-08-05', geo='JP')
+
+df = pytrends.interest_over_time()
+df.drop(columns=['isPartial'], inplace=True)
+df.reset_index(inplace=True)
+#st.dataframe(df)
+
+fig34 = px.line(df, x='date', y=kw_list)
+st.subheader('google trend')
+st.plotly_chart(fig34)
 
