@@ -16,7 +16,7 @@ date_str = now.strftime('%Y-%m-%d')
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["AI","ChatGPT"]
 #kw_list = ["データサイエンス"]
-pytrends.build_payload(kw_list, timeframe='2013-01-01 2024-08-05', geo='JP')
+pytrends.build_payload(kw_list, timeframe='2020-01-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time().drop(columns=['isPartial'])
 df.reset_index(inplace=True)
 st.dataframe(df)
