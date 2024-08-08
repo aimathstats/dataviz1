@@ -12,6 +12,7 @@ st.set_page_config(layout="wide")
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["AI","データサイエンス","ChatGPT"]
 kw_list = ["データサイエンス"]
+kw_list = ["ChatGPT"]
 pytrends.build_payload(kw_list, timeframe='2013-01-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time().drop(columns=['isPartial'])
 df.reset_index(inplace=True)
