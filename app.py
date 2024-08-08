@@ -23,7 +23,7 @@ st.plotly_chart(fig33)
 
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["コロナ"]
-pytrends.build_payload(kw_list, timeframe='2023-06-01 2024-08-07', geo='JP')
+pytrends.build_payload(kw_list, timeframe='2024-06-01 2024-08-07', geo='JP')
 df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
 df.reset_index(inplace=True)
