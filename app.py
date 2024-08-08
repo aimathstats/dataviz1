@@ -14,7 +14,7 @@ kw_list = ["AI","データサイエンス","ChatGPT"]
 pytrends.build_payload(kw_list, timeframe='2013-01-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time()
 #df.drop(columns=['isPartial'], inplace=True)
-df.reset_index(inplace=True)
+#df.reset_index(inplace=True)
 st.dataframe(df)
 
 fig33 = px.line(df, x='date', y=kw_list)
