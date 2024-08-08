@@ -6,4 +6,3 @@ networkx
 PyMuPDF
 bs4
 pytrends
-timedelta
