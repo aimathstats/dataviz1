@@ -849,7 +849,7 @@ date_str = yesterday.strftime('%Y-%m-%d')
 pytrends = TrendReq(hl='ja-JP', tz=360)
 #kw_list = ["AI","ChatGPT"]
 kw_list = [
-    "Official髭男dism",
+    #"Official髭男dism",
     "Pretender", "Cry Baby", "ミックスナッツ", "Sharon", "Subtitle",
     #"115万キロのフィルム",
     #"宿命",    "I LOVE...",    "イエスタデイ",    #"ノーダウト",    "Laughter",    "Cry Baby",    "115万キロのフィルム",
@@ -868,8 +868,8 @@ pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["コロナ"]
 start_date = '2024-06-01'
 date_range = f'{start_date} {date_str}'
-#pytrends.build_payload(kw_list, timeframe=date_range, geo='JP')
-pytrends.build_payload(kw_list, timeframe='2024-06-01 2024-08-05', geo='JP')
+#pytrends.build_payload(kw_list, timeframe='2024-06-01 2024-08-05', geo='JP')
+pytrends.build_payload(kw_list, timeframe=date_range, geo='JP')
 
 df = pytrends.interest_over_time()
 df.drop(columns=['isPartial'], inplace=True)
