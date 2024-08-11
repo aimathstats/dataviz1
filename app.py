@@ -847,8 +847,7 @@ yesterday = now - timedelta(days=1)
 date_str = yesterday.strftime('%Y-%m-%d')
 
 pytrends = TrendReq(hl='ja-JP', tz=360)
-kw_list = ["AI","ChatGPT"]
-#kw_list = ["データサイエンス"]
+#kw_list = ["AI","ChatGPT"]
 kw_list = [
     "Official髭男dism",
     "Pretender", "Cry Baby", "ミックスナッツ", "Sharon", "Subtitle",
