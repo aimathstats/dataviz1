@@ -850,21 +850,10 @@ pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["AI","ChatGPT"]
 #kw_list = ["データサイエンス"]
 kw_list = [
-    "Pretender",
-    "宿命",
-    "I LOVE...",
-    "イエスタデイ",
-    "ノーダウト",
-    "Laughter",
-    "Cry Baby",
-    "115万キロのフィルム",
-    "FIRE GROUND",
-    "ブラザーズ",
-    "異端なスター",
-    "バッドフォーミー",
-    "Universe",
-    "パラボラ",
-    "アポトーシス"
+    "Pretender",    "宿命",    "I LOVE...",    "イエスタデイ",
+    "ノーダウト",    "Laughter",    "Cry Baby",    "115万キロのフィルム",
+    #"FIRE GROUND",    "ブラザーズ",    "異端なスター",    "バッドフォーミー",
+    "Universe",    "パラボラ",    "アポトーシス"
 ]
 pytrends.build_payload(kw_list, timeframe='2020-01-01 2024-08-05', geo='JP')
 df = pytrends.interest_over_time().drop(columns=['isPartial'])
