@@ -849,8 +849,8 @@ date_str = yesterday.strftime('%Y-%m-%d')
 pytrends = TrendReq(hl='ja-JP', tz=360)
 kw_list = ["AI","ChatGPT"]
 #kw_list = ["データサイエンス"]
-kw_list = [
-    "Pretender", "Cry Baby", "115万キロのフィルム", "ミックスナッツ", "Sharon", "Subtitle",
+kw_list = ["Pretender", "Cry Baby", "ミックスナッツ", "Sharon", "Subtitle",
+    #"115万キロのフィルム",
     #"宿命",    "I LOVE...",    "イエスタデイ",    #"ノーダウト",    "Laughter",    "Cry Baby",    "115万キロのフィルム",
     #"FIRE GROUND",    "ブラザーズ",    "異端なスター",    "バッドフォーミー",    #"Universe",    "パラボラ",    "アポトーシス"
 ]
