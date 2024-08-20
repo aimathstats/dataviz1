@@ -6,7 +6,7 @@ import json
 from io import StringIO
 
 # data
-with open("data/kokusei_R2.xls", encoding = 'utf-8') as f:
+with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
     geojson = json.load(f)
 
 
