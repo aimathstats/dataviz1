@@ -5,14 +5,11 @@ import numpy as np
 import json
 from io import StringIO
 
-#with open("data/N03-23_25_230101.geojson", encoding = 'utf-8') as f:
+# geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
 
-#geojson["features"][1]["properties"]
-#for i in range(len(geojson["features"])):
-#  st.write(geojson["features"][i]["properties"]["N03_004"])
-
+# data frame
 shiga_pop_text = """市区町村名,男,女,計,世帯数
 大津市,160170,169871,330041,130143
 彦根市,53908,55368,109276,41257
@@ -37,8 +34,7 @@ shiga_pop = pd.read_csv(StringIO(shiga_pop_text))
 shiga_pop.head()
 
 fig13 = px.choropleth_mapbox(
-    shiga_pop,
-    geojson=geojson,
+    shiga_pop, geojson=geojson,
     locations="市区町村名",
     color="計",
     hover_name="市区町村名",
@@ -65,18 +61,22 @@ kyoto_pop_text = """市区町村,総数
 京都市山科区,135101
 京都市西京区,149837"""
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
+st.write(kyoto_pop)
 
 fig13 = px.choropleth_mapbox(
-    kyoto_pop,
-    geojson=geojson,
+    kyoto_pop, geojson=geojson,
     locations="市区町村",
     color="総数",
     hover_name="市区町村",
     featureidkey="properties.N03_004",
     mapbox_style="carto-positron",
     zoom=9,
-    center={"lat": 35.02, "lon": 135.76}, #35.02348902017437, 135.76484302775438
+    center={"lat": 35.02, "lon": 135.76},
     opacity=0.5,
     width=800,
     height=800,
 )
+
+st.subheader('Choropleth Map in Kyoto district')
+st.plotly_chart(fig13)
+
