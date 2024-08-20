@@ -10,7 +10,7 @@ import xlrd
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
 #    geojson = json.load(f)
-df1 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=0, index_col=None, skiprows = [0,2,3,4,5,6])
+df1 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=0, index_col=None, skiprows = [0,1,3,4,5,6])
 df2 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=1, index_col=None)
 st.write(df1)
 st.write(df2)
