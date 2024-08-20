@@ -4,6 +4,7 @@ import streamlit as st
 import numpy as np
 import json
 from io import StringIO
+import openpyxl
 
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
