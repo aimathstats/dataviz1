@@ -9,7 +9,7 @@ import openpyxl
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
 #    geojson = json.load(f)
-df = pd.read_excel('data/kokusei_R2.xlsx', index_col=10)
+df = pd.read_excel('data/kokusei_R2.xlsx', index_col=0)
 st.write(df)
 
 # geojson
