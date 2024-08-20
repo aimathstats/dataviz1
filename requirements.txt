@@ -6,3 +6,5 @@ networkx
 PyMuPDF
 bs4
 pytrends
+openpyxl
+xlrd
