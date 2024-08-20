@@ -455,7 +455,7 @@ with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
 #geojson["features"][1]["properties"]
 for i in range(len(geojson["features"])):
-  st.write(geojson["features"][i]["properties"])
+  st.write(geojson["features"][i]["properties"]["N03_004"])
 
 shiga_pop_text = """市区町村名,男,女,計,世帯数
 大津市,160170,169871,330041,130143
