@@ -453,6 +453,12 @@ from io import StringIO
 #with open("data/N03-23_25_230101.geojson", encoding = 'utf-8') as f:
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
+    # GeoJSONデータから不要な列を削除する
+    for feature in geojson['features']:
+        feature['properties'].pop('N03_001')
+        feature['properties'].pop('N03_002')
+        feature['properties'].pop('N03_003')
+        feature['properties'].pop('N03_007')
 #geojson["features"][1]["properties"]
 for i in range(len(geojson["features"])):
   st.write(geojson["features"][i]["properties"]["N03_004"])
