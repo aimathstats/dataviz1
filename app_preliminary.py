@@ -17,9 +17,10 @@ st.write(df1.columns)
 df1 = df1[df1["地域都道府県名"] == "26_京都府"]
 df1 = df1[df1["地域市などの別（地域識別コード）"] == 0]
 df1["地域都道府県・市区町村名"] = df1["地域都道府県・市区町村名"].str.replace(r'^\d+_', '', regex=True)
-
-df1 = df1[["地域都道府県・市区町村名","総人口（男女別）総数（人）"]]
 st.write(df1)
+
+df = df1[["地域都道府県・市区町村名","総人口（男女別）総数（人）"]]
+st.write(df)
 #st.write(df2)
 
 # geojson
@@ -27,7 +28,7 @@ with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
 
 fig2 = px.choropleth_mapbox(
-    df1, 
+    df, 
     geojson=geojson,
     locations="地域都道府県・市区町村名",
     color="総人口（男女別）総数（人）",
