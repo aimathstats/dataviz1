@@ -460,8 +460,8 @@ with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
         feature['properties'].pop('N03_003')
         feature['properties'].pop('N03_007')
 #geojson["features"][1]["properties"]
-for i in range(len(geojson["features"])):
-  st.write(geojson["features"][i]["properties"]["N03_004"])
+#for i in range(len(geojson["features"])):
+#  st.write(geojson["features"][i]["properties"]["N03_004"])
 
 shiga_pop_text = """市区町村名,男,女,計,世帯数
 大津市,160170,169871,330041,130143
@@ -503,7 +503,18 @@ fig13 = px.choropleth_mapbox(
 )
 
 shiga_pop_text = """市区町村,総数
-京都市,1463723
+京都市北区,117165
+京都市上京区,83832
+京都市左京区,166039
+京都市中京区,110488
+京都市東山区,36602
+京都市下京区,82784
+京都市南区,101970
+京都市右京区,202047
+京都市伏見区,277858
+京都市山科区,135101
+京都市西京区,149837
+#京都市,1463723
 福知山市,77306
 舞鶴市,80336
 綾部市,31846
