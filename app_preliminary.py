@@ -17,7 +17,8 @@ st.write(df2)
 
 st.write(df1.iloc[3])
 st.write(df1.iloc[7])
-
+new = df1.iloc[3] + df1.iloc[7]
+st.write(new)
 #df1.drop(d
 
 # geojson
