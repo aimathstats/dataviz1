@@ -10,11 +10,12 @@ import xlrd
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
 #    geojson = json.load(f)
-df1 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=0, index_col=0)
+df1 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=0, index_col=None)
+df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=None)
 st.write(df1)
-
-df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=0)
 st.write(df2)
+
+#df1.drop(
 
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
