@@ -5,6 +5,7 @@ import numpy as np
 import json
 from io import StringIO
 import openpyxl
+import xlrd
 
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
