@@ -13,7 +13,7 @@ import xlrd
 df1 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=0, index_col=None, skiprows = [0,1,3,4,5,6,7])
 df2 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=1, index_col=None, skiprows = [0,1,2,4,5,6,7,8])
 
-df1 = df1["地域都道府県名"="26_京都府"]
+df1 = df1["地域都道府県名"=="26_京都府"]
 df2 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=1, index_col=None, skiprows = [0,1,2,4,5,6,7,8])
 
 
