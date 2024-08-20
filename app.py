@@ -453,12 +453,6 @@ from io import StringIO
 #with open("data/N03-23_25_230101.geojson", encoding = 'utf-8') as f:
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
-    # GeoJSONデータから不要な列を削除する
-    for feature in geojson['features']:
-        feature['properties'].pop('N03_001')
-        feature['properties'].pop('N03_002')
-        feature['properties'].pop('N03_003')
-        feature['properties'].pop('N03_007')
 #geojson["features"][1]["properties"]
 #for i in range(len(geojson["features"])):
 #  st.write(geojson["features"][i]["properties"]["N03_004"])
@@ -502,7 +496,7 @@ fig13 = px.choropleth_mapbox(
     height=800,
 )
 
-shiga_pop_text = """市区町村,総数
+kyoto_pop_text = """市区町村,総数
 京都市北区,117165
 京都市上京区,83832
 京都市左京区,166039
@@ -514,18 +508,17 @@ shiga_pop_text = """市区町村,総数
 京都市伏見区,277858
 京都市山科区,135101
 京都市西京区,149837"""
-shiga_pop = pd.read_csv(StringIO(shiga_pop_text))
-shiga_pop.head()
+kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
 
 fig13 = px.choropleth_mapbox(
-    shiga_pop,
+    kyoto_pop,
     geojson=geojson,
     locations="市区町村",
     color="総数",
     hover_name="市区町村",
     featureidkey="properties.N03_004",
     mapbox_style="carto-positron",
-    zoom=8,
+    zoom=10,
     center={"lat": 35.02, "lon": 135.76}, #35.02348902017437, 135.76484302775438
     opacity=0.5,
     width=800,
