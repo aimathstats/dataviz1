@@ -5,6 +5,11 @@ import numpy as np
 import json
 from io import StringIO
 
+# data
+with open("data/kokusei_R2.xls", encoding = 'utf-8') as f:
+    geojson = json.load(f)
+
+
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
