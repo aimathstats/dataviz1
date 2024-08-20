@@ -17,7 +17,7 @@ st.write(df2)
 
 st.write(df1.iloc[3])
 st.write(df1.iloc[7])
-new = df1.iloc[3] + df1.iloc[7]
+new = df1.iloc[3].fillna('') + df1.iloc[7].fillna('')
 st.write(new)
 #df1.drop(d
 
