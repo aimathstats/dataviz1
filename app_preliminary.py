@@ -15,6 +15,8 @@ df2 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=1, index_col=None, ski
 st.write(df1.columns)
 st.write(df1)
 
+df1 = df1[df1[:,4] == "a"]
+
 #df[(df['age'] < 25) & (df['point'] > 65)]
 #df1 = df1[df1["地域都道府県名"] == "26_京都府"]
 #df1 = df1[df1.iloc[:,4] == 0]
