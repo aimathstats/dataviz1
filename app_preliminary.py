@@ -20,6 +20,7 @@ df1["地域都道府県・市区町村名"] = df1["地域都道府県・市区�
 st.write(df1)
 
 df = df1[["地域都道府県・市区町村名","総人口（男女別）総数（人）"]]
+df["総人口（男女別）総数（人）"] = pd.to_numeric(df["総人口（男女別）総数（人）"], errors='coerce') # additional
 st.write(df)
 #st.write(df2)
 
