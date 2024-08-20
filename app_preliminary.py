@@ -10,16 +10,22 @@ import xlrd
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
 #    geojson = json.load(f)
-df1 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=0, index_col=None)
-df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=None)
+df1 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=0, index_col=None, skiprow=[0,1,2])
+df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=None, skiprow=[0,1,2])
 st.write(df1)
 st.write(df2)
 
-st.write(df1.iloc[3])
-st.write(df1.iloc[7])
-new = df1.iloc[3].fillna('') + df1.iloc[7].fillna('')
-st.write(new)
-#df1.drop(d
+#df1 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=0, index_col=None)
+#df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=None)
+#st.write(df1)
+#st.write(df2)
+
+#st.write(df1.iloc[3])
+#st.write(df1.iloc[7])
+#new = df1.iloc[3].fillna('') + df1.iloc[7].fillna('')
+#st.write(new)
+
+
 
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
