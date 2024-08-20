@@ -17,10 +17,10 @@ st.write(df1.columns)
 df1 = df1[df1["地域都道府県名"] == "26_京都府"]
 df1 = df1[df1["地域市などの別（地域識別コード）"] == 0]
 df1["地域都道府県・市区町村名"] = df1["地域都道府県・市区町村名"].str.replace(r'^\d+_', '', regex=True)
-st.write(df1)
-#st.write(df2)
 
 df1 = df1[["地域都道府県・市区町村名","総人口（男女別）総数（人）"]]
+st.write(df1)
+#st.write(df2)
 
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
@@ -66,8 +66,8 @@ fig1 = px.choropleth_mapbox(
     zoom=9, opacity=0.5,
     width=800, height=800,
 )
-st.subheader('Choropleth Map in Kyoto district')
-st.plotly_chart(fig1)
+#st.subheader('Choropleth Map in Kyoto district')
+#st.plotly_chart(fig1)
 
 st.subheader('Choropleth Map in Kyoto district (selective)')
 st.plotly_chart(fig2)
