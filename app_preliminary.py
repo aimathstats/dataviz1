@@ -38,6 +38,7 @@ fig2 = px.choropleth_mapbox(
     mapbox_style="carto-positron",
     center={"lat": 35.02, "lon": 135.76},
     zoom=9, opacity=0.5,
+    color_continuous_scale="Viridis",  # 連続的なカラースケールを明示的に指定
     width=800, height=800,
 )
 
