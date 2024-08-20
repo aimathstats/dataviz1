@@ -17,8 +17,8 @@ st.write(df1.columns)
 df1 = df1[df1["地域都道府県名"] == "26_京都府"]
 #df1 = df1[df1[:,4] == "a"]
 st.write(df1)
-st.write(df1["都道府県・市区町村名"])
-st.write(df1["市などの別（地域識別コード）"])
+st.write(df1["地域都道府県・市区町村名"])
+st.write(df1["地域市などの別（地域識別コード）"])
 
 #df[(df['age'] < 25) & (df['point'] > 65)]
 #df1 = df1[df1.iloc[:,4] == 0]
