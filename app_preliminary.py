@@ -20,6 +20,8 @@ df1["地域都道府県・市区町村名"] = df1["地域都道府県・市区�
 st.write(df1)
 #st.write(df2)
 
+df1 = df1[["地域都道府県・市区町村名","総人口（男女別）総数（人）"]]
+
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
@@ -27,9 +29,9 @@ with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
 fig2 = px.choropleth_mapbox(
     df1, 
     geojson=geojson,
-    locations="市区町村",
-    color="総数",
-    hover_name="市区町村",
+    locations="地域都道府県・市区町村名",
+    color="総人口（男女別）総数（人）",
+    hover_name="地域都道府県・市区町村名",
     featureidkey="properties.N03_004",
     mapbox_style="carto-positron",
     center={"lat": 35.02, "lon": 135.76},
