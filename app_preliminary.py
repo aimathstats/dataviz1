@@ -6,9 +6,10 @@ import json
 from io import StringIO
 
 # data
-with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
-    geojson = json.load(f)
-
+#with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
+#    geojson = json.load(f)
+df = pd.read_excel('data/kokusei_R2.xlsx', index_col=10)
+st.write(df)
 
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
