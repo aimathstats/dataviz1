@@ -18,7 +18,7 @@ df2 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=1, index_col=None, ski
 
 df1 = df1[df1["地域都道府県名"] == "26_京都府"]
 df1 = df1[df1["地域市などの別（地域識別コード）"] == 0]
-df1 = df1["地域都道府県・市区町村名"] = df1["地域都道府県・市区町村名"].str.replace(r'^\d+_', '', regex=True)
+df1["地域都道府県・市区町村名"] = df1["地域都道府県・市区町村名"].str.replace(r'^\d+_', '', regex=True)
 st.write(df1)
 #st.write(df2)
 
