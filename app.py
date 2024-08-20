@@ -453,7 +453,7 @@ from io import StringIO
 #with open("data/N03-23_25_230101.geojson", encoding = 'utf-8') as f:
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
-#geojson["features"][1]["properties"]
+geojson["features"][1]["properties"]
 
 shiga_pop_text = """市区町村名,男,女,計,世帯数
 大津市,160170,169871,330041,130143
@@ -530,7 +530,7 @@ fig13 = px.choropleth_mapbox(
     locations="市区町村",
     color="総数",
     hover_name="市区町村",
-    #featureidkey="properties.N03_004",
+    featureidkey="properties.N03_004",
     mapbox_style="carto-positron",
     zoom=8,
     center={"lat": 35.02, "lon": 135.76}, #35.02348902017437, 135.76484302775438
