@@ -12,9 +12,7 @@ import xlrd
 #    geojson = json.load(f)
 df1 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=0, index_col=None, skiprows = [0,1,3,4,5,6,7])
 df2 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=1, index_col=None, skiprows = [0,1,2,4,5,6,7,8])
-#df1 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=0, index_col=None)
-#df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=None)
-#st.write(df1.columns)
+st.write(df1.columns)
 
 df1 = df1[df1["地域都道府県名"] == "26_京都府"]
 df1 = df1[df1["地域市などの別（地域識別コード）"] == 0]
@@ -22,14 +20,22 @@ df1["地域都道府県・市区町村名"] = df1["地域都道府県・市区�
 st.write(df1)
 #st.write(df2)
 
-#st.write(df1.iloc[3])
-#st.write(df1.iloc[7])
-#new = df1.iloc[3].fillna('') + df1.iloc[7].fillna('')
-#st.write(new)
-
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
+
+fig2 = px.choropleth_mapbox(
+    df1, 
+    geojson=geojson,
+    locations="市区町村",
+    color="総数",
+    hover_name="市区町村",
+    featureidkey="properties.N03_004",
+    mapbox_style="carto-positron",
+    center={"lat": 35.02, "lon": 135.76},
+    zoom=9, opacity=0.5,
+    width=800, height=800,
+)
 
 # data frame
 kyoto_pop_text = """市区町村,総数
@@ -47,7 +53,7 @@ kyoto_pop_text = """市区町村,総数
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
 st.write(kyoto_pop)
 
-fig13 = px.choropleth_mapbox(
+fig1 = px.choropleth_mapbox(
     kyoto_pop, geojson=geojson,
     locations="市区町村",
     color="総数",
@@ -58,7 +64,9 @@ fig13 = px.choropleth_mapbox(
     zoom=9, opacity=0.5,
     width=800, height=800,
 )
-
 st.subheader('Choropleth Map in Kyoto district')
-st.plotly_chart(fig13)
+st.plotly_chart(fig1)
+
+st.subheader('Choropleth Map in Kyoto district (selective)')
+st.plotly_chart(fig2)
 
