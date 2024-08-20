@@ -24,12 +24,17 @@ df["総人口（男女別）総数（人）"] = pd.to_numeric(df["総人口（�
 st.write(df)
 #st.write(df2)
 
+# データフレームをCSVファイルに書き出し
+df.to_csv("population_data.csv", index=False)
+df = pd.read_csv("population_data.csv")
+print(df.dtypes)
+
 # geojson
 with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
 
 fig2 = px.choropleth_mapbox(
-    df, 
+    df,
     geojson=geojson,
     locations="地域都道府県・市区町村名",
     color="総人口（男女別）総数（人）",
@@ -74,4 +79,3 @@ fig1 = px.choropleth_mapbox(
 
 st.subheader('Choropleth Map in Kyoto district (selective)')
 st.plotly_chart(fig2)
-
