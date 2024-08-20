@@ -522,6 +522,7 @@ shiga_pop_text = """市区町村,総数
 伊根町,1928
 与謝野町,20092"""
 shiga_pop = pd.read_csv(StringIO(shiga_pop_text))
+shiga_pop.head()
 
 fig13 = px.choropleth_mapbox(
     shiga_pop,
@@ -529,11 +530,10 @@ fig13 = px.choropleth_mapbox(
     locations="市区町村",
     color="総数",
     hover_name="市区町村",
-    #hover_data=["男", "女", "世帯数"],
     featureidkey="properties.N03_004",
     mapbox_style="carto-positron",
-    zoom=8,
-    center={"lat": 35.09, "lon": 136.18},
+    zoom=10,
+    center={"lat": 35.02, "lon": 135.76}, #35.02348902017437, 135.76484302775438
     opacity=0.5,
     width=800,
     height=800,
