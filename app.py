@@ -450,7 +450,8 @@ fig12.update_layout(
 #
 import json
 from io import StringIO
-with open("data/N03-23_25_230101.geojson", encoding = 'utf-8') as f:
+#with open("data/N03-23_25_230101.geojson", encoding = 'utf-8') as f:
+with open("data/N03-23_26_230101.geojson", encoding = 'utf-8') as f:
     geojson = json.load(f)
 #geojson["features"][1]["properties"]
 
@@ -492,6 +493,52 @@ fig13 = px.choropleth_mapbox(
     width=800,
     height=800,
 )
+
+shiga_pop_text = """市区町村,総数
+京都市,1463723
+福知山市,77306
+舞鶴市,80336
+綾部市,31846
+宇治市,179630
+宮津市,16758
+亀岡市,86174
+城陽市,74607
+向日市,56859
+長岡京市,80608
+八幡市,70433
+京田辺市,73753
+京丹後市,50860
+南丹市,31629
+木津川市,77907
+大山崎町,15953
+久御山町,15250
+井手町,7406
+宇治田原町,8911
+笠置町,1144
+和束町,3478
+精華町,36198
+南山城村,2391
+京丹波町,12907
+伊根町,1928
+与謝野町,20092"""
+shiga_pop = pd.read_csv(StringIO(shiga_pop_text))
+
+fig13 = px.choropleth_mapbox(
+    shiga_pop,
+    geojson=geojson,
+    locations="市区町村",
+    color="総数",
+    hover_name="市区町村",
+    #hover_data=["男", "女", "世帯数"],
+    featureidkey="properties.N03_004",
+    mapbox_style="carto-positron",
+    zoom=8,
+    center={"lat": 35.09, "lon": 136.18},
+    opacity=0.5,
+    width=800,
+    height=800,
+)
+
 
 # treemap
 df5 = px.data.tips()
