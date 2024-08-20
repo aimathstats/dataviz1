@@ -15,7 +15,9 @@ df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=None)
 st.write(df1)
 st.write(df2)
 
-st.write(df1[3,])
+st.write(df1.iloc[3])
+st.write(df1.iloc[7])
+
 #df1.drop(d
 
 # geojson
