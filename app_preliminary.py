@@ -16,15 +16,12 @@ st.write(df1.columns)
 
 #df[(df['age'] < 25) & (df['point'] > 65)]
 #df1 = df1[df1["地域都道府県名"] == "26_京都府"]
-df1 = df1[df1["市などの別（地域識別コード）"] == "0"]
+df1 = df1[df1.iolc[,4] == "0"]
 
 df2 = pd.read_excel('data/kokusei_R2_v2.xlsx', sheet_name=1, index_col=None, skiprows = [0,1,2,4,5,6,7,8])
 
-
 st.write(df1)
 st.write(df2)
-
-
 
 #df1 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=0, index_col=None)
 #df2 = pd.read_excel('data/kokusei_R2.xlsx', sheet_name=1, index_col=None)
