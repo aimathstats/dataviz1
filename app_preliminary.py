@@ -20,9 +20,8 @@ fig5 = px.scatter_mapbox(
     #hover_name="市区町村名",
     #hover_data=["所在並びに地番"],
     center={"lat": 35.02, "lon": 135.76},
-    opacity=0.5,
-    width=800,
-    height=800,
+    zoom=9, opacity=0.5,
+    width=800, height=800,
     mapbox_style="carto-positron",
 )
 st.plotly_chart(fig5)
