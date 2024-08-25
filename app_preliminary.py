@@ -55,7 +55,7 @@ fig3 = px.scatter_mapbox(
     lon="centroid_lon", 
     zoom=10,
     #mapbox_style="open-street-map"
-    mapbox_style=”carto-positron”,
+    mapbox_style="carto-positron",
 )
 fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0}) #余白消しのため追記
 
