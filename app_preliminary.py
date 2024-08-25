@@ -9,6 +9,8 @@ import xlrd
 
 land_price = pd.read_csv("data/L01-2024P-2K_26.csv", encoding="cp932")
 land_price.loc[:, ["経度", "緯度"]] = land_price.loc[:, ["経度", "緯度"]] / 3600
+st.write(land_price)
+
 fig5 = px.scatter_mapbox(
     land_price,
     lat="緯度",
@@ -23,7 +25,7 @@ fig5 = px.scatter_mapbox(
     height=800,
     mapbox_style="carto-positron",
 )
-st.plotly_chart(fig5)
+#st.plotly_chart(fig5)
 
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
