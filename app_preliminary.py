@@ -7,6 +7,24 @@ from io import StringIO
 import openpyxl
 import xlrd
 
+land_price = pd.read_csv("data/L01-2024P-2K_26.csv", encoding="cp932")
+land_price.loc[:, ["経度", "緯度"]] = land_price.loc[:, ["経度", "緯度"]] / 3600
+fig5 = px.scatter_mapbox(
+    land_price,
+    lat="緯度",
+    lon="経度",
+    size="Ｒ４価格",
+    color="用途区分",
+    hover_name="市区町村名",
+    hover_data=["所在並びに地番"],
+    center={"lat": 35.09, "lon": 136.18},
+    opacity=0.5,
+    width=800,
+    height=800,
+    mapbox_style="carto-positron",
+)
+st.plotly_chart(fig5)
+
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
 #    geojson = json.load(f)
