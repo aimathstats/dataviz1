@@ -49,7 +49,6 @@ fig2 = px.choropleth_mapbox(
 
 #import plotly.express as px
 df = px.data.carshare()
-st.write(df)
 fig3 = px.scatter_mapbox(
     df, 
     lat="centroid_lat", 
@@ -59,6 +58,9 @@ fig3 = px.scatter_mapbox(
     mapbox_style="carto-positron",
 )
 fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0}) #余白消しのため追記
+
+fig4 = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",zoom=10,
+                        mapbox_style="open-street-map",color="peak_hour")
 
 # data frame
 kyoto_pop_text = """市区町村,総数
@@ -94,4 +96,6 @@ st.subheader('Choropleth Map in Kyoto district (selective)')
 st.plotly_chart(fig2)
 
 st.subheader('Choropleth Map in Kyoto district (selective)')
+st.write(df)
 st.plotly_chart(fig3)
+st.plotly_chart(fig4)
