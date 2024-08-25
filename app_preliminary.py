@@ -49,8 +49,14 @@ fig2 = px.choropleth_mapbox(
 
 #import plotly.express as px
 df = px.data.carshare()
-fig3 = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",zoom=10,
-                        mapbox_style="open-street-map")
+fig3 = px.scatter_mapbox(
+    df, 
+    lat="centroid_lat", 
+    lon="centroid_lon", 
+    zoom=10,
+    #mapbox_style="open-street-map"
+    mapbox_style=”carto-positron”,
+)
 fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0}) #余白消しのため追記
 
 # data frame
