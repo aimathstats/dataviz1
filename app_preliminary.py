@@ -25,7 +25,7 @@ fig5 = px.scatter_mapbox(
     height=800,
     mapbox_style="carto-positron",
 )
-#st.plotly_chart(fig5)
+st.plotly_chart(fig5)
 
 # data
 #with open("data/kokusei_R2.xlsx", encoding = 'utf-8') as f:
