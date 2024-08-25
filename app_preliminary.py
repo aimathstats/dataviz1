@@ -49,6 +49,7 @@ fig2 = px.choropleth_mapbox(
 
 #import plotly.express as px
 df = px.data.carshare()
+st.write(df)
 fig3 = px.scatter_mapbox(
     df, 
     lat="centroid_lat", 
