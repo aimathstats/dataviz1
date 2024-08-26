@@ -127,7 +127,7 @@ fig6 = px.choropleth_mapbox(
     featureidkey="properties.N03_004",
     mapbox_style="carto-positron",
     center={"lat": 36.64, "lon": 137.21}, #36.642108540104545, 137.21097192980957
-    zoom=9, opacity=0.5,
+    zoom=8, opacity=0.5,
     color_continuous_scale="Viridis",  # 連続的なカラースケールを明示的に指定
     width=800, height=800,
 )
