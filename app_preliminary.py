@@ -80,7 +80,7 @@ kyoto_pop_text = """市区町村,総数
 京都市山科区,135101
 京都市西京区,149837"""
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
-st.write(kyoto_pop)
+#st.write(kyoto_pop)
 
 fig1 = px.choropleth_mapbox(
     kyoto_pop, geojson=geojson,
@@ -113,7 +113,7 @@ toyama_pop_text = """市区町村,若年女性人口減少率
 入善町,-56.3 
 朝日町,-64.0"""
 toyama_pop = pd.read_csv(StringIO(toyama_pop_text))
-st.write(toyama_pop)
+#st.write(toyama_pop)
 
 with open("data/N03-20240101_16.geojson", encoding = 'utf-8') as f:
     geojson2 = json.load(f)
