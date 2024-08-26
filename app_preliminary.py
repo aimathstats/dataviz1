@@ -93,8 +93,44 @@ fig1 = px.choropleth_mapbox(
     zoom=9, opacity=0.5,
     width=800, height=800,
 )
-#st.subheader('Choropleth Map in Kyoto district')
 #st.plotly_chart(fig1)
+
+# toyama women
+toyama_pop_text = """市区町村,若年女性人口減少率
+富山市,-27.7
+高岡市,-41.8
+魚津市,-46.9
+氷見市,-63.0 
+滑川市,-30.3 
+黒部市,-37.1 
+砺波市,-35.5 
+小矢部市,-49.3 
+南砺市,-55.4 
+射水市,-31.9 
+舟橋村,-22.6 
+上市町,-59.0 
+立山町,-46.0 
+入善町,-56.3 
+朝日町,-64.0"""
+toyama_pop = pd.read_csv(StringIO(toyama_pop_text))
+st.write(toyama_pop)
+
+with open("data/N03-20240101_16.geojson", encoding = 'utf-8') as f:
+    geojson2 = json.load(f)
+
+fig6 = px.choropleth_mapbox(
+    toyama_pop,
+    geojson=geojson2,
+    locations="市区町村",
+    color="若年女性人口減少率",
+    hover_name="市区町村",
+    featureidkey="properties.N03_004",
+    mapbox_style="carto-positron",
+    center={"lat": 35.02, "lon": 135.76},
+    zoom=9, opacity=0.5,
+    color_continuous_scale="Viridis",  # 連続的なカラースケールを明示的に指定
+    width=800, height=800,
+)
 
 
 #### reference -> https://python.monzblog.com/plotly_express_scatter_mapbox/
@@ -112,7 +148,6 @@ fig3.update_layout(margin={"r":0,"t":0,"l":0,"b":0}) #余白消しのため追�
 fig4 = px.scatter_mapbox(df, lat="centroid_lat", lon="centroid_lon",zoom=10,
                         mapbox_style="open-street-map",color="peak_hour")
 
-
 st.subheader('Choropleth Map in Kyoto district (selective)')
 st.plotly_chart(fig2)
 
@@ -120,3 +155,4 @@ st.subheader('scatter_mapbox')
 st.write(df)
 st.plotly_chart(fig3)
 st.plotly_chart(fig4)
+st.plotly_chart(fig6)
