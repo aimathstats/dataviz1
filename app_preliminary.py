@@ -9,11 +9,11 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded")
 
-kyoto_pop_text = """A,B
-1,5
-2,6
-3,7
-4,8"""
+kyoto_pop_text = """A,B,C,D
+1,5,1,5
+2,6,1,5
+3,7,1,5
+4,8,1,5"""
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
 st.table(kyoto_pop)
 
