@@ -25,6 +25,11 @@ with col2:
 with col3:
     st.header("B")
     st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
+    with st.expander("See explanation"):
+        st.write('''
+            The chart above shows some numbers I picked for you.
+        ''')
+
 
 st.subheader('container')
 container = st.container(border=True)
