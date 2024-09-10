@@ -4,16 +4,10 @@ import streamlit as st
 from io import StringIO
 
 st.set_page_config(
-    page_title="Ex-stream-ly Cool App",
+    page_title="Cool App",
     page_icon="🧊",
     layout="wide",
-    initial_sidebar_state="expanded",
-    menu_items={
-        'Get Help': 'https://www.extremelycoolapp.com/help',
-        'Report a bug': "https://www.extremelycoolapp.com/bug",
-        'About': "# This is a header. This is an *extremely* cool app!"
-    }
-)
+    initial_sidebar_state="expanded")
 
 kyoto_pop_text = """A,B
 1,5
