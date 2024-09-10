@@ -13,6 +13,7 @@ st.table(kyoto_pop)
 
 st.latex(r'''\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)''')
 
+#columns
 col1, col2, col3 = st.columns(3)
 with col1:
     st.header("A cat")
@@ -25,6 +26,14 @@ with col2:
 with col3:
     st.header("An owl")
     st.image("https://static.streamlit.io/examples/owl.jpg")
+
+#container
+container = st.container(border=True)
+container.write("This is inside the container")
+st.write("This is outside the container")
+
+# Now insert some more in the container
+container.write("This is inside too")
 
 import pandas as pd
 import plotly.express as px
