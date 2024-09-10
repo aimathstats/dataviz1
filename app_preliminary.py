@@ -11,35 +11,25 @@ kyoto_pop_text = """A,B
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
 st.table(kyoto_pop)
 
-#st.subheader('tabs')
-#tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
-#with tab1:
-#    st.header("A cat")
-#    st.image("https://static.streamlit.io/examples/cat.jpg", width=200)
-#with tab2:
-#    st.header("A dog")
-#    st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
-#with tab3:
-#    st.header("An owl")
-#    st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
-
 st.subheader('columns')
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.header("A cat")
+    st.header("A")
     st.latex(r'''\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)''')
 with col2:
-    st.header("A dog")
-    st.image("https://static.streamlit.io/examples/dog.jpg")
+    st.header("B")
+    st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
+    container = st.container(border=True)
+    container.latex(r'''\sum_{k=0}^{n-1} ar^k''')
+
 with col3:
-    st.header("An owl")
-    st.image("https://static.streamlit.io/examples/owl.jpg")
+    st.header("B")
+    st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
 
 st.subheader('container')
 container = st.container(border=True)
 container.write("This is inside the container")
-st.write("This is outside the container")
-# Now insert some more in the container
+#st.write("This is outside the container")
 container.write("This is inside too")
 
 st.subheader('expander')
