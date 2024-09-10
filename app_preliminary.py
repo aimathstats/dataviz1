@@ -84,10 +84,11 @@ if blue:
 
 #sidebar
 # Using object notation
-add_selectbox = st.sidebar.selectbox(
-    "How would you like to be contacted?",
-    ("Email", "Home phone", "Mobile phone")
+selected = st.sidebar.selectbox(
+    "what part?",
+    ("model", "approximation bound", "generalization bound","entropy bound","minimax thm")
 )
+st.write(selected)
 # Using "with" notation
 with st.sidebar:
     add_radio = st.radio(
