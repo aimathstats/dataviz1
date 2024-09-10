@@ -16,11 +16,9 @@ col1, col2, col3 = st.columns(3)
 with col1:
     st.header("A cat")
     st.latex(r'''\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)''')
-
 with col2:
     st.header("A dog")
     st.image("https://static.streamlit.io/examples/dog.jpg")
-
 with col3:
     st.header("An owl")
     st.image("https://static.streamlit.io/examples/owl.jpg")
@@ -29,23 +27,25 @@ st.subheader('container')
 container = st.container(border=True)
 container.write("This is inside the container")
 st.write("This is outside the container")
-
 # Now insert some more in the container
 container.write("This is inside too")
 
+st.subheader('expander')
+st.bar_chart({"data": [1, 5, 2, 6, 2, 1]})
+with st.expander("See explanation"):
+    st.write('''
+        The chart above shows some numbers I picked for you.
+        I rolled actual dice for these, so they're *guaranteed* to
+        be random.
+    ''')
+    st.image("https://static.streamlit.io/examples/dice.jpg")
 
-st.subheader('empty')
-placeholder = st.empty()
-# Replace the placeholder with some text:
-placeholder.text("Hello")
-# Replace the text with a chart:
-placeholder.line_chart({"data": [1, 5, 2, 6]})
-# Replace the chart with several elements:
-with placeholder.container():
-    st.write("This is one element")
-    st.write("This is another")
-# Clear all those elements:
-#placeholder.empty()
+st.subheader('popover')
+with st.popover("Open popover"):
+    st.markdown("Hello World 👋")
+    name = st.text_input("What's your name?")
+st.write("Your name:", name)
+
 
 import pandas as pd
 import plotly.express as px
