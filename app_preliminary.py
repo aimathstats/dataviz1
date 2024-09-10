@@ -3,18 +3,11 @@ import plotly.express as px
 import streamlit as st
 from io import StringIO
 
-kyoto_pop_text = """市区町村,総数
-京都市北区,117165
-京都市上京区,83832
-京都市左京区,166039
-京都市中京区,110488
-京都市東山区,36602
-京都市下京区,82784
-京都市南区,101970
-京都市右京区,202047
-京都市伏見区,277858
-京都市山科区,135101
-京都市西京区,149837"""
+kyoto_pop_text = """A,B
+1,5
+2,6
+3,7
+4,8"""
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
 st.table(kyoto_pop)
 
