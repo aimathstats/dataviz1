@@ -13,8 +13,18 @@ st.table(kyoto_pop)
 
 st.latex(r'''\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)''')
 
-#st.set_page_config(layout="wide")
-#left1, left2 = st.columns(2)
+col1, col2, col3 = st.columns(3)
+with col1:
+    st.header("A cat")
+    st.image("https://static.streamlit.io/examples/cat.jpg")
+
+with col2:
+    st.header("A dog")
+    st.image("https://static.streamlit.io/examples/dog.jpg")
+
+with col3:
+    st.header("An owl")
+    st.image("https://static.streamlit.io/examples/owl.jpg")
 
 import pandas as pd
 import plotly.express as px
