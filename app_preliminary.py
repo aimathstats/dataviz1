@@ -55,13 +55,14 @@ with col2:
 with col3:
     st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
 
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.latex(r'''\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)''')
-with col2:
-    st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
-with col3:
-    st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
+if selected == "minimax thm":
+    col1, col2, col3 = st.columns(3)
+    with col1:
+        st.latex(r'''\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)''')
+    with col2:
+        st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
+    with col3:
+        st.latex(r'''\sum_{k=0}^{n-1} ar^k''')
 
 
 st.subheader('container')
