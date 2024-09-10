@@ -13,7 +13,7 @@ st.table(kyoto_pop)
 
 st.latex(r'''\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)''')
 
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 #left1, left2 = st.columns(2)
 
 import pandas as pd
