@@ -50,11 +50,11 @@ with col3:
 if selected == "model":
     col1, col2, col3 = st.columns(3)
     with col1:
-        st.latex(a)
+        st.latex("a")
     with col2:
-        st.latex(b)
+        st.latex("b")
     with col3:
-        st.latex(c)
+        st.latex("c")
 
 if selected == "minimax thm":
     col1, col2, col3 = st.columns(3)
