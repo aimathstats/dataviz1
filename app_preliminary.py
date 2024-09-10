@@ -33,6 +33,25 @@ st.write("This is outside the container")
 # Now insert some more in the container
 container.write("This is inside too")
 
+
+st.subheader('empty')
+
+placeholder = st.empty()
+
+# Replace the placeholder with some text:
+placeholder.text("Hello")
+
+# Replace the text with a chart:
+placeholder.line_chart({"data": [1, 5, 2, 6]})
+
+# Replace the chart with several elements:
+with placeholder.container():
+    st.write("This is one element")
+    st.write("This is another")
+
+# Clear all those elements:
+placeholder.empty()
+
 import pandas as pd
 import plotly.express as px
 import streamlit as st
