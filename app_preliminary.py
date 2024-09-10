@@ -11,16 +11,17 @@ kyoto_pop_text = """A,B
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
 st.table(kyoto_pop)
 
-tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
-with tab1:
-    st.header("A cat")
-    st.image("https://static.streamlit.io/examples/cat.jpg", width=200)
-with tab2:
-    st.header("A dog")
-    st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
-with tab3:
-    st.header("An owl")
-    st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
+#st.subheader('tabs')
+#tab1, tab2, tab3 = st.tabs(["Cat", "Dog", "Owl"])
+#with tab1:
+#    st.header("A cat")
+#    st.image("https://static.streamlit.io/examples/cat.jpg", width=200)
+#with tab2:
+#    st.header("A dog")
+#    st.image("https://static.streamlit.io/examples/dog.jpg", width=200)
+#with tab3:
+#    st.header("An owl")
+#    st.image("https://static.streamlit.io/examples/owl.jpg", width=200)
 
 st.subheader('columns')
 col1, col2, col3 = st.columns(3)
