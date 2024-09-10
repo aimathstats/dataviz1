@@ -11,7 +11,7 @@ st.set_page_config(
 
 selected = st.sidebar.selectbox(
     "what part?",
-    ("model", "approximation bound", "generalization bound","entropy bound","minimax thm")
+    ("model", "approximation bound", "generalization bound","entropy bound","minimax thm","others")
 )
 st.write(selected)
 
