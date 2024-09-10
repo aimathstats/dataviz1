@@ -9,6 +9,18 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded")
 
+selected = st.sidebar.selectbox(
+    "what part?",
+    ("model", "approximation bound", "generalization bound","entropy bound","minimax thm")
+)
+st.write(selected)
+
+with st.sidebar:
+    add_radio = st.radio(
+        "Choose a shipping method",
+        ("Standard (5-15 days)", "Express (2-5 days)")
+    )
+
 kyoto_pop_text = """A,B,C,D
 1,"\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)",1,5
 2,6,1,5
@@ -82,19 +94,6 @@ if red:
 if blue:
     st.write(":blue[This is a blue item.]")
 
-#sidebar
-# Using object notation
-selected = st.sidebar.selectbox(
-    "what part?",
-    ("model", "approximation bound", "generalization bound","entropy bound","minimax thm")
-)
-st.write(selected)
-# Using "with" notation
-with st.sidebar:
-    add_radio = st.radio(
-        "Choose a shipping method",
-        ("Standard (5-15 days)", "Express (2-5 days)")
-    )
 
 
 import pandas as pd
