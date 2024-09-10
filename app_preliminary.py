@@ -11,7 +11,7 @@ kyoto_pop_text = """A,B
 kyoto_pop = pd.read_csv(StringIO(kyoto_pop_text))
 st.table(kyoto_pop)
 
-st.set_page_config(layout="wide")
+#st.set_page_config(layout="wide")
 left1, left2 = st.columns(2)
 #left_column.subheader('日経225: ' + vars3_selected)
 left1.st.latex(r'''
