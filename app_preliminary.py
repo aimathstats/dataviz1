@@ -10,7 +10,7 @@ st.set_page_config(
     initial_sidebar_state="expanded")
 
 kyoto_pop_text = """A,B,C,D
-1,\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right),1,5
+1,"\sum_{k=0}^{n-1} ar^k = a \left(\frac{1-r^{n}}{1-r}\right)",1,5
 2,6,1,5
 3,7,1,5
 4,8,1,5"""
