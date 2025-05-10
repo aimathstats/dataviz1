@@ -16,10 +16,6 @@ pref_list = [
 ]
 st.map(pref_list)
 
-import streamlit as st
-import pandas as pd
-import numpy as np
-
 # 東京駅を中心に擬似的な位置情報データを生成
 lat, lon = 35.68184, 139.76718
 df = pd.DataFrame(
