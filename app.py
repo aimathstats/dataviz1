@@ -70,7 +70,7 @@ fig29 = px.line(prefecture_data, x="週", y="値", title=f"{selected_prefecture}
 st.subheader('2024年コロナ都道府県別定点観測:  ' + selected_prefecture)
 st.plotly_chart(fig29)
 
-
+"""
 # network graph
 import networkx as nx
 G = nx.random_geometric_graph(200, 0.125)
@@ -99,7 +99,6 @@ for node in G.nodes():
     node_x.append(x)
     node_y.append(y)
 
-"""
 node_trace = go.Scatter(
     x=node_x, y=node_y,
     mode='markers',
