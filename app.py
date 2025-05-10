@@ -99,6 +99,7 @@ for node in G.nodes():
     node_x.append(x)
     node_y.append(y)
 
+"""
 node_trace = go.Scatter(
     x=node_x, y=node_y,
     mode='markers',
@@ -147,6 +148,7 @@ fig28 = go.Figure(data=[edge_trace, node_trace],
                 )
 st.subheader('network graph')
 st.plotly_chart(fig28)
+"""
 
 # contour plot
 fig27 = go.Figure(data=go.Contour(
