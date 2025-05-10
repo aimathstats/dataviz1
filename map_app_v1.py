@@ -11,4 +11,4 @@ list = [
 st.title("避難所マップ　version 1")
 st.map(list)
 st.write("デフォルト現在地：京都府立植物園北門")
-st.write(list)
+#st.write(list)
