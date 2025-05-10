@@ -8,14 +8,11 @@ from pytrends.request import TrendReq
 
 st.set_page_config(layout="wide")
 
-# 簡単地図作成と地点表示、緯度経度データ（10進数）
+# 簡単地図作成と地点表示、緯度経度（10進数）
 pref_list = [
   {"longitude":135.86859, "latitude":35.004531}, # 滋賀県
   {"longitude":135.755608, "latitude":35.021004}, # 京都府
   {"longitude":135.519711, "latitude":34.686316}, # 大阪府
-  #{"longitude":130.741667, "latitude":32.789828}, # 熊本県
-  #{"longitude":131.423855, "latitude":31.911090}, # 宮崎県
-  #{"longitude":130.557981, "latitude":31.560148}, # 鹿児島県
 ]
 st.map(pref_list)
 
