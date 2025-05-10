@@ -10,6 +10,7 @@ st.set_page_config(layout="wide")
 
 # 簡単地図作成と地点表示、緯度経度（10進数）
 pref_list = [
+  {"latitude":35.051095034877825, "longitude":135.76477636253375}, #現在地（デフォルト）
   {"latitude":35.04289379, "longitude":135.75676882}, #紫明小学校
   {"latitude":35.05044293, "longitude":135.75418841}, #元町小学校
   #{"longitude":135.86859, "latitude":35.004531}, # 滋賀県
