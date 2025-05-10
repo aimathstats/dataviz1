@@ -18,8 +18,9 @@ pref_list = [
 ]
 st.map(pref_list)
 
-# 東京駅を中心に擬似的な位置情報データを生成
-lat, lon = 35.68184, 139.76718
+# 京都を中心に擬似的な位置情報データを生成
+#lat, lon = 35.68184, 139.76718
+lat, lon = 35.021004, 135.755608
 df = pd.DataFrame(
     np.random.randn(100, 2) / [100, 100] + [lat, lon],
     columns=['lat', 'lon']
