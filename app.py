@@ -10,16 +10,18 @@ st.set_page_config(layout="wide")
 
 # 簡単地図作成と地点表示、緯度経度（10進数）
 pref_list = [
-  {"longitude":135.86859, "latitude":35.004531}, # 滋賀県
-  {"longitude":135.755608, "latitude":35.021004}, # 京都府
-  {"longitude":135.519711, "latitude":34.686316}, # 大阪府
+  {"latitude":35.04289379, "longitude":135.75676882}, #紫明小学校
+  {"latitude":35.05044293, "longitude":135.75418841}, #元町小学校
+  #{"longitude":135.86859, "latitude":35.004531}, # 滋賀県
+  #{"longitude":135.755608, "latitude":35.021004}, # 京都府
+  #{"longitude":135.519711, "latitude":34.686316}, # 大阪府
 ]
 st.map(pref_list)
 
 # 東京駅を中心に擬似的な位置情報データを生成
 lat, lon = 35.68184, 139.76718
 df = pd.DataFrame(
-    np.random.randn(1000, 2) / [100, 100] + [lat, lon],
+    np.random.randn(100, 2) / [100, 100] + [lat, lon],
     columns=['lat', 'lon']
 )
 st.map(df)
