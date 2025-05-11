@@ -2,18 +2,19 @@ import streamlit as st
 
 st.set_page_config(layout="wide")
 
+st.title("簡単避難所マップ by streamlit")
+st.write("デフォルト現在地：京都府立植物園北門")
+
 list = [
   {"latitude":35.051095034877825, "longitude":135.76477636253375}, #デフォルト現在地（植物園）
   {"latitude":35.04289379, "longitude":135.75676882}, #紫明小学校
   {"latitude":35.05044293, "longitude":135.75418841}, #元町小学校
 ]
 
-st.title("簡単避難所マップ by streamlit")
-st.write("デフォルト現在地：京都府立植物園北門")
 st.map(list)
 
 
-##############################
+##### 現在地取得してfoliumマップに表示
 import folium
 from streamlit_folium import st_folium
 from streamlit_js_eval import get_geolocation
@@ -21,28 +22,26 @@ from streamlit_js_eval import get_geolocation
 st.title("現在地を取得して地図に表示")
 st.write("ブラウザに位置情報の使用を許可してください。")
 
-# JavaScriptで現在地を取得（navigator.geolocation）
-loc = get_geolocation()
+loc = get_geolocation()  # JavaScriptで現在地を取得（navigator.geolocation）
 
 if loc:
     lat = loc["coords"]["latitude"]
     lon = loc["coords"]["longitude"]
     st.success(f"現在地：緯度 {lat:.5f}, 経度 {lon:.5f}")
-    # Foliumマップ作成
     m = folium.Map(location=[lat, lon], zoom_start=19)
     folium.Marker([lat, lon], tooltip="現在地", icon=folium.Icon(color="red")).add_to(m)
     st_folium(m, height=500, width=500)
 else:
-    st.warning("位置情報を取得中...またはブラウザで許可されていません。")
+    st.warning("位置情報を取得中...またはブラウザで位置情報が許可されていません。")
 
 
-###############################################
-# google map api
+##### Google map api から座標に基づくルート情報を取得して表示
 import requests
 import polyline  # Googleのポリラインデータのデコード
 import random
 
-st.title("Google Maps Directions API (北大路→京都御所)")
+st.title("ルート表示：北大路～京都御所")
+st.write("by Google Maps Directions API")
 API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # 出発地と到着地の座標
@@ -77,7 +76,7 @@ else:
     polyline_str = data["routes"][0]["overview_polyline"]["points"]
     decoded_path = polyline.decode(polyline_str)
 
-    # 地図の中心（ルート中点）、ルート描画、マーカー追加
+    # 地図の中心をルート中点に、地図作成、ルート描画、マーカー追加
     midpoint = decoded_path[len(decoded_path)//2]
     m = folium.Map(location=midpoint, zoom_start=14)
     folium.PolyLine(decoded_path, color="blue", weight=5).add_to(m)
