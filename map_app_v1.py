@@ -40,6 +40,7 @@ else:
 # google map api
 import requests
 import polyline  # Googleのポリラインデータのデコード
+import numpy as np
 
 st.title("Google Maps Directions API")
 API_KEY = st.secrets["GOOGLE_API_KEY"]
@@ -48,6 +49,7 @@ API_KEY = st.secrets["GOOGLE_API_KEY"]
 origin_coords = "35.04540,135.75870"      # 北大路駅
 destination_coords = "35.02332,135.75953" # 京都御所
 st.write(destination_coords)
+st.write(np.random.randn(1,1)/100)
 #a=destination_coords[1]+np.random.randn(1,1)/100
 #b=destination_coords[2]+np.random.randn(1,1)/100
 st.write(a)
