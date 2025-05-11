@@ -54,7 +54,7 @@ url = "https://maps.googleapis.com/maps/api/directions/json"
 params = {
     "origin": origin_coords,
     "destination": destination_coords,
-    "mode": "driving",
+    "mode": "walking", #driving
     "key": API_KEY
 }
 
@@ -66,7 +66,9 @@ data = res.json()
 if data.get("status") != "OK":
     st.error(f"Directions APIの取得に失敗しました: {data.get('status')}")
     st.json(data)  # エラーメッセージの中身を表示
+
 else:
+    st.write(data)
     # ポリラインをデコード
     polyline_str = data["routes"][0]["overview_polyline"]["points"]
     decoded_path = polyline.decode(polyline_str)
