@@ -56,11 +56,11 @@ directions_url = f"https://maps.googleapis.com/maps/api/directions/json?origin={
 response = requests.get(directions_url).json()
 
 # ルートのpolylineを描画
-if response['status'] == 'OK':
-    points = response['routes'][0]['overview_polyline']['points']
-    import polyline
-    decoded = polyline.decode(points)
-    folium.PolyLine(decoded, color="blue", weight=5, opacity=0.7).add_to(m)
+#if response['status'] == 'OK':
+#    points = response['routes'][0]['overview_polyline']['points']
+#    import polyline
+#    decoded = polyline.decode(points)
+#    folium.PolyLine(decoded, color="blue", weight=5, opacity=0.7).add_to(m)
 
 # Places APIで周辺施設取得（例：レストラン）
 #places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={destination[0]},{destination[1]}&radius=500&type=restaurant&key={GOOGLE_MAPS_API_KEY}"
@@ -113,7 +113,7 @@ if routes["status"] == "OK":
 
     # 地図を保存または表示
     m.save("route_tokyo_to_shinjuku.html")
-    print("✅ 地図を 'route_tokyo_to_shinjuku.html' に保存しました。")
+    print("地図を 'route_tokyo_to_shinjuku.html' に保存しました。")
 
 else:
     print("❌ ルート取得に失敗しました：", routes["status"])
