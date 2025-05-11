@@ -42,7 +42,6 @@ else:
 import polyline  # Googleのポリラインデータをデコードするために必要
 
 # ✅ APIキー（自分のものに置き換えてください）
-#API_KEY = "AIzaSyDi2e1a8LqhIsVeRczodf_TEu32oIxua4w"
 API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # ✅ 出発地と到着地の座標（東京駅 → 新宿駅）
