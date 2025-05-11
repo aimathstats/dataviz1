@@ -45,8 +45,8 @@ st.title("Google Maps Directions API")
 API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # 出発地と到着地の座標
-origin_coords = "35.041815,135.753769"      # 北大路駅
-destination_coords = "35.025400,135.762116" # 京都御所（建礼門）
+origin_coords = "35.04540,135.75870"      # 北大路駅
+destination_coords = "35.02332,135.75953" # 京都御所
 
 # Directions APIリクエスト作成
 url = "https://maps.googleapis.com/maps/api/directions/json"
@@ -78,8 +78,8 @@ else:
     folium.PolyLine(decoded_path, color="blue", weight=5).add_to(m)
 
     # マーカー追加
-    folium.Marker(decoded_path[0], tooltip="出発（東京駅）", icon=folium.Icon(color="green")).add_to(m)
-    folium.Marker(decoded_path[-1], tooltip="到着（新宿駅）", icon=folium.Icon(color="red")).add_to(m)
+    folium.Marker(decoded_path[0], tooltip="出発", icon=folium.Icon(color="green")).add_to(m)
+    folium.Marker(decoded_path[-1], tooltip="到着", icon=folium.Icon(color="red")).add_to(m)
 
     # 地図表示
     st_folium(m, width=700, height=500)
