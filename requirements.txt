@@ -12,3 +12,4 @@ folium
 streamlit_folium
 requests
 streamlit-js-eval
+polyline
