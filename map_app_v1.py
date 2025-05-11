@@ -63,14 +63,13 @@ if response['status'] == 'OK':
     folium.PolyLine(decoded, color="blue", weight=5, opacity=0.7).add_to(m)
 
 # Places APIで周辺施設取得（例：レストラン）
-places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={destination[0]},{destination[1]}&radius=500&type=restaurant&key={GOOGLE_MAPS_API_KEY}"
-places = requests.get(places_url).json()
-
-for place in places.get('results', []):
-    lat = place['geometry']['location']['lat']
-    lng = place['geometry']['location']['lng']
-    name = place['name']
-    folium.Marker([lat, lng], tooltip=name, icon=folium.Icon(color="green")).add_to(m)
+#places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={destination[0]},{destination[1]}&radius=500&type=restaurant&key={GOOGLE_MAPS_API_KEY}"
+#places = requests.get(places_url).json()
+#for place in places.get('results', []):
+#    lat = place['geometry']['location']['lat']
+#    lng = place['geometry']['location']['lng']
+#    name = place['name']
+#    folium.Marker([lat, lng], tooltip=name, icon=folium.Icon(color="green")).add_to(m)
 
 # 表示
 st.title("Google Maps APIアプリ")
