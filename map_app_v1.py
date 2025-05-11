@@ -68,7 +68,7 @@ if data.get("status") != "OK":
     st.json(data)  # エラーメッセージの中身を表示
 
 else:
-    st.write(data)
+    print(data)
     # ポリラインをデコード
     polyline_str = data["routes"][0]["overview_polyline"]["points"]
     decoded_path = polyline.decode(polyline_str)
