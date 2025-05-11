@@ -82,48 +82,48 @@ from streamlit_folium import st_folium
 import requests
 import polyline  # Googleのポリラインデータをデコードするために必要
 
-# ✅ Google Maps APIキーをここに入力
-#API_KEY = "YOUR_GOOGLE_MAPS_API_KEY"
+# ✅ APIキー（自分のものに置き換えてください）
+API_KEY = "AIzaSyDi2e1a8LqhIsVeRczodf_TEu32oIxua4w"
 
-# 出発地と目的地（東京駅→新宿駅）
-origin = "Tokyo Station"
-destination = "Shinjuku Station"
+# ✅ 出発地と到着地の座標（東京駅 → 新宿駅）
+origin_coords = "35.681236,139.767125"     # 東京駅
+destination_coords = "35.689592,139.700413" # 新宿駅西口周辺
 
-# Directions APIのURLを構築
-directions_url = f"https://maps.googleapis.com/maps/api/directions/json"
+# Directions APIリクエスト作成
+url = "https://maps.googleapis.com/maps/api/directions/json"
 params = {
-    "origin": origin,
-    "destination": destination,
-    "mode": "driving",  # 車、walkingやtransitも選べる
-    "key": GOOGLE_MAPS_API_KEY
+    "origin": origin_coords,
+    "destination": destination_coords,
+    "mode": "driving",
+    "key": API_KEY
 }
 
-# APIにリクエスト
-response = requests.get(directions_url, params=params)
-data = response.json()
+st.title("🚗 Google Maps Directions API × Folium ルート表示")
 
-st.title("🚗 東京駅 → 新宿駅 のルート（Google Directions API + Folium）")
+# APIリクエスト送信
+res = requests.get(url, params=params)
+data = res.json()
 
-# エラーチェック
-if data["status"] != "OK":
-    st.error(f"Directions APIエラー: {data['status']}")
+# レスポンスの確認
+if data.get("status") != "OK":
+    st.error(f"Directions APIの取得に失敗しました: {data.get('status')}")
+    st.json(data)  # エラーメッセージの中身を表示
 else:
-    # ルート情報を取得
-    route = data["routes"][0]
-    overview_polyline = route["overview_polyline"]["points"]
-    decoded_points = polyline.decode(overview_polyline)
+    # ポリラインをデコード
+    polyline_str = data["routes"][0]["overview_polyline"]["points"]
+    decoded_path = polyline.decode(polyline_str)
 
-    # 地図の中心点を出発地付近に設定（例：東京駅）
-    map_center = decoded_points[len(decoded_points) // 2]
-    m = folium.Map(location=map_center, zoom_start=13)
+    # 地図の中心（ルート中点）
+    midpoint = decoded_path[len(decoded_path)//2]
+    m = folium.Map(location=midpoint, zoom_start=13)
 
-    # ポリライン（ルート線）を描画
-    folium.PolyLine(decoded_points, color="blue", weight=5, opacity=0.8).add_to(m)
+    # ルート描画
+    folium.PolyLine(decoded_path, color="blue", weight=5).add_to(m)
 
-    # 出発地・目的地マーカー
-    folium.Marker(decoded_points[0], tooltip="東京駅", icon=folium.Icon(color="green")).add_to(m)
-    folium.Marker(decoded_points[-1], tooltip="新宿駅", icon=folium.Icon(color="red")).add_to(m)
+    # マーカー追加
+    folium.Marker(decoded_path[0], tooltip="出発（東京駅）", icon=folium.Icon(color="green")).add_to(m)
+    folium.Marker(decoded_path[-1], tooltip="到着（新宿駅）", icon=folium.Icon(color="red")).add_to(m)
 
-    # 地図を表示
-    st_folium(m, height=500, width=700)
+    # 地図表示
+    st_folium(m, width=700, height=500)
 
