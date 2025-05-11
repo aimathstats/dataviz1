@@ -47,7 +47,7 @@ API_KEY = st.secrets["GOOGLE_API_KEY"]
 # 出発地と到着地の座標
 origin_coords = "35.04540,135.75870"      # 北大路駅
 destination_coords = "35.02332,135.75953" # 京都御所
-destination_coords = "35.02332,135.88888" # 京都御所
+destination_coords = "35.02332,135.11111" # 京都御所
 
 # Directions APIリクエスト作成
 url = "https://maps.googleapis.com/maps/api/directions/json"
