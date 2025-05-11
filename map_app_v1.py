@@ -69,7 +69,7 @@ st.write(result)
 #####
 from streamlit_js_eval import get_geolocation
 
-st.set_page_config(page_title="現在地表示", layout="centered")
+#st.set_page_config(page_title="現在地表示", layout="centered")
 
 st.title("📍 現在地を取得して地図に表示する")
 st.write("ブラウザに位置情報の使用を許可してください。")
