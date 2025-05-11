@@ -40,28 +40,19 @@ else:
 # google map api
 import requests
 import polyline  # Googleのポリラインデータのデコード
-import numpy as np
+import random
 
-st.title("Google Maps Directions API")
+st.title("Google Maps Directions API (北大路→京都御所)")
 API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # 出発地と到着地の座標
 origin_coords = "35.04540,135.75870"      # 北大路駅
-destination_coords = "35.02332,135.75953" # 京都御所
-#center_lat, center_lon = 35.02332, 135.75953
-#a = np.random.randn(1,2)/[10,10] + [center_lat, center_lon] 
-#destination_coords = f"a[0],a[1]"
-import random
-#e1 = random.uniform(-0.003, 0.003)
-#e2 = random.uniform(-0.003, 0.003)
-#destination_coords = f"{35.02332 + e1:.6f},{135.75953 + e2:.6f}"
-#destination_coords = f"{35.02332 + random.uniform(-0.003, 0.003):.6f}," \
-#                     f"{135.75953 + random.uniform(-0.003, 0.003):.6f}"
 if "destination_coords" not in st.session_state:
     lat = 35.025 + random.uniform(-0.003, 0.003)
     lon = 135.762 + random.uniform(-0.003, 0.003)
     st.session_state.destination_coords = f"{lat:.6f},{lon:.6f}"
 destination_coords = st.session_state.destination_coords
+#destination_coords = "35.02332,135.75953" # 京都御所
 
 # Directions APIリクエスト作成
 url = "https://maps.googleapis.com/maps/api/directions/json"
@@ -82,22 +73,16 @@ if data.get("status") != "OK":
     st.json(data)  # エラーメッセージの中身を表示
 
 else:
-    #print(data)
     # ポリラインをデコード
     polyline_str = data["routes"][0]["overview_polyline"]["points"]
     decoded_path = polyline.decode(polyline_str)
 
-    # 地図の中心（ルート中点）
+    # 地図の中心（ルート中点）、ルート描画、マーカー追加
     midpoint = decoded_path[len(decoded_path)//2]
-    m = folium.Map(location=midpoint, zoom_start=13)
-
-    # ルート描画
+    m = folium.Map(location=midpoint, zoom_start=15)
     folium.PolyLine(decoded_path, color="blue", weight=5).add_to(m)
-
-    # マーカー追加
     folium.Marker(decoded_path[0], tooltip="出発", icon=folium.Icon(color="green")).add_to(m)
     folium.Marker(decoded_path[-1], tooltip="到着", icon=folium.Icon(color="red")).add_to(m)
 
     # 地図表示
     st_folium(m, width=700, height=500)
-
