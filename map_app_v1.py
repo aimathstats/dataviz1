@@ -31,3 +31,29 @@ destination = (35.689487, 139.691706)       # 新宿駅
 m = folium.Map(location=current_location, zoom_start=13)
 folium.Marker(current_location, tooltip="現在地").add_to(m)
 folium.Marker(destination, tooltip="目的地").add_to(m)
+
+# Directions APIでルート取得
+directions_url = f"https://maps.googleapis.com/maps/api/directions/json?origin={current_location[0]},{current_location[1]}&destination={destination[0]},{destination[1]}&mode=driving&key={GOOGLE_MAPS_API_KEY}"
+response = requests.get(directions_url).json()
+
+# ルートのpolylineを描画
+if response['status'] == 'OK':
+    points = response['routes'][0]['overview_polyline']['points']
+    import polyline
+    decoded = polyline.decode(points)
+    folium.PolyLine(decoded, color="blue", weight=5, opacity=0.7).add_to(m)
+
+# Places APIで周辺施設取得（例：レストラン）
+places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={destination[0]},{destination[1]}&radius=500&type=restaurant&key={GOOGLE_MAPS_API_KEY}"
+places = requests.get(places_url).json()
+
+for place in places.get('results', []):
+    lat = place['geometry']['location']['lat']
+    lng = place['geometry']['location']['lng']
+    name = place['name']
+    folium.Marker([lat, lng], tooltip=name, icon=folium.Icon(color="green")).add_to(m)
+
+# 表示
+st.title("Google Maps APIアプリ")
+st_folium(m, width=700)
+
