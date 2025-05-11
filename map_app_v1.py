@@ -78,8 +78,6 @@ st_folium(m, width=500)
 
 
 #####
-import folium
-import requests
 import polyline
 
 # Google APIキーを設定
