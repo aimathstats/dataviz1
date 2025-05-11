@@ -50,6 +50,7 @@ origin_coords = "35.04540,135.75870"      # 北大路駅
 destination_coords = "35.02332,135.75953" # 京都御所
 center_lat, center_lon = 35.02332, 135.75953
 a = np.random.randn(1,2)/[10,10] + [center_lat, center_lon] 
+print(a)
 destination_coords = f"{a[0]},{a[1]}"
 
 # Directions APIリクエスト作成
