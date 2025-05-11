@@ -79,7 +79,7 @@ else:
 
     # 地図の中心（ルート中点）、ルート描画、マーカー追加
     midpoint = decoded_path[len(decoded_path)//2]
-    m = folium.Map(location=midpoint, zoom_start=15)
+    m = folium.Map(location=midpoint, zoom_start=14)
     folium.PolyLine(decoded_path, color="blue", weight=5).add_to(m)
     folium.Marker(decoded_path[0], tooltip="出発", icon=folium.Icon(color="green")).add_to(m)
     folium.Marker(decoded_path[-1], tooltip="到着", icon=folium.Icon(color="red")).add_to(m)
