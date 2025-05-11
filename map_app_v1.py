@@ -14,7 +14,6 @@ st.map(list)
 
 
 ##############################
-# google map api
 import folium
 import requests
 from streamlit_folium import st_folium
@@ -39,47 +38,7 @@ else:
 
 
 ###############################################
-# Google Maps API Key
-# GOOGLE_MAPS_API_KEY = "GOOGLE_API_KEY"
-
-# サンプルの現在地と目的地
-#current_location = (35.681236, 139.767125)  # 東京駅
-#destination = (35.689487, 139.691706)       # 新宿駅
-
-# 地図作成
-#m = folium.Map(location=current_location, zoom_start=14)
-#folium.Marker(current_location, tooltip="現在地").add_to(m)
-#folium.Marker(destination, tooltip="目的地").add_to(m)
-
-# Directions APIでルート取得
-#directions_url = f"https://maps.googleapis.com/maps/api/directions/json?origin={current_location[0]},{current_location[1]}&destination={destination[0]},{destination[1]}&mode=driving&key={GOOGLE_MAPS_API_KEY}"
-#response = requests.get(directions_url).json()
-
-# ルートのpolylineを描画
-#if response['status'] == 'OK':
-#    points = response['routes'][0]['overview_polyline']['points']
-#    import polyline
-#    decoded = polyline.decode(points)
-#    folium.PolyLine(decoded, color="blue", weight=5, opacity=0.7).add_to(m)
-
-# Places APIで周辺施設取得（例：レストラン）
-#places_url = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={destination[0]},{destination[1]}&radius=500&type=restaurant&key={GOOGLE_MAPS_API_KEY}"
-#places = requests.get(places_url).json()
-#for place in places.get('results', []):
-#    lat = place['geometry']['location']['lat']
-#    lng = place['geometry']['location']['lng']
-#    name = place['name']
-#    folium.Marker([lat, lng], tooltip=name, icon=folium.Icon(color="green")).add_to(m)
-
-#st.title("Google Maps APIアプリ")
-#st_folium(m, width=500)
-
-
-
-import streamlit as st
-import folium
-from streamlit_folium import st_folium
-import requests
+# google map api
 import polyline  # Googleのポリラインデータをデコードするために必要
 
 # ✅ APIキー（自分のものに置き換えてください）
@@ -98,7 +57,7 @@ params = {
     "key": API_KEY
 }
 
-st.title("🚗 Google Maps Directions API × Folium ルート表示")
+st.title("Google Maps Directions API")
 
 # APIリクエスト送信
 res = requests.get(url, params=params)
@@ -126,4 +85,5 @@ else:
 
     # 地図表示
     st_folium(m, width=700, height=500)
+
 
