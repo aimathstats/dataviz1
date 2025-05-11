@@ -52,11 +52,16 @@ destination_coords = "35.02332,135.75953" # 京都御所
 #a = np.random.randn(1,2)/[10,10] + [center_lat, center_lon] 
 #destination_coords = f"a[0],a[1]"
 import random
-e1 = random.uniform(-0.003, 0.003)
-e2 = random.uniform(-0.003, 0.003)
-destination_coords = f"{35.02332 + e1:.6f},{135.75953 + e2:.6f}"
+#e1 = random.uniform(-0.003, 0.003)
+#e2 = random.uniform(-0.003, 0.003)
+#destination_coords = f"{35.02332 + e1:.6f},{135.75953 + e2:.6f}"
 #destination_coords = f"{35.02332 + random.uniform(-0.003, 0.003):.6f}," \
 #                     f"{135.75953 + random.uniform(-0.003, 0.003):.6f}"
+if "destination_coords" not in st.session_state:
+    lat = 35.025 + random.uniform(-0.003, 0.003)
+    lon = 135.762 + random.uniform(-0.003, 0.003)
+    st.session_state.destination_coords = f"{lat:.6f},{lon:.6f}"
+destination_coords = st.session_state.destination_coords
 
 # Directions APIリクエスト作成
 url = "https://maps.googleapis.com/maps/api/directions/json"
