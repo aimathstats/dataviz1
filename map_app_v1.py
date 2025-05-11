@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.set_page_config(layout="narrow")
+st.set_page_config(layout="wide")
 
 list = [
   {"latitude":35.051095034877825, "longitude":135.76477636253375}, #デフォルト現在地（植物園）
