@@ -47,7 +47,7 @@ current_location = (35.681236, 139.767125)  # 東京駅
 destination = (35.689487, 139.691706)       # 新宿駅
 
 # 地図作成
-m = folium.Map(location=current_location, zoom_start=13)
+m = folium.Map(location=current_location, zoom_start=14)
 folium.Marker(current_location, tooltip="現在地").add_to(m)
 folium.Marker(destination, tooltip="目的地").add_to(m)
 
