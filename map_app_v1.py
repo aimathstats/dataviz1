@@ -49,7 +49,7 @@ API_KEY = st.secrets["GOOGLE_API_KEY"]
 origin_coords = "35.04540,135.75870"      # 北大路駅
 destination_coords = "35.02332,135.75953" # 京都御所
 center_lat, center_lon = 35.02332, 135.75953
-a = np.random.randn(1,2)/[100,100] + [center_lat, center_lon] 
+a = np.random.randn(1,2)/[10,10] + [center_lat, center_lon] 
 destination_coords = f"{a[0]},{a[1]}"
 
 # Directions APIリクエスト作成
@@ -71,7 +71,7 @@ if data.get("status") != "OK":
     st.json(data)  # エラーメッセージの中身を表示
 
 else:
-    print(data)
+    #print(data)
     # ポリラインをデコード
     polyline_str = data["routes"][0]["overview_polyline"]["points"]
     decoded_path = polyline.decode(polyline_str)
