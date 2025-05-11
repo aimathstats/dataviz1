@@ -12,8 +12,14 @@ st.title("簡単避難所マップ by streamlit")
 st.write("デフォルト現在地：京都府立植物園北門")
 st.map(list)
 
+
 ##############################
-#####
+# google map api
+import folium
+import requests
+from streamlit_folium import st_folium
+from streamlit_js_eval import get_geolocation
+
 st.title("現在地を取得して地図に表示")
 st.write("ブラウザに位置情報の使用を許可してください。")
 
@@ -33,12 +39,6 @@ else:
 
 
 ###############################################
-# google map api
-import folium
-from streamlit_folium import st_folium
-import requests
-from streamlit_js_eval import get_geolocation
-
 # Google Maps API Key
 GOOGLE_MAPS_API_KEY = "GOOGLE_API_KEY"
 
