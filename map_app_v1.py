@@ -83,7 +83,7 @@ import requests
 import polyline
 
 # Google APIキーを設定
-API_KEY = "YOUR_API_KEY"
+API_KEY = "GOOGLE_API_KEY"
 
 # 出発地と目的地（東京駅 → 新宿駅）
 origin = "Tokyo Station"
