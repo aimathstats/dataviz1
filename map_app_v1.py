@@ -15,7 +15,6 @@ st.map(list)
 
 ##############################
 import folium
-import requests
 from streamlit_folium import st_folium
 from streamlit_js_eval import get_geolocation
 
@@ -39,14 +38,15 @@ else:
 
 ###############################################
 # google map api
-import polyline  # Googleのポリラインデータをデコードするために必要
+import requests
+import polyline  # Googleのポリラインデータのデコード
 
-# ✅ APIキー（自分のものに置き換えてください）
+st.title("Google Maps Directions API")
 API_KEY = st.secrets["GOOGLE_API_KEY"]
 
-# ✅ 出発地と到着地の座標（東京駅 → 新宿駅）
-origin_coords = "35.681236,139.767125"     # 東京駅
-destination_coords = "35.689592,139.700413" # 新宿駅西口周辺
+# 出発地と到着地の座標
+origin_coords = "35.041815,135.753769"      # 北大路駅
+destination_coords = "35.025400,135.762116" # 京都御所（建礼門）
 
 # Directions APIリクエスト作成
 url = "https://maps.googleapis.com/maps/api/directions/json"
@@ -56,8 +56,6 @@ params = {
     "mode": "driving",
     "key": API_KEY
 }
-
-st.title("Google Maps Directions API")
 
 # APIリクエスト送信
 res = requests.get(url, params=params)
@@ -85,5 +83,4 @@ else:
 
     # 地図表示
     st_folium(m, width=700, height=500)
-
 
