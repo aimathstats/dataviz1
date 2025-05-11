@@ -83,7 +83,7 @@ import requests
 import polyline
 
 # Google APIキーを設定
-API_KEY = "GOOGLE_API_KEY"
+GOOGLE_MAPS_API_KEY = "GOOGLE_API_KEY"
 
 # 出発地と目的地（東京駅 → 新宿駅）
 origin = "Tokyo Station"
@@ -92,7 +92,7 @@ destination = "Shinjuku Station"
 # Directions API リクエスト
 url = (
     "https://maps.googleapis.com/maps/api/directions/json"
-    f"?origin={origin}&destination={destination}&mode=driving&key={API_KEY}"
+    f"?origin={origin}&destination={destination}&mode=driving&key={GOOGLE_MAPS_API_KEY}"
 )
 
 response = requests.get(url)
