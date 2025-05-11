@@ -48,8 +48,8 @@ API_KEY = st.secrets["GOOGLE_API_KEY"]
 # 出発地と到着地の座標
 origin_coords = "35.04540,135.75870"      # 北大路駅
 if "destination_coords" not in st.session_state:
-    lat = 35.025 + random.uniform(-0.03, 0.03)
-    lon = 135.762 + random.uniform(-0.03, 0.03)
+    lat = 35.02332 + random.uniform(-0.03, 0.03)
+    lon = 135.75953 + random.uniform(-0.03, 0.03)
     st.session_state.destination_coords = f"{lat:.6f},{lon:.6f}"
 destination_coords = st.session_state.destination_coords
 #destination_coords = "35.02332,135.75953" # 京都御所
