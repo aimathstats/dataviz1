@@ -8,10 +8,28 @@ list = [
   {"latitude":35.05044293, "longitude":135.75418841}, #元町小学校
 ]
 
-st.title("避難所マップ　version 1")
-st.map(list)
+st.title("簡単避難所マップ by streamlit")
 st.write("デフォルト現在地：京都府立植物園北門")
-#st.write(list)
+st.map(list)
+
+##############################
+#####
+st.title("現在地を取得して地図に表示")
+st.write("ブラウザに位置情報の使用を許可してください。")
+
+# JavaScriptで現在地を取得（navigator.geolocation）
+loc = get_geolocation()
+
+if loc:
+    lat = loc["coords"]["latitude"]
+    lon = loc["coords"]["longitude"]
+    st.success(f"現在地：緯度 {lat:.5f}, 経度 {lon:.5f}")
+    # Foliumマップ作成
+    m = folium.Map(location=[lat, lon], zoom_start=15)
+    folium.Marker([lat, lon], tooltip="現在地", icon=folium.Icon(color="red")).add_to(m)
+    st_folium(m, height=500, width=500)
+else:
+    st.warning("位置情報を取得中...またはブラウザで許可されていません。")
 
 
 ###############################################
@@ -56,21 +74,4 @@ for place in places.get('results', []):
 
 # 表示
 st.title("Google Maps APIアプリ")
-st_folium(m, width=700)
-
-
-st.title("現在地を取得して地図に表示")
-st.write("ブラウザに位置情報の使用を許可してください。")
-
-# JavaScriptで現在地を取得（navigator.geolocation）
-loc = get_geolocation()
-if loc:
-    lat = loc["coords"]["latitude"]
-    lon = loc["coords"]["longitude"]
-    st.success(f"現在地：緯度 {lat:.5f}, 経度 {lon:.5f}")
-    # Foliumマップ作成
-    m = folium.Map(location=[lat, lon], zoom_start=15)
-    folium.Marker([lat, lon], tooltip="現在地", icon=folium.Icon(color="red")).add_to(m)
-    st_folium(m, height=500, width=700)
-else:
-    st.warning("位置情報を取得中...またはブラウザで許可されていません。")
+st_folium(m, width=500)
