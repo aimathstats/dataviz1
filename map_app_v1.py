@@ -29,7 +29,7 @@ if loc:
     lon = loc["coords"]["longitude"]
     st.success(f"現在地：緯度 {lat:.5f}, 経度 {lon:.5f}")
     # Foliumマップ作成
-    m = folium.Map(location=[lat, lon], zoom_start=15)
+    m = folium.Map(location=[lat, lon], zoom_start=20)
     folium.Marker([lat, lon], tooltip="現在地", icon=folium.Icon(color="red")).add_to(m)
     st_folium(m, height=500, width=500)
 else:
