@@ -51,11 +51,11 @@ destination_coords = "35.02332,135.75953" # 京都御所
 #center_lat, center_lon = 35.02332, 135.75953
 #a = np.random.randn(1,2)/[10,10] + [center_lat, center_lon] 
 #destination_coords = f"a[0],a[1]"
-import random
-e1 = random.uniform(-0.003, 0.003)
-e2 = random.uniform(-0.003, 0.003)
-destination_coords = f"{35.02332 + e1:.6f}," \
-                     f"{135.75953 + e2:.6f}"
+#import random
+#e1 = random.uniform(-0.003, 0.003)
+#e2 = random.uniform(-0.003, 0.003)
+destination_coords = f"{35.02332 + np.random.randn(1,1):.6f}," \
+                     f"{135.75953 + np.random.randn(1,1):.6f}"
 #destination_coords = f"{35.02332 + random.uniform(-0.003, 0.003):.6f}," \
 #                     f"{135.75953 + random.uniform(-0.003, 0.003):.6f}"
 
