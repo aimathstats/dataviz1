@@ -57,3 +57,9 @@ for place in places.get('results', []):
 st.title("Google Maps APIアプリ")
 st_folium(m, width=700)
 
+#####
+from streamlit_js_eval import streamlit_js_eval
+st.title("現在地の取得")
+# 現在地の取得
+result = streamlit_js_eval(js_expressions="navigator.geolocation.getCurrentPosition", key="get_geolocation")
+st.write(result)
