@@ -40,7 +40,7 @@ else:
 
 ###############################################
 # Google Maps API Key
-GOOGLE_MAPS_API_KEY = "GOOGLE_API_KEY"
+# GOOGLE_MAPS_API_KEY = "GOOGLE_API_KEY"
 
 # サンプルの現在地と目的地
 #current_location = (35.681236, 139.767125)  # 東京駅
