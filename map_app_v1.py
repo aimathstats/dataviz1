@@ -63,3 +63,30 @@ st.title("現在地の取得")
 # 現在地の取得
 result = streamlit_js_eval(js_expressions="navigator.geolocation.getCurrentPosition", key="get_geolocation")
 st.write(result)
+
+
+
+#####
+from streamlit_js_eval import get_geolocation
+
+st.set_page_config(page_title="現在地表示", layout="centered")
+
+st.title("📍 現在地を取得して地図に表示する")
+st.write("ブラウザに位置情報の使用を許可してください。")
+
+# JavaScriptで現在地を取得（navigator.geolocation）
+loc = get_geolocation()
+
+if loc:
+    lat = loc["coords"]["latitude"]
+    lon = loc["coords"]["longitude"]
+    st.success(f"現在地：緯度 {lat:.5f}, 経度 {lon:.5f}")
+
+    # Foliumマップ作成
+    m = folium.Map(location=[lat, lon], zoom_start=15)
+    folium.Marker([lat, lon], tooltip="現在地", icon=folium.Icon(color="red")).add_to(m)
+
+    st_folium(m, height=500, width=700)
+
+else:
+    st.warning("位置情報を取得中...またはブラウザで許可されていません。")
