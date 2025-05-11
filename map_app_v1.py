@@ -43,17 +43,17 @@ else:
 GOOGLE_MAPS_API_KEY = "GOOGLE_API_KEY"
 
 # サンプルの現在地と目的地
-current_location = (35.681236, 139.767125)  # 東京駅
-destination = (35.689487, 139.691706)       # 新宿駅
+#current_location = (35.681236, 139.767125)  # 東京駅
+#destination = (35.689487, 139.691706)       # 新宿駅
 
 # 地図作成
-m = folium.Map(location=current_location, zoom_start=14)
-folium.Marker(current_location, tooltip="現在地").add_to(m)
-folium.Marker(destination, tooltip="目的地").add_to(m)
+#m = folium.Map(location=current_location, zoom_start=14)
+#folium.Marker(current_location, tooltip="現在地").add_to(m)
+#folium.Marker(destination, tooltip="目的地").add_to(m)
 
 # Directions APIでルート取得
-directions_url = f"https://maps.googleapis.com/maps/api/directions/json?origin={current_location[0]},{current_location[1]}&destination={destination[0]},{destination[1]}&mode=driving&key={GOOGLE_MAPS_API_KEY}"
-response = requests.get(directions_url).json()
+#directions_url = f"https://maps.googleapis.com/maps/api/directions/json?origin={current_location[0]},{current_location[1]}&destination={destination[0]},{destination[1]}&mode=driving&key={GOOGLE_MAPS_API_KEY}"
+#response = requests.get(directions_url).json()
 
 # ルートのpolylineを描画
 #if response['status'] == 'OK':
