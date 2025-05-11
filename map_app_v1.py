@@ -43,7 +43,7 @@ import polyline  # Googleのポリラインデータをデコードするため�
 
 # ✅ APIキー（自分のものに置き換えてください）
 #API_KEY = "AIzaSyDi2e1a8LqhIsVeRczodf_TEu32oIxua4w"
-API_KEY = GOOGLE_API_KEY
+API_KEY = st.secrets["GOOGLE_API_KEY"]
 
 # ✅ 出発地と到着地の座標（東京駅 → 新宿駅）
 origin_coords = "35.681236,139.767125"     # 東京駅
