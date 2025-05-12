@@ -23,6 +23,7 @@ st.title("現在地を取得して地図に表示")
 st.write("ブラウザに位置情報の使用を許可してください。")
 
 loc = get_geolocation()  # JavaScriptで現在地を取得（navigator.geolocation）
+st.json(loc)
 
 if loc:
     lat = loc["coords"]["latitude"]
@@ -206,9 +207,8 @@ for entry in place_list:
     st.markdown(entry)
 
 
-
-##### ポップアップ版
-st.title("🅿️ 京都御所周辺の駐車場（マーカークリックで詳細表示）")
+##### ポップアップで詳細表示
+st.title("京都御所周辺の駐車場（クリックで詳細表示）")
 center_lat, center_lng = 35.025400, 135.762116
 places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 params = {
@@ -221,14 +221,13 @@ params = {
 
 res = requests.get(places_url, params=params)
 data = res.json()
-
 m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
 folium.Marker([center_lat, center_lng], tooltip="京都御所中心", icon=folium.Icon(color="blue")).add_to(m)
 
 place_list = []
 
 if data.get("status") == "OK":
-    results = data.get("results", [])[:10]
+    results = data.get("results", [])[:10] # 10件のみ表示
 
     for i, place in enumerate(results, start=1):
         name = place.get("name", "名称不明")
@@ -238,7 +237,7 @@ if data.get("status") == "OK":
         place_id = place.get("place_id")
         gmap_url = f"https://www.google.com/maps/place/?q=place_id:{place_id}"
 
-        # HTMLポップアップを作成（トリプルシングルクォートで安全）
+        # HTMLポップアップを作成
         popup_html = f'''
         <b>{i}. {name}</b><br>
         評価: {rating}<br>
@@ -259,7 +258,6 @@ else:
     st.json(data)
 
 st_folium(m, width=700, height=500)
-
 st.markdown("上位10件の駐車場リスト")
 for entry in place_list:
     st.markdown(entry)
