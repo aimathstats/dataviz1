@@ -91,8 +91,7 @@ else:
 st.title("北大路駅周辺のレストラン")
 st.write("by Google Places API")
 
-# 北大路駅
-center_lat, center_lng = 35.04540, 135.75870
+center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
 radius = 500  # メートル
 
 # Places API Nearby Search リクエスト
@@ -100,9 +99,18 @@ places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 params = {
     "location": f"{center_lat},{center_lng}",
     "radius": radius,
-    "type": "restaurant",  # ← レストランに限定
+    #"type": "restaurant",  # レストランに限定
+    "type": "parking",  # 駐車場に限定
     "key": API_KEY
 }
+
+### type list
+# レストラン `restaurant`        
+# カフェ   `cafe`              
+# コンビニ  `convenience_store` 
+# バス停  `bus_station`       
+# 美術館   `museum`            
+# 駐車場　parking"
 
 res = requests.get(places_url, params=params)
 data = res.json()
@@ -125,7 +133,7 @@ st_folium(m, width=700, height=500)
 
 
 #### 人気順
-st.title("京都御所周辺のレストラン（評価順）")
+st.title("北大路駅周辺のレストラン（評価順）")
 center_lat, center_lng = 35.025400, 135.762116
 
 places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
@@ -141,9 +149,8 @@ res = requests.get(places_url, params=params)
 data = res.json()
 
 m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
-folium.Marker([center_lat, center_lng], tooltip="京都御所中心", icon=folium.Icon(color="blue")).add_to(m)
+folium.Marker([center_lat, center_lng], tooltip="北大路駅中心", icon=folium.Icon(color="blue")).add_to(m)
 
-# レストラン表示
 if data.get("status") == "OK":
     for i, place in enumerate(data.get("results", []), start=1):
         name = place.get("name", "名称不明")
