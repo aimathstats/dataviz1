@@ -92,13 +92,12 @@ st.title("北大路駅周辺のレストラン")
 st.write("by Google Places API")
 
 center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
-radius = 500  # メートル
 
 # Places API Nearby Search リクエスト
 places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 params = {
     "location": f"{center_lat},{center_lng}",
-    "radius": radius,
+    "radius": 500,
     #"type": "restaurant",  # レストランに限定
     "type": "parking",  # 駐車場に限定
     "key": API_KEY
@@ -133,9 +132,8 @@ st_folium(m, width=700, height=500)
 
 
 #### 人気順
-st.title("北大路駅周辺のレストラン（評価順）")
-center_lat, center_lng = 35.025400, 135.762116
-
+st.title("北大路駅周辺のレストラン（人気順表示）")
+center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
 places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 params = {
     "location": f"{center_lat},{center_lng}",
@@ -147,7 +145,6 @@ params = {
 
 res = requests.get(places_url, params=params)
 data = res.json()
-
 m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
 folium.Marker([center_lat, center_lng], tooltip="北大路駅中心", icon=folium.Icon(color="blue")).add_to(m)
 
@@ -157,15 +154,89 @@ if data.get("status") == "OK":
         rating = place.get("rating", "不明")
         lat = place["geometry"]["location"]["lat"]
         lng = place["geometry"]["location"]["lng"]
-        tooltip = f"{i}. {name}（評価: {rating}）"
-        folium.Marker(
-            [lat, lng],
-            tooltip=tooltip,
-            icon=folium.Icon(color="red", icon="cutlery", prefix="fa")
-        ).add_to(m)
+        tooltip = f"{i}. {name}（評価: {rating}）" # modified
+        folium.Marker([lat, lng], tooltip=tooltip, icon=folium.Icon(color="red", icon="cutlery", prefix="fa")).add_to(m)
 else:
     st.error(f"Places APIエラー: {data.get('status')}")
     st.json(data)
 
 st_folium(m, width=700, height=500)
+
+
+##### 営業時間つき
+st.title("京都御所周辺の駐車場（評価順 + 営業時間）")
+
+# 京都御所中心
+center_lat, center_lng = 35.025400, 135.762116
+
+# Nearby Search API（駐車場）
+places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+params = {
+    "location": f"{center_lat},{center_lng}",
+    "radius": 800,
+    "type": "parking",
+    "rankby": "prominence",
+    "key": API_KEY
+}
+res = requests.get(places_url, params=params)
+data = res.json()
+m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
+folium.Marker([center_lat, center_lng], tooltip="京都御所中心", icon=folium.Icon(color="blue")).add_to(m)
+
+# リスト作成
+place_list = []
+
+if data.get("status") == "OK":
+    for i, place in enumerate(data.get("results", []), start=1):
+        name = place.get("name", "名称不明")
+        rating = place.get("rating", "評価なし")
+        lat = place["geometry"]["location"]["lat"]
+        lng = place["geometry"]["location"]["lng"]
+        place_id = place.get("place_id")
+
+        # Google Maps URL
+        gmap_url = f"https://www.google.com/maps/place/?q=place_id:{place_id}"
+
+        # Place Details API で営業時間を取得
+        details_url = "https://maps.googleapis.com/maps/api/place/details/json"
+        details_params = {
+            "place_id": place_id,
+            "fields": "opening_hours",
+            "key": API_KEY
+        }
+        details_res = requests.get(details_url, params=details_params)
+        details_data = details_res.json()
+        
+        # 営業時間情報
+        opening_info = "営業時間情報なし"
+        try:
+            weekday_text = details_data["result"]["opening_hours"]["weekday_text"]
+            opening_info = weekday_text[0]  # 月曜だけ表示（例: "Monday: Open 24 hours"）
+        except:
+            pass
+
+        # 地図マーカー
+        tooltip = f"{i}. {name}（評価: {rating}）"
+        folium.Marker(
+            [lat, lng],
+            tooltip=tooltip,
+            icon=folium.Icon(color="purple", icon="info-sign")
+        ).add_to(m)
+
+        # リストに追加（Markdownリンク付き）
+        place_list.append(f"**{i}. [{name}]({gmap_url})**  \n評価: {rating}  \n{opening_info}")
+
+else:
+    st.error(f"Places APIエラー: {data.get('status')}")
+    st.json(data)
+
+st_folium(m, width=700, height=500)
+
+# リスト表示
+st.markdown("一覧（Googleマップリンク + 営業時間）")
+for entry in place_list:
+    st.markdown(entry)
+
+
+
 
