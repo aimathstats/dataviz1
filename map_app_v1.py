@@ -88,9 +88,10 @@ else:
 
 
 ##### google map places API
-st.title("🍽️ Google Places API：京都御所周辺のレストラン")
+st.title("京都御所周辺のレストラン")
+st.write("by Google Places API")
 
-# 京都御所の中心
+# 京都御所
 center_lat, center_lng = 35.025400, 135.762116
 radius = 500  # メートル
 
