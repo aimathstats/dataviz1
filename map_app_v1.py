@@ -90,7 +90,6 @@ else:
 ##### google map places API
 st.title("北大路駅周辺のレストラン")
 st.write("by Google Places API")
-
 center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
 
 # Places API Nearby Search リクエスト
@@ -164,8 +163,8 @@ st_folium(m, width=700, height=500)
 
 
 ##### リスト書き出し版
-st.title("京都御所周辺の駐車場（評価順）")
-center_lat, center_lng = 35.025400, 135.762116
+st.title("北大路駅周辺の駐車場（評価順）")
+center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
 
 # APIリクエスト設定
 places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
@@ -177,15 +176,10 @@ params = {
     "key": API_KEY
 }
 
-# API呼び出し
 res = requests.get(places_url, params=params)
 data = res.json()
-
-# 地図作成
 m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
-folium.Marker([center_lat, center_lng], tooltip="京都御所中心", icon=folium.Icon(color="blue")).add_to(m)
-
-# リストを格納
+folium.Marker([center_lat, center_lng], tooltip="北大路駅中心", icon=folium.Icon(color="blue")).add_to(m)
 place_list = []
 
 if data.get("status") == "OK":
@@ -198,26 +192,16 @@ if data.get("status") == "OK":
 
         # Google Maps の URL を生成
         gmap_url = f"https://www.google.com/maps/place/?q=place_id:{place_id}"
-
-        # 地図にマーカー
         tooltip = f"{i}. {name}（評価: {rating}）"
-        folium.Marker(
-            [lat, lng],
-            tooltip=tooltip,
-            icon=folium.Icon(color="purple", icon="info-sign")
-        ).add_to(m)
-
-        # リストに追加（Markdownリンク形式）
+        folium.Marker([lat, lng], tooltip=tooltip, icon=folium.Icon(color="purple", icon="info-sign")).add_to(m)
         place_list.append(f"{i}. [{name}]({gmap_url}) - 評価: {rating}")
 
 else:
     st.error(f"Places APIエラー: {data.get('status')}")
     st.json(data)
 
-# 地図表示
 st_folium(m, width=700, height=500)
-
 # リスト表示（地図の下）
-st.markdown("### 📋 一覧（Googleマップリンク付き）")
+st.markdown("一覧（Googleマップリンク付き）")
 for entry in place_list:
     st.markdown(entry)
