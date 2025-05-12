@@ -228,7 +228,7 @@ folium.Marker([center_lat, center_lng], tooltip="京都御所中心", icon=foliu
 place_list = []
 
 if data.get("status") == "OK":
-    results = data.get("results", [])[:5]
+    results = data.get("results", [])[:10]
 
     for i, place in enumerate(results, start=1):
         name = place.get("name", "名称不明")
@@ -238,12 +238,6 @@ if data.get("status") == "OK":
         place_id = place.get("place_id")
         gmap_url = f"https://www.google.com/maps/place/?q=place_id:{place_id}"
 
-        # HTMLポップアップを作成
-        #popup_html = f"""
-        #<b>{i}. {name}</b><br>
-        #評価: {rating}<br>
-        #<a href="{gmap_url}" target="_blank">Googleマップで見る</a>
-        #"""
         # HTMLポップアップを作成（トリプルシングルクォートで安全）
         popup_html = f'''
         <b>{i}. {name}</b><br>
@@ -258,7 +252,6 @@ if data.get("status") == "OK":
             icon=folium.Icon(color="purple", icon="info-sign")
         ).add_to(m)
 
-        # 下のリスト用
         place_list.append(f"**{i}. [{name}]({gmap_url})**  \n評価: {rating}")
 
 else:
@@ -267,7 +260,7 @@ else:
 
 st_folium(m, width=700, height=500)
 
-st.markdown("### 📋 上位5件の駐車場リスト")
+st.markdown("上位10件の駐車場リスト")
 for entry in place_list:
     st.markdown(entry)
 
