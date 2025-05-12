@@ -14,7 +14,8 @@ list = [
 st.map(list)
 
 
-##### 現在地取得してfoliumマップに表示
+
+##### jsで現在地取得してfoliumマップに表示（google api不使用）
 import folium
 from streamlit_folium import st_folium
 from streamlit_js_eval import get_geolocation
@@ -23,6 +24,7 @@ st.title("現在地を取得して地図に表示")
 st.write("ブラウザに位置情報の使用を許可してください。")
 
 loc = get_geolocation()  # JavaScriptで現在地を取得（navigator.geolocation）
+st.write("取得した現在地情報（jsonファイル）") # 確認のため、アプリ上に表示
 st.json(loc)
 
 if loc:
@@ -34,6 +36,7 @@ if loc:
     st_folium(m, height=500, width=500)
 else:
     st.warning("位置情報を取得中...またはブラウザで位置情報が許可されていません。")
+
 
 
 ##### Google map api から座標に基づくルート情報を取得して表示
@@ -88,8 +91,9 @@ else:
     st_folium(m, width=700, height=500)
 
 
+
 ##### Google map places API
-st.title("北大路駅周辺のレストラン")
+st.title("北大路駅周辺のレストラン（簡単版）")
 st.write("by Google Places API")
 center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
 
@@ -99,7 +103,6 @@ params = {
     "location": f"{center_lat},{center_lng}",
     "radius": 500,
     "type": "restaurant",  # レストランに限定
-    #"type": "parking",  # 駐車場に限定
     "key": API_KEY
 }
 
@@ -131,7 +134,8 @@ else:
 st_folium(m, width=700, height=500)
 
 
-#### 人気順
+
+#### 人気順表示
 st.title("北大路駅周辺のレストラン（人気順表示）")
 center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
 places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
@@ -161,6 +165,7 @@ else:
     st.json(data)
 
 st_folium(m, width=700, height=500)
+
 
 
 ##### 駐車場リスト書き出し
@@ -205,6 +210,7 @@ st_folium(m, width=700, height=500)
 st.markdown("一覧（Googleマップリンク付き）") # リスト表示（地図の下）
 for entry in place_list:
     st.markdown(entry)
+
 
 
 ##### ポップアップで詳細表示
