@@ -87,7 +87,7 @@ else:
     st_folium(m, width=700, height=500)
 
 
-##### google map places API
+##### Google map places API
 st.title("北大路駅周辺のレストラン")
 st.write("by Google Places API")
 center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
@@ -97,8 +97,8 @@ places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 params = {
     "location": f"{center_lat},{center_lng}",
     "radius": 500,
-    #"type": "restaurant",  # レストランに限定
-    "type": "parking",  # 駐車場に限定
+    "type": "restaurant",  # レストランに限定
+    #"type": "parking",  # 駐車場に限定
     "key": API_KEY
 }
 
@@ -162,7 +162,7 @@ else:
 st_folium(m, width=700, height=500)
 
 
-##### リスト書き出し版
+##### 駐車場リスト書き出し
 st.title("北大路駅周辺の駐車場（評価順）")
 center_lat, center_lng = 35.04540, 135.75870 # 北大路駅
 
@@ -201,7 +201,7 @@ else:
     st.json(data)
 
 st_folium(m, width=700, height=500)
-# リスト表示（地図の下）
-st.markdown("一覧（Googleマップリンク付き）")
+st.markdown("一覧（Googleマップリンク付き）") # リスト表示（地図の下）
 for entry in place_list:
     st.markdown(entry)
+
