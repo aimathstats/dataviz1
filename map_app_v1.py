@@ -24,8 +24,6 @@ st.title("現在地を取得して地図に表示")
 st.write("ブラウザに位置情報の使用を許可してください。")
 
 loc = get_geolocation()  # JavaScriptで現在地を取得（navigator.geolocation）
-st.write("取得した現在地情報（jsonファイル）") # 確認のため、アプリ上に表示
-st.json(loc)
 
 if loc:
     lat = loc["coords"]["latitude"]
@@ -36,6 +34,9 @@ if loc:
     st_folium(m, height=500, width=500)
 else:
     st.warning("位置情報を取得中...またはブラウザで位置情報が許可されていません。")
+
+st.write("取得した現在地情報（jsonファイル）") # 確認のため、アプリ上に表示
+st.json(loc)
 
 
 
