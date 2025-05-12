@@ -163,13 +163,11 @@ else:
 st_folium(m, width=700, height=500)
 
 
-##### 営業時間つき
-st.title("京都御所周辺の駐車場（評価順 + 営業時間）")
-
-# 京都御所中心
+##### リスト書き出し版
+st.title("京都御所周辺の駐車場（評価順）")
 center_lat, center_lng = 35.025400, 135.762116
 
-# Nearby Search API（駐車場）
+# APIリクエスト設定
 places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
 params = {
     "location": f"{center_lat},{center_lng}",
@@ -178,12 +176,16 @@ params = {
     "rankby": "prominence",
     "key": API_KEY
 }
+
+# API呼び出し
 res = requests.get(places_url, params=params)
 data = res.json()
+
+# 地図作成
 m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
 folium.Marker([center_lat, center_lng], tooltip="京都御所中心", icon=folium.Icon(color="blue")).add_to(m)
 
-# リスト作成
+# リストを格納
 place_list = []
 
 if data.get("status") == "OK":
@@ -194,28 +196,10 @@ if data.get("status") == "OK":
         lng = place["geometry"]["location"]["lng"]
         place_id = place.get("place_id")
 
-        # Google Maps URL
+        # Google Maps の URL を生成
         gmap_url = f"https://www.google.com/maps/place/?q=place_id:{place_id}"
 
-        # Place Details API で営業時間を取得
-        details_url = "https://maps.googleapis.com/maps/api/place/details/json"
-        details_params = {
-            "place_id": place_id,
-            "fields": "opening_hours",
-            "key": API_KEY
-        }
-        details_res = requests.get(details_url, params=details_params)
-        details_data = details_res.json()
-        
-        # 営業時間情報
-        opening_info = "営業時間情報なし"
-        try:
-            weekday_text = details_data["result"]["opening_hours"]["weekday_text"]
-            opening_info = weekday_text[0]  # 月曜だけ表示（例: "Monday: Open 24 hours"）
-        except:
-            pass
-
-        # 地図マーカー
+        # 地図にマーカー
         tooltip = f"{i}. {name}（評価: {rating}）"
         folium.Marker(
             [lat, lng],
@@ -223,20 +207,17 @@ if data.get("status") == "OK":
             icon=folium.Icon(color="purple", icon="info-sign")
         ).add_to(m)
 
-        # リストに追加（Markdownリンク付き）
-        place_list.append(f"**{i}. [{name}]({gmap_url})**  \n評価: {rating}  \n{opening_info}")
+        # リストに追加（Markdownリンク形式）
+        place_list.append(f"{i}. [{name}]({gmap_url}) - 評価: {rating}")
 
 else:
     st.error(f"Places APIエラー: {data.get('status')}")
     st.json(data)
 
+# 地図表示
 st_folium(m, width=700, height=500)
 
-# リスト表示
-st.markdown("一覧（Googleマップリンク + 営業時間）")
+# リスト表示（地図の下）
+st.markdown("### 📋 一覧（Googleマップリンク付き）")
 for entry in place_list:
     st.markdown(entry)
-
-
-
-
