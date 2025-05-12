@@ -239,12 +239,18 @@ if data.get("status") == "OK":
         gmap_url = f"https://www.google.com/maps/place/?q=place_id:{place_id}"
 
         # HTMLポップアップを作成
-        popup_html = f"""
+        #popup_html = f"""
+        #<b>{i}. {name}</b><br>
+        #評価: {rating}<br>
+        #<a href="{gmap_url}" target="_blank">Googleマップで見る</a>
+        #"""
+        # HTMLポップアップを作成（トリプルシングルクォートで安全）
+        popup_html = f'''
         <b>{i}. {name}</b><br>
         評価: {rating}<br>
         <a href="{gmap_url}" target="_blank">Googleマップで見る</a>
-        """
-        
+        '''
+
         folium.Marker(
             [lat, lng],
             tooltip=f"{name}（クリックで詳細）",
@@ -264,3 +270,5 @@ st_folium(m, width=700, height=500)
 st.markdown("### 📋 上位5件の駐車場リスト")
 for entry in place_list:
     st.markdown(entry)
+
+
