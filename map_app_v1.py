@@ -88,11 +88,11 @@ else:
 
 
 ##### google map places API
-st.title("京都御所周辺のレストラン")
+st.title("北大路駅周辺のレストラン")
 st.write("by Google Places API")
 
-# 京都御所
-center_lat, center_lng = 35.025400, 135.762116
+# 北大路駅
+center_lat, center_lng = 35.04540, 135.75870
 radius = 500  # メートル
 
 # Places API Nearby Search リクエスト
@@ -108,7 +108,7 @@ res = requests.get(places_url, params=params)
 data = res.json()
 
 m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
-folium.Marker([center_lat, center_lng], tooltip="京都御所中心").add_to(m)
+folium.Marker([center_lat, center_lng], tooltip="北大路駅中心").add_to(m)
 
 # レストラン表示
 if data.get("status") == "OK":
@@ -122,3 +122,4 @@ else:
     st.json(data)
 
 st_folium(m, width=700, height=500)
+
