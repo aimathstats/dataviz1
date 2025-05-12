@@ -85,3 +85,39 @@ else:
 
     # 地図表示
     st_folium(m, width=700, height=500)
+
+
+##### google map places API
+st.title("🍽️ Google Places API：京都御所周辺のレストラン")
+
+# 京都御所の中心
+center_lat, center_lng = 35.025400, 135.762116
+radius = 500  # メートル
+
+# Places API Nearby Search リクエスト
+places_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json"
+params = {
+    "location": f"{center_lat},{center_lng}",
+    "radius": radius,
+    "type": "restaurant",  # ← レストランに限定
+    "key": API_KEY
+}
+
+res = requests.get(places_url, params=params)
+data = res.json()
+
+m = folium.Map(location=[center_lat, center_lng], zoom_start=16)
+folium.Marker([center_lat, center_lng], tooltip="京都御所中心").add_to(m)
+
+# レストラン表示
+if data.get("status") == "OK":
+    for place in data.get("results", []):
+        name = place.get("name")
+        lat = place["geometry"]["location"]["lat"]
+        lng = place["geometry"]["location"]["lng"]
+        folium.Marker([lat, lng], tooltip=name, icon=folium.Icon(color="red", icon="cutlery", prefix="fa")).add_to(m)
+else:
+    st.error(f"Places APIエラー: {data.get('status')}")
+    st.json(data)
+
+st_folium(m, width=700, height=500)
