@@ -71,10 +71,6 @@ params = {
 res = requests.get(url, params=params)
 data = res.json()
 
-# 確認のため，アプリ上にデータ表示
-st.write("取得したデータ")
-st.json(data)
-
 # レスポンスの確認
 if data.get("status") != "OK":
     st.error(f"Directions APIの取得に失敗しました: {data.get('status')}")
@@ -94,6 +90,10 @@ else:
 
     # 地図表示
     st_folium(m, width=700, height=500)
+
+# 確認のため，アプリ上にデータ表示
+st.write("取得したデータ")
+st.json(data)
 
 
 
