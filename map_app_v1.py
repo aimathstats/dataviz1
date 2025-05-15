@@ -92,8 +92,8 @@ else:
     st_folium(m, width=700, height=500)
 
 # 確認のため，アプリ上にデータ表示
-st.write("取得したデータ")
-st.json(data)
+#st.write("取得したデータ")
+#st.json(data)
 
 
 
