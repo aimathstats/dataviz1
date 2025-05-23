@@ -4,7 +4,7 @@ import numpy as np
 
 # ファイルの読み込み
 url = "https://github.com/aimathstats/dataviz1/raw/refs/heads/main/data/movie_rate.xlsx"
-df = pd.read_excel(url)
+real2 = pd.read_excel(url)
 
 # 初期設定
 M = 4   # 因子数
