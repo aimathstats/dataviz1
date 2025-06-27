@@ -6,16 +6,16 @@ import os
 from scipy.stats import ttest_ind, sem, t
 import matplotlib.pyplot as plt
 
-# ファイル名
+# ファイル名（最初は存在しなくても通る）
 DATA_FILE = 'ab_test_data.csv'
 
-# 広告のランダム表示と計測開始
+# 広告のランダム表示と計測開始（セッションに保存）
 if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
     st.session_state.start_time = time.time()
 
 st.title("Web広告のABテスト")
-st.write("確率0.5で広告A、確率0.5で広告Bを表示します")
+st.write("広告A/Bをそれぞれ確率1/2で表示します")
 st.subheader(f"あなたへの広告：**{st.session_state.ad_type}**")
 #st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
