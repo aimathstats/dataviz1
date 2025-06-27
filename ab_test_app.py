@@ -118,7 +118,7 @@ else:
 
 # 全データの表示
 st.divider()
-st.subheader("これまでに記録された全データ")
+st.subheader("(参考)これまでに記録された全データ")
 if os.path.exists(DATA_FILE):
     st.dataframe(df.sort_values("timestamp", ascending=False).reset_index(drop=True))
 else:
