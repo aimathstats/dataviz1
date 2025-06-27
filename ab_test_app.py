@@ -14,13 +14,13 @@ if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
     st.session_state.start_time = time.time()
 
-st.title("📊 簡易ABテスト with t検定・グラフ・信頼区間")
+st.title("簡易ABテスト with t検定")
 st.subheader(f"あなたに表示された広告：**{st.session_state.ad_type}**")
 
-st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
+#st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
 # 滞在時間の記録
-if st.button("✅ 滞在完了として記録"):
+if st.button("滞在完了（記録）して画面更新"):
     end_time = time.time()
     duration = end_time - st.session_state.start_time
 
@@ -47,7 +47,7 @@ if st.button("✅ 滞在完了として記録"):
 
 # データ処理と分析
 st.divider()
-st.subheader("📈 A/B広告の滞在時間データ")
+st.subheader("A/B広告の滞在時間データ")
 
 if os.path.exists(DATA_FILE):
     df = pd.read_csv(DATA_FILE)
@@ -58,7 +58,7 @@ if os.path.exists(DATA_FILE):
     b_data = df[df["ad_type"] == "B"]["duration"]
 
     # グラフ表示
-    st.subheader("📊 滞在時間の分布")
+    st.subheader("滞在時間の分布")
 
     fig1, ax1 = plt.subplots()
     ax1.hist(a_data, bins=15, alpha=0.6, label='A')
@@ -86,7 +86,7 @@ if os.path.exists(DATA_FILE):
         ci = t_val * s
         return (m - ci, m + ci)
 
-    st.subheader("📐 平均滞在時間の95%信頼区間")
+    st.subheader("平均滞在時間の95%信頼区間")
     ci_a = compute_ci(a_data)
     ci_b = compute_ci(b_data)
 
@@ -103,23 +103,22 @@ if os.path.exists(DATA_FILE):
     # t検定
     if len(a_data) >= 2 and len(b_data) >= 2:
         t_stat, p_value = ttest_ind(a_data, b_data, equal_var=False)
-        st.subheader("🧪 t検定の結果")
+        st.subheader("t検定の結果")
         st.write(f"検定統計量 t = {t_stat:.3f}")
         st.write(f"p値 = {p_value:.4f}")
         alpha = 0.05
         if p_value < alpha:
-            st.success("✅ 差は統計的に有意です（p < 0.05）")
+            st.success("差は統計的に有意です（p < 0.05）")
         else:
-            st.info("⚠️ 差は統計的に有意とは言えません（p ≥ 0.05）")
+            st.info("⚠差は統計的に有意とは言えません（p ≥ 0.05）")
     else:
         st.warning("検定には各群で2件以上のデータが必要です。")
 else:
     st.info("まだ記録がありません。滞在完了を記録してください。")
 
-# --- 全データの表示（ページ末尾） ---
+# 全データの表示
 st.divider()
-st.subheader("🗃 これまでに記録された全データ")
-
+st.subheader("これまでに記録された全データ")
 if os.path.exists(DATA_FILE):
     st.dataframe(df.sort_values("timestamp", ascending=False).reset_index(drop=True))
 else:
