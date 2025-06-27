@@ -15,7 +15,7 @@ if 'ad_type' not in st.session_state:
     st.session_state.start_time = time.time()
 
 st.title("Web広告のABテスト")
-st.write("広告A/Bをそれぞれ確率1/2で表示します")
+st.write("広告AかBをそれぞれ確率1/2で表示します")
 st.subheader(f"あなたへの広告：**{st.session_state.ad_type}**")
 #st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
