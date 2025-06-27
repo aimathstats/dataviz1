@@ -14,9 +14,9 @@ if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
     st.session_state.start_time = time.time()
 
-st.title("Web広告のABテスト with t検定")
+st.title("Web広告のABテスト")
 st.subheader(f"あなたに表示された広告：**{st.session_state.ad_type}**")
-#st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
+st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
 # 滞在時間の記録
 if st.button("滞在完了（記録）して画面更新"):
@@ -44,6 +44,8 @@ if st.button("滞在完了（記録）して画面更新"):
             del st.session_state[key]
     st.rerun()
 
+st.subheader("※ 以上、広告画面（以下はユーザーから見えない）")
+
 # データ処理と分析
 st.divider()
 st.subheader("A/B広告の滞在時間データ")
@@ -52,26 +54,24 @@ if os.path.exists(DATA_FILE):
     df = pd.read_csv(DATA_FILE)
     summary = df.groupby("ad_type")["duration"].agg(['count', 'mean', 'std'])
     st.dataframe(summary)
-
     a_data = df[df["ad_type"] == "A"]["duration"]
     b_data = df[df["ad_type"] == "B"]["duration"]
 
     # グラフ表示
     st.subheader("滞在時間の分布")
-
     fig1, ax1 = plt.subplots()
     ax1.hist(a_data, bins=15, alpha=0.6, label='A')
     ax1.hist(b_data, bins=15, alpha=0.6, label='B')
-    ax1.set_xlabel("滞在時間（秒）")
-    ax1.set_ylabel("件数")
-    ax1.set_title("ヒストグラム")
+    ax1.set_xlabel("Duration (second)")
+    ax1.set_ylabel("Frequency")
+    ax1.set_title("Histogram of Stay Duration")
     ax1.legend()
     st.pyplot(fig1)
 
     fig2, ax2 = plt.subplots()
     ax2.boxplot([a_data, b_data], labels=['A', 'B'])
-    ax2.set_ylabel("滞在時間（秒）")
-    ax2.set_title("箱ひげ図")
+    ax2.set_ylabel("Duration (second)")
+    ax2.set_title("Boxplot of Stay Duration")
     st.pyplot(fig2)
 
     # 信頼区間（95%）表示
