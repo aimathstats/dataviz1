@@ -47,7 +47,7 @@ if st.button("滞在完了（記録）して画面更新"):
 
 # データ処理と分析
 st.divider()
-st.write("※以下に示されるデータ・データ分析はユーザーから見えません")
+st.write("※以下に示されるデータ分析はユーザーから見えません")
 st.subheader("A/B広告の滞在時間データ")
 
 if os.path.exists(DATA_FILE):
