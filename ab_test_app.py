@@ -16,7 +16,7 @@ if 'ad_type' not in st.session_state:
 
 st.title("Web広告のABテスト")
 st.subheader(f"あなたに表示された広告：**{st.session_state.ad_type}**")
-st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
+#st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
 # 滞在時間の記録
 if st.button("滞在完了（記録）して画面更新"):
@@ -44,7 +44,7 @@ if st.button("滞在完了（記録）して画面更新"):
             del st.session_state[key]
     st.rerun()
 
-st.subheader("※ 以上、広告画面（以下はユーザーから見えない）")
+st.write("※ 以上、広告画面（以下はユーザーから見えない）")
 
 # データ処理と分析
 st.divider()
