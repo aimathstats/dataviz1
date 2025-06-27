@@ -9,6 +9,15 @@ import matplotlib.pyplot as plt
 # ファイル名（最初は存在しなくても通る）
 DATA_FILE = 'ab_test_data.csv'
 
+import streamlit as st
+import random
+
+# 広告画像のパス
+ad_images = {
+    'A': 'ad_A.png',
+    'B': 'ad_B.png'
+}
+
 # 広告のランダム表示と計測開始（セッションに保存）
 if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
@@ -17,6 +26,7 @@ if 'ad_type' not in st.session_state:
 st.title("Web広告のABテスト")
 st.write("広告AかBをそれぞれ確率1/2で表示します")
 st.subheader(f"あなたへの広告：**{st.session_state.ad_type}**")
+st.image(ad_images[st.session_state.ad_type], use_column_width=True)
 #st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
 # 滞在時間の記録
