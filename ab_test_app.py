@@ -44,10 +44,9 @@ if st.button("滞在完了（記録）して画面更新"):
             del st.session_state[key]
     st.rerun()
 
-st.write("※ 以上、広告画面（以下はユーザーから見えない）")
-
 # データ処理と分析
 st.divider()
+st.write("※以下はユーザーから見えない）")
 st.subheader("A/B広告の滞在時間データ")
 
 if os.path.exists(DATA_FILE):
