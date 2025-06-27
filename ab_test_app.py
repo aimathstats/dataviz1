@@ -14,8 +14,8 @@ import random
 
 # 広告画像のパス
 ad_images = {
-    'A': 'ad_A.png',
-    'B': 'ad_B.png'
+    'A': 'data/ad_A.png',
+    'B': 'data/ad_B.png'
 }
 
 # 広告のランダム表示と計測開始（セッションに保存）
