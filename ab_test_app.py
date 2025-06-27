@@ -109,3 +109,12 @@ if os.path.exists(DATA_FILE):
         st.warning("検定には各群で2件以上のデータが必要です。")
 else:
     st.info("まだ記録がありません。滞在完了を記録してください。")
+
+# --- 全データの表示（ページ末尾） ---
+st.divider()
+st.subheader("🗃 これまでに記録された全データ")
+
+if os.path.exists(DATA_FILE):
+    st.dataframe(df.sort_values("timestamp", ascending=False).reset_index(drop=True))
+else:
+    st.info("まだデータはありません。")
