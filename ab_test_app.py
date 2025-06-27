@@ -38,6 +38,12 @@ if st.button("✅ 滞在完了として記録"):
 
     df.to_csv(DATA_FILE, index=False)
     st.success(f"{st.session_state.ad_type} の滞在時間 {duration:.2f} 秒を記録しました。")
+    
+    # session_stateをクリアしてページをリロード
+    for key in ['ad_type', 'start_time']:
+        if key in st.session_state:
+            del st.session_state[key]
+    st.rerun()
 
 # データ処理と分析
 st.divider()
