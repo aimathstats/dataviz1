@@ -14,9 +14,8 @@ if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
     st.session_state.start_time = time.time()
 
-st.title("簡易ABテスト with t検定")
+st.title("Web広告のABテスト with t検定")
 st.subheader(f"あなたに表示された広告：**{st.session_state.ad_type}**")
-
 #st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
 # 滞在時間の記録
@@ -110,7 +109,7 @@ if os.path.exists(DATA_FILE):
         if p_value < alpha:
             st.success("差は統計的に有意です（p < 0.05）")
         else:
-            st.info("⚠差は統計的に有意とは言えません（p ≥ 0.05）")
+            st.info("差は統計的に有意とは言えません（p ≥ 0.05）")
     else:
         st.warning("検定には各群で2件以上のデータが必要です。")
 else:
