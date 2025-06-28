@@ -97,20 +97,20 @@ if os.path.exists(DATA_FILE):
     ci_b = compute_ci(b_data)
 
     if ci_a:
-        st.write(f"A広告の平均: {a_data.mean():.2f} 秒 (95% CI: [{ci_a[0]:.2f}, {ci_a[1]:.2f}])")
+        st.write(f"広告Aの平均: {a_data.mean():.2f} 秒 (95% CI: [{ci_a[0]:.2f}, {ci_a[1]:.2f}])")
     else:
-        st.write("A広告の信頼区間を計算するには2件以上のデータが必要です。")
+        st.write("広告Aの信頼区間を計算するには2件以上のデータが必要です。")
 
     if ci_b:
-        st.write(f"B広告の平均: {b_data.mean():.2f} 秒 (95% CI: [{ci_b[0]:.2f}, {ci_b[1]:.2f}])")
+        st.write(f"広告Bの平均: {b_data.mean():.2f} 秒 (95% CI: [{ci_b[0]:.2f}, {ci_b[1]:.2f}])")
     else:
-        st.write("B広告の信頼区間を計算するには2件以上のデータが必要です。")
+        st.write("広告Bの信頼区間を計算するには2件以上のデータが必要です。")
 
     # t検定
     if len(a_data) >= 2 and len(b_data) >= 2:
         t_stat, p_value = ttest_ind(a_data, b_data, equal_var=False)
         st.subheader("t検定の結果")
-        st.write(f"検定統計量 t = {t_stat:.3f}")
+        #st.write(f"検定統計量 t = {t_stat:.3f}")
         st.write(f"p値 = {p_value:.4f}（「広告の間に差がない」とする仮説の下でデータが得られる確率）")
         alpha = 0.05
         if p_value < alpha:
