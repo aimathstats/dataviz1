@@ -59,7 +59,7 @@ st.subheader("A/B広告の滞在時間の基本統計量とデータ可視化")
 
 if os.path.exists(DATA_FILE):
     df = pd.read_csv(DATA_FILE)
-    summary = df.groupby("ad_type")["duration"].agg(['頻度', '平均値（秒）', '標準偏差（秒）'])
+    summary = df.groupby("ad_type")["duration"].agg(["頻度","平均値（秒）","標準偏差（秒）"])
     st.dataframe(summary)
     a_data = df[df["ad_type"] == "A"]["duration"]
     b_data = df[df["ad_type"] == "B"]["duration"]
