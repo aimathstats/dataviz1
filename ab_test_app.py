@@ -111,7 +111,7 @@ if os.path.exists(DATA_FILE):
         t_stat, p_value = ttest_ind(a_data, b_data, equal_var=False)
         st.subheader("t検定の結果")
         st.write(f"検定統計量 t = {t_stat:.3f}")
-        st.write(f"p値 = {p_value:.4f}（仮説「広告間に差がない」の下でデータが得られる確率）")
+        st.write(f"p値 = {p_value:.4f}（「広告の間に差がない」とする仮説の下でデータが得られる確率）")
         alpha = 0.05
         if p_value < alpha:
             st.success("差は統計的に有意です（p < 0.05）")
