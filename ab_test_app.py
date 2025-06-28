@@ -66,20 +66,22 @@ if os.path.exists(DATA_FILE):
 
     # グラフ表示
     st.subheader("滞在時間の分布")
-    fig1, ax1 = plt.subplots()
-    ax1.hist(a_data, bins=15, alpha=0.6, label='A')
-    ax1.hist(b_data, bins=15, alpha=0.6, label='B')
-    ax1.set_xlabel("Duration (second)")
-    ax1.set_ylabel("Frequency")
-    ax1.set_title("Histogram of Stay Duration")
-    ax1.legend()
-    st.pyplot(fig1)
-
-    fig2, ax2 = plt.subplots()
-    ax2.boxplot([a_data, b_data], labels=['A', 'B'])
-    ax2.set_ylabel("Duration (second)")
-    ax2.set_title("Boxplot of Stay Duration")
-    st.pyplot(fig2)
+    col1, col2 = st.columns(2)
+    with col1:
+        fig1, ax1 = plt.subplots()
+        ax1.hist(a_data, bins=15, alpha=0.6, label='A')
+        ax1.hist(b_data, bins=15, alpha=0.6, label='B')
+        ax1.set_xlabel("Duration (second)")
+        ax1.set_ylabel("Frequency")
+        ax1.set_title("Histogram of Stay Duration")
+        ax1.legend()
+        st.pyplot(fig1)
+    with col2:
+        fig2, ax2 = plt.subplots()
+        ax2.boxplot([a_data, b_data], labels=['A', 'B'])
+        ax2.set_ylabel("Duration (second)")
+        ax2.set_title("Boxplot of Stay Duration")
+        st.pyplot(fig2)
 
     # 信頼区間（95%）表示
     def compute_ci(data, alpha=0.05):
