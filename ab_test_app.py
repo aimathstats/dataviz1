@@ -6,16 +6,16 @@ import os
 from scipy.stats import ttest_ind, sem, t
 import matplotlib.pyplot as plt
 
-# ファイル名（最初は存在しなくても通る）
+# データ保存用ファイル（最初は存在しなくても通る）
 DATA_FILE = 'ab_test_data.csv'
 
-# 画像のパス
+# 広告画像のパス
 ad_images = {
     'A': 'data/ad_A.png',
     'B': 'data/ad_B.png'
 }
 
-# 広告のランダム表示と計測開始（セッションに保存）
+# 広告のランダム表示と計測開始（セッション状態に保存）
 if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
     st.session_state.start_time = time.time()
@@ -111,7 +111,7 @@ if os.path.exists(DATA_FILE):
         t_stat, p_value = ttest_ind(a_data, b_data, equal_var=False)
         st.subheader("t検定の結果")
         st.write(f"検定統計量 t = {t_stat:.3f}")
-        st.write(f"p値 = {p_value:.4f}")
+        st.write(f"p値 = {p_value:.4f} （）")
         alpha = 0.05
         if p_value < alpha:
             st.success("差は統計的に有意です（p < 0.05）")
