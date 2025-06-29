@@ -11,6 +11,12 @@ DATA_FILE = "ab_test_data.csv"
 BANDIT_STATE_FILE = "bandit_state.json"
 ads = ["A", "B"]
 
+# 広告画像のパス
+ad_images = {
+    'A': 'data/ad_A.png',
+    'B': 'data/ad_B.png'
+}
+
 # ---------- バンディット状態の読み込み・初期化 ----------
 if os.path.exists(BANDIT_STATE_FILE):
     with open(BANDIT_STATE_FILE, "r") as f:
@@ -50,7 +56,7 @@ st.markdown(
     f"""
     <div style='background-color:#f0f8ff; padding:20px; border-radius:10px; text-align:center;'>
         <h4>あなたに表示された広告タイプ：{ad}</h4>
-        <img src='data/ad_{ad}.png' width='256'>
+        <img src='{ad_images[ad]}' width='256'>
     </div>
     """,
     unsafe_allow_html=True
