@@ -67,11 +67,11 @@ st.table(pd.DataFrame({
 duration_placeholder = st.empty()
 stop_button = st.button("✅ 滞在完了として記録")
 
-if not stop_button:
-    elapsed = time.time() - st.session_state.start_time
-    duration_placeholder.markdown(f"### ⏱ 現在の滞在時間：{elapsed:.1f} 秒")
-    time.sleep(1)
-    st.rerun()
+#if not stop_button:
+#    elapsed = time.time() - st.session_state.start_time
+#    duration_placeholder.markdown(f"### ⏱ 現在の滞在時間：{elapsed:.1f} 秒")
+#    time.sleep(1)
+#    st.rerun()
 
 # ---------- 記録と更新 ----------
 if stop_button:
