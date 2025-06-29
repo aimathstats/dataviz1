@@ -50,17 +50,10 @@ if "ad_type" not in st.session_state:
 # ---------- UI：広告表示 ----------
 st.title("📊 ABテスト with UCB")
 
-# 広告部分を背景色付きで表示
+# 広告表示（背景色なし）
 ad = st.session_state.ad_type
-st.markdown(
-    f"""
-    <div style='background-color:#f0f8ff; padding:20px; border-radius:10px; text-align:center;'>
-        <h4>あなたに表示された広告タイプ：{ad}</h4>
-        <img src='{ad_images[ad]}' width='256'>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+st.markdown(f"### あなたに表示された広告タイプ：{ad}")
+st.image(ad_images[ad], width=200)
 
 # ---------- UCBスコアの可視化 ----------
 st.subheader("📐 現在のUCBスコア")
