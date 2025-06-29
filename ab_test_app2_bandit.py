@@ -110,7 +110,9 @@ st.subheader("📈 滞在時間の比較")
 
 if os.path.exists(DATA_FILE):
     df = pd.read_csv(DATA_FILE)
-    st.dataframe(df.groupby("ad_type")["duration"].agg(["count", "mean", "std"]))
+    #st.dataframe(df.groupby("ad_type")["duration"].agg(["count", "mean", "std"]))
+    summary = df.groupby("ad_type")["duration"].agg(['count','mean','std'])
+    st.dataframe(summary)
 
     # グラフ表示を左右に並べる
     col1, col2 = st.columns(2)
