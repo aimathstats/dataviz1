@@ -7,7 +7,7 @@ import json
 import matplotlib.pyplot as plt
 
 # ---------- ファイルと初期設定 ----------
-DATA_FILE = "ab_test_data.csv"
+DATA_FILE = "ab_test_data2.csv"
 BANDIT_STATE_FILE = "bandit_state.json"
 ads = ["A", "B"]
 
