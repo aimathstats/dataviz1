@@ -50,7 +50,7 @@ st.markdown(
     f"""
     <div style='background-color:#f0f8ff; padding:20px; border-radius:10px; text-align:center;'>
         <h4>あなたに表示された広告タイプ：{ad}</h4>
-        <img src='ad_{ad}_small.png' width='256'>
+        <img src='data/ad_{ad}.png' width='256'>
     </div>
     """,
     unsafe_allow_html=True
