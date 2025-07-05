@@ -53,7 +53,7 @@ if "ad_type" not in st.session_state:
     st.session_state.start_time = time.time()
 
 # ---------- UI：広告表示 ----------
-st.title("ABテスト with 信頼上限方策（UCB）")
+st.title("ABテスト with 信頼上限方策")
 
 # 広告表示（背景色なし）
 ad = st.session_state.ad_type
