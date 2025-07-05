@@ -55,7 +55,7 @@ if st.button("滞在完了（記録）して画面更新"):
 # データ処理と分析
 st.divider()
 st.write("※ 以下に示されるデータ分析はユーザーから見えません")
-st.subheader("A/B広告の滞在時間の基本統計量とデータ可視化")
+st.subheader("広告の滞在時間の基本統計・データ可視化")
 
 if os.path.exists(DATA_FILE):
     df = pd.read_csv(DATA_FILE)
@@ -111,7 +111,7 @@ if os.path.exists(DATA_FILE):
     # t検定
     if len(a_data) >= 2 and len(b_data) >= 2:
         t_stat, p_value = ttest_ind(a_data, b_data, equal_var=False)
-        st.subheader("t検定の結果")
+        st.subheader("平均滞在時間のt検定")
         #st.write(f"検定統計量 t = {t_stat:.3f}")
         st.write(f"p値 = {p_value:.4f}（「広告の間に差がない」とする仮説の下でデータが得られる確率）")
         alpha = 0.05
