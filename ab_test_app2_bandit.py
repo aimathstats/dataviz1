@@ -60,6 +60,16 @@ ad = st.session_state.ad_type
 st.markdown(f"### あなたに表示された広告タイプ：{ad}")
 st.image(ad_images[ad], width=200)
 
+# ---------- リアルタイム滞在時間表示 ----------
+duration_placeholder = st.empty()
+stop_button = st.button("滞在完了として記録")
+
+#if not stop_button:
+#    elapsed = time.time() - st.session_state.start_time
+#    duration_placeholder.markdown(f"### ⏱ 現在の滞在時間：{elapsed:.1f} 秒")
+#    time.sleep(1)
+#    st.rerun()
+
 # ---------- UCBスコアの可視化 ----------
 st.divider()
 st.write("※ 以下に示されるデータ分析はユーザーから見えません")
@@ -71,21 +81,10 @@ st.table(pd.DataFrame({
     "UCBスコア": st.session_state.ucb_scores
 }))
 
-# ---------- リアルタイム滞在時間表示 ----------
-duration_placeholder = st.empty()
-stop_button = st.button("滞在完了として記録")
-
-#if not stop_button:
-#    elapsed = time.time() - st.session_state.start_time
-#    duration_placeholder.markdown(f"### ⏱ 現在の滞在時間：{elapsed:.1f} 秒")
-#    time.sleep(1)
-#    st.rerun()
-
 # ---------- 記録と更新 ----------
 if stop_button:
     end_time = time.time()
     duration = end_time - st.session_state.start_time
-
     new_row = pd.DataFrame([{"ad_type": ad, "duration": duration, "timestamp": pd.Timestamp.now()}])
 
     # CSVに保存
@@ -119,7 +118,7 @@ st.subheader("滞在時間の比較")
 
 if os.path.exists(DATA_FILE):
     df = pd.read_csv(DATA_FILE)
-    #st.dataframe(df.groupby("ad_type")["duration"].agg(["count", "mean", "std"]))
+    st.dataframe(df.groupby("ad_type")["duration"].agg(["count", "mean", "std"]))
     #summary = df.groupby("ad_type")["duration"].agg(['count','mean','std'])
     #st.dataframe(summary)
 
