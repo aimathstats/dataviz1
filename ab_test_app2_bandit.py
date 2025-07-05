@@ -61,6 +61,8 @@ st.markdown(f"### あなたに表示された広告タイプ：{ad}")
 st.image(ad_images[ad], width=200)
 
 # ---------- UCBスコアの可視化 ----------
+st.divider()
+st.write("※ 以下に示されるデータ分析はユーザーから見えません")
 st.subheader("現在のUCBスコア")
 st.table(pd.DataFrame({
     "表示回数 (count)": bandit_state["counts"],
@@ -112,7 +114,7 @@ if stop_button:
     st.rerun()
 
 # ---------- 結果の表示 ----------
-st.divider()
+#st.divider()
 st.subheader("滞在時間の比較")
 
 if os.path.exists(DATA_FILE):
