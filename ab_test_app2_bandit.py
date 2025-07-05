@@ -17,7 +17,7 @@ ad_images = {
     'B': 'data/ad_B.png'
 }
 
-# ---------- バンディット状態の読み込み・初期化 ----------
+# ---------- バンディット状態の読み込み・初期化 (json ファイル) ----------
 if os.path.exists(BANDIT_STATE_FILE):
     with open(BANDIT_STATE_FILE, "r") as f:
         bandit_state = json.load(f)
@@ -31,24 +31,29 @@ else:
 def select_ad(state):
     total_counts = sum(state["counts"].values()) + 1
     ucb_scores = {}
+    bonuses = {}
     for ad in ads:
         count = state["counts"][ad]
         value = state["values"][ad]
         if count == 0:
+            bonuses[ad] = float("inf")
             ucb_scores[ad] = float("inf")
         else:
-            ucb_scores[ad] = value + np.sqrt(2 * np.log(total_counts) / count)
-    return max(ucb_scores, key=ucb_scores.get), ucb_scores
+            bonus = np.sqrt(2 * np.log(total_counts) / count)
+            bonuses[ad] = bonus
+            ucb_scores[ad] = value + bonus
+    return max(ucb_scores, key=ucb_scores.get), ucb_scores, bonuses
 
 # ---------- 選択広告と滞在開始時間 ----------
 if "ad_type" not in st.session_state:
-    selected_ad, current_ucb = select_ad(bandit_state)
+    selected_ad, current_ucb, current_bonus = select_ad(bandit_state)
     st.session_state.ad_type = selected_ad
     st.session_state.ucb_scores = current_ucb
+    st.session_state.bonuses = current_bonus
     st.session_state.start_time = time.time()
 
 # ---------- UI：広告表示 ----------
-st.title("📊 ABテスト with UCB")
+st.title("ABテスト with 信頼上限方策（UCB）")
 
 # 広告表示（背景色なし）
 ad = st.session_state.ad_type
@@ -56,16 +61,17 @@ st.markdown(f"### あなたに表示された広告タイプ：{ad}")
 st.image(ad_images[ad], width=200)
 
 # ---------- UCBスコアの可視化 ----------
-st.subheader("📐 現在のUCBスコア")
+st.subheader("現在のUCBスコア")
 st.table(pd.DataFrame({
     "表示回数 (count)": bandit_state["counts"],
     "平均滞在時間 (mean)": bandit_state["values"],
+    "補正項 (bonus)": st.session_state.bonuses,
     "UCBスコア": st.session_state.ucb_scores
 }))
 
 # ---------- リアルタイム滞在時間表示 ----------
 duration_placeholder = st.empty()
-stop_button = st.button("✅ 滞在完了として記録")
+stop_button = st.button("滞在完了として記録")
 
 #if not stop_button:
 #    elapsed = time.time() - st.session_state.start_time
@@ -98,43 +104,62 @@ if stop_button:
     with open(BANDIT_STATE_FILE, "w") as f:
         json.dump(bandit_state, f)
 
-    st.success(f"{ad} の滞在時間 {duration:.2f} 秒を記録しました。画面を更新して次の広告を表示します。")
+    #st.success(f"{ad} の滞在時間 {duration:.2f} 秒を記録しました。画面を更新して次の広告を表示します。")
     del st.session_state.ad_type
     del st.session_state.start_time
     del st.session_state.ucb_scores
+    del st.session_state.bonuses
     st.rerun()
 
 # ---------- 結果の表示 ----------
 st.divider()
-st.subheader("📈 滞在時間の比較")
+st.subheader("滞在時間の比較")
 
 if os.path.exists(DATA_FILE):
     df = pd.read_csv(DATA_FILE)
-    #st.dataframe(df.groupby("ad_type")["duration"].agg(["count", "mean", "std"]))
-    summary = df.groupby("ad_type")["duration"].agg(['count','mean','std'])
-    st.dataframe(summary)
+    st.dataframe(df.groupby("ad_type")["duration"].agg(["count", "mean", "std"]))
+    #summary = df.groupby("ad_type")["duration"].agg(['count','mean','std'])
+    #st.dataframe(summary)
 
     # グラフ表示を左右に並べる
     col1, col2 = st.columns(2)
-    with col1:
-        fig1, ax1 = plt.subplots()
-        ax1.hist(df[df.ad_type == "A"]["duration"], bins=15, alpha=0.6, label="A")
-        ax1.hist(df[df.ad_type == "B"]["duration"], bins=15, alpha=0.6, label="B")
-        ax1.set_title("Histogram")
-        ax1.set_xlabel("Duration (sec)")
-        ax1.set_ylabel("Frequency")
-        ax1.legend()
-        st.pyplot(fig1)
+    #with col1:
+    #    fig1, ax1 = plt.subplots()
+    #    ax1.hist(df[df.ad_type == "A"]["duration"], bins=15, alpha=0.6, label="A")
+    #    ax1.hist(df[df.ad_type == "B"]["duration"], bins=15, alpha=0.6, label="B")
+    #    ax1.set_title("Histogram")
+    #    ax1.set_xlabel("Duration (sec)")
+    #    ax1.set_ylabel("Frequency")
+    #    ax1.legend()
+    #    st.pyplot(fig1)
 
-    with col2:
+    with col1:
         fig2, ax2 = plt.subplots()
         ax2.boxplot([df[df.ad_type == "A"]["duration"], df[df.ad_type == "B"]["duration"]], labels=["A", "B"])
         ax2.set_title("Boxplot")
         ax2.set_ylabel("Duration (sec)")
         st.pyplot(fig2)
+        
+    with col2:
+        means = [bandit_state["values"][ad] for ad in ads]
+        bonuses = [np.sqrt(2 * np.log(sum(bandit_state["counts"].values()) + 1) / bandit_state["counts"][ad]) if bandit_state["counts"][ad] > 0 else 0 for ad in ads]
+        ucbs = [means[i] + bonuses[i] for i in range(len(ads))]
+
+        x = np.arange(len(ads))
+        width = 0.3
+
+        fig, ax = plt.subplots()
+        ax.bar(x - width, means, width, label='Mean')
+        ax.bar(x, bonuses, width, label='Bonus')
+        ax.bar(x + width, ucbs, width, label='UCB')
+        ax.set_xticks(x)
+        ax.set_xticklabels(ads)
+        ax.set_title("UCB Components")
+        ax.legend()
+        st.pyplot(fig)
 
     # 全記録表示
-    st.subheader("🗃 すべての記録")
+    st.subheader("すべての記録")
     st.dataframe(df.sort_values("timestamp", ascending=False).reset_index(drop=True))
 else:
     st.info("まだ記録はありません。")
