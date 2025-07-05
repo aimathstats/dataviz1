@@ -142,19 +142,16 @@ if os.path.exists(DATA_FILE):
         
     with col2:
         means = [bandit_state["values"][ad] for ad in ads]
-        bonuses = [np.sqrt(2 * np.log(sum(bandit_state["counts"].values()) + 1) / bandit_state["counts"][ad]) if bandit_state["counts"][ad] > 0 else 0 for ad in ads]
-        ucbs = [means[i] + bonuses[i] for i in range(len(ads))]
+        bonuses = [st.session_state.bonuses[ad] if np.isfinite(st.session_state.bonuses[ad]) else 0 for ad in ads]
 
         x = np.arange(len(ads))
-        width = 0.3
-
         fig, ax = plt.subplots()
-        ax.bar(x - width, means, width, label='Mean')
-        ax.bar(x, bonuses, width, label='Bonus')
-        ax.bar(x + width, ucbs, width, label='UCB')
+        ax.bar(x, means, label='Mean')
+        ax.bar(x, bonuses, bottom=means, label='Bonus')
         ax.set_xticks(x)
         ax.set_xticklabels(ads)
-        ax.set_title("UCB Components")
+        ax.set_title("UCB Score = Mean + Bonus")
+        ax.set_ylabel("Score")
         ax.legend()
         st.pyplot(fig)
 
