@@ -60,16 +60,6 @@ ad = st.session_state.ad_type
 st.markdown(f"### あなたに表示された広告タイプ：{ad}")
 st.image(ad_images[ad], width=200)
 
-# ---------- リアルタイム滞在時間表示 ----------
-duration_placeholder = st.empty()
-stop_button = st.button("滞在完了として記録")
-
-#if not stop_button:
-#    elapsed = time.time() - st.session_state.start_time
-#    duration_placeholder.markdown(f"### ⏱ 現在の滞在時間：{elapsed:.1f} 秒")
-#    time.sleep(1)
-#    st.rerun()
-
 # ---------- UCBスコアの可視化 ----------
 st.divider()
 st.write("※ 以下に示されるデータ分析はユーザーから見えません")
@@ -80,6 +70,16 @@ st.table(pd.DataFrame({
     "補正項 (bonus)": st.session_state.bonuses,
     "UCBスコア": st.session_state.ucb_scores
 }))
+
+# ---------- リアルタイム滞在時間表示 ----------
+duration_placeholder = st.empty()
+stop_button = st.button("滞在完了として記録")
+
+#if not stop_button:
+#    elapsed = time.time() - st.session_state.start_time
+#    duration_placeholder.markdown(f"### ⏱ 現在の滞在時間：{elapsed:.1f} 秒")
+#    time.sleep(1)
+#    st.rerun()
 
 # ---------- 記録と更新 ----------
 if stop_button:
