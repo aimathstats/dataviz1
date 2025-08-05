@@ -60,7 +60,7 @@ holder_norm = approx_holder_norm(Z)
 
 #st.subheader("数式（Latex 表記）")
 st.latex(f"f(x,y) = {latex(simplify(expr))}")
-st.latex(f"f \\in B^{{{s}}}_{{2,2}}(\\mathbb{{R}}^2) = H^{{s}}(\\mathbb{{R}}^2)")
+st.latex(f"f \\in B^{{{s}}}_{{2,2}}(\\mathbb{{R}}^2) = H^{{{s}}}(\\mathbb{{R}}^2)")
 
 st.subheader("ノルムの比較")
 col1, col2 = st.columns(2)
