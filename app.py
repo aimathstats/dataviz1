@@ -24,8 +24,8 @@ X, Y = np.meshgrid(x, y)
 #s = round(np.random.uniform(0.5, 2.0), 2)  # 滑らかさ s
 #num_terms = random.randint(5, 10)
 # スライダーで s を選択
-s = st.slider("滑らかさパラメータ s を選択", 0.1, 2.0, 1.0, 0.1)
-num_terms = st.slider("正弦波の項数", 5, 20, 5)
+s = st.slider("滑らかさパラメータ s を選択", 0.1, 5.0, 1.0, 0.1)
+num_terms = st.slider("正弦波の項数", 3, 20, 5)
 
 # ランダムな正弦波による関数生成
 Z = np.zeros_like(X)
