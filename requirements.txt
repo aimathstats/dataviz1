@@ -16,4 +16,3 @@ polyline
 matplotlib
 numpy
 sympy
-pywt
