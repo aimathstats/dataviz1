@@ -8,23 +8,19 @@ from pytrends.request import TrendReq
 
 st.set_page_config(layout="wide")
 
-#import streamlit as st
-#import numpy as np
 import matplotlib.pyplot as plt
-#import pywt
 from sympy import symbols, sin, pi, latex, simplify
 from mpl_toolkits.mplot3d import Axes3D
 import random
 
 st.set_page_config(page_title="Besov Space Function Viewer", layout="wide")
-st.title("🎨 ベゾフ空間 B(2,2)^s に属する関数の可視化")
+st.title("Besov空間 B_{2,2}^s に属する関数の可視化")
 
 N = 128
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 X, Y = np.meshgrid(x, y)
 
-# ランダム設定
 s = round(np.random.uniform(0.5, 2.0), 2)  # 滑らかさ s
 num_terms = random.randint(5, 10)
 
@@ -46,9 +42,7 @@ for _ in range(num_terms):
 
 norm_besov = np.sqrt(norm_besov_sq)
 
-# -----------------------------
 # Hölderノルムの近似（α=0.5）
-# -----------------------------
 def approx_holder_norm(Z, alpha=0.5, sample_size=500):
     idx = np.random.randint(0, Z.shape[0], sample_size)
     idy = np.random.randint(0, Z.shape[1], sample_size)
@@ -64,24 +58,16 @@ def approx_holder_norm(Z, alpha=0.5, sample_size=500):
 
 holder_norm = approx_holder_norm(Z)
 
-# -----------------------------
-# 数式表示
-# -----------------------------
-st.subheader("🧮 数式（Latex 表記）")
+#st.subheader("数式（Latex 表記）")
 st.latex(f"f(x,y) = {latex(simplify(expr))}")
-st.latex(f"f \\in B^{{{s}}}_{{2,2}}(\\mathbb{{R}}^2) = H^{s}(\\mathbb{{R}}^2)")
+st.latex(f"f \\in B^{{{s}}}_{{2,2}}(\\mathbb{{R}}^2) = H^{{s}}(\\mathbb{{R}}^2)")
 
-# -----------------------------
-# ノルム表示
-# -----------------------------
-st.subheader("📊 ノルムの比較")
+st.subheader("ノルムの比較")
 col1, col2 = st.columns(2)
 col1.metric("ベゾフ/ソボレフノルム", f"{norm_besov:.4f}")
 col2.metric("ヘルダー（α=0.5）ノルム", f"{holder_norm:.4f}")
 
-# -----------------------------
 # 3D可視化
-# -----------------------------
 fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(X, Y, Z, cmap="viridis", edgecolor="none")
@@ -91,16 +77,11 @@ ax.set_ylabel("y")
 ax.set_zlabel("f(x,y)")
 st.pyplot(fig)
 
-# -----------------------------
 # リロードボタン
-# -----------------------------
 if st.button("🔄 別のランダム関数を見る"):
     st.experimental_rerun()
 
-
-
-
-
+###################################################
 # 簡単地図作成と地点表示、緯度経度（10進数）
 pref_list = [
   {"latitude":35.051095034877825, "longitude":135.76477636253375}, #現在地（デフォルト）
