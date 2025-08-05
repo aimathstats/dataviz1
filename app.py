@@ -11,7 +11,7 @@ st.set_page_config(layout="wide")
 #import streamlit as st
 #import numpy as np
 import matplotlib.pyplot as plt
-import pywt
+#import pywt
 from sympy import symbols, sin, pi, latex, simplify
 from mpl_toolkits.mplot3d import Axes3D
 import random
