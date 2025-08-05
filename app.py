@@ -14,19 +14,20 @@ from mpl_toolkits.mplot3d import Axes3D
 import random
 
 st.set_page_config(page_title="Besov Space Function Viewer", layout="wide")
-st.title("Besov空間 B_{2,2}^s に属する関数の可視化")
+st.title("Besov空間 B_{2,2}^s の関数")
 
 N = 128
 x = np.linspace(0, 1, N)
 y = np.linspace(0, 1, N)
 X, Y = np.meshgrid(x, y)
 
-s = round(np.random.uniform(0.5, 2.0), 2)  # 滑らかさ s
-num_terms = random.randint(5, 10)
+#s = round(np.random.uniform(0.5, 2.0), 2)  # 滑らかさ s
+#num_terms = random.randint(5, 10)
+# スライダーで s を選択
+s = st.slider("滑らかさパラメータ s を選択", 0.1, 2.0, 1.0, 0.1)
+num_terms = st.slider("正弦波の項数", 5, 30, 10)
 
-# -----------------------------
 # ランダムな正弦波による関数生成
-# -----------------------------
 Z = np.zeros_like(X)
 x_sym, y_sym = symbols("x y")
 expr = 0
@@ -71,14 +72,14 @@ col2.metric("ヘルダー（α=0.5）ノルム", f"{holder_norm:.4f}")
 fig = plt.figure(figsize=(8, 6))
 ax = fig.add_subplot(111, projection='3d')
 ax.plot_surface(X, Y, Z, cmap="viridis", edgecolor="none")
-ax.set_title(f"関数の3Dプロット (s = {s}, 項数 = {num_terms})")
+ax.set_title(f"3D plot of Besov function (s = {s}, number of terms = {num_terms})")
 ax.set_xlabel("x")
 ax.set_ylabel("y")
 ax.set_zlabel("f(x,y)")
 st.pyplot(fig)
 
 # リロードボタン
-if st.button("🔄 別のランダム関数を見る"):
+if st.button("別のランダム関数を見る"):
     st.experimental_rerun()
 
 ###################################################
