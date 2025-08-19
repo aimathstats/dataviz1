@@ -285,11 +285,11 @@ class GPT(nn.Module):
         b, t = idx.size() # b=1, t=sequence length (4 or 6)
         #assert t <= self.block_size, f"Cannot forward sequence of length {t}, block size is only {self.block_size}"
         pos = torch.arange(0, t, dtype=torch.long, device=device).unsqueeze(0) # shape (1, t)
-        pos.data # [[0, 1, 2, 3]] or [[0, 1, 2, 3, 4, 5]]
+        #pos.data # [[0, 1, 2, 3]] or [[0, 1, 2, 3, 4, 5]]
 
         tok_emb = self.transformer.wte(idx) # token embeddings of shape (b, t, n_embd)
         pos_emb = self.transformer.wpe(pos) # position embeddings of shape (1, t, n_embd)
-        tok_emb.size(), pos_emb.size() # (4 * 48) or (6 * 48)        
+        #tok_emb.size(), pos_emb.size() # (4 * 48) or (6 * 48)        
 
         # main model part
         #x = tok_emb + pos_emb
