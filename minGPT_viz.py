@@ -657,3 +657,8 @@ heat(logits,'logits output')
 #print(logits)
 logits_ = logits.detach().clone().numpy()
 
+########################################################
+mat = np.random.rand(5, 5)
+fig, ax = plt.subplots()
+sns.heatmap(mat, ax=ax, cmap="Blues")
+st.pyplot(fig)
