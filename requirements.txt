@@ -16,3 +16,7 @@ polyline
 matplotlib
 numpy
 sympy
+torch
+collections
+seaborn
+ast
