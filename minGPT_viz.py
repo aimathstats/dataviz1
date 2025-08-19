@@ -1,5 +1,4 @@
-import streamlit as st
-
+import streamlit as st # for streamlit
 import os
 import sys
 import json
@@ -24,6 +23,7 @@ def set_seed(seed):
     np.random.seed(seed)
     torch.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
+
 def setup_logging(config):
     """ monotonous bookkeeping """
     work_dir = config.system.work_dir
@@ -35,6 +35,7 @@ def setup_logging(config):
     # log the config itself
     with open(os.path.join(work_dir, 'config.json'), 'w') as f:
         f.write(json.dumps(config.to_dict(), indent=4))
+
 class CfgNode:
     ""
     def __init__(self, **kwargs):
@@ -134,21 +135,9 @@ def heat(mat, title: str):
     #sns.heatmap(mat_, cmap='coolwarm') # Blues, Oranges, coolwarm
     sns.heatmap(mat_, cmap='Blues') # Blues, Oranges, coolwarm
     plt.title(title)
+
 class SelfAttention(nn.Module):
     def __init__(self, config1):
-        """
-        config.model = GPT.get_default_config()
-        config.model.model_type = 'gpt-nano'
-        config.model.model_type = 'gpt-supernano7'
-        config.model.vocab_size = train_dataset.get_vocab_size()
-        config.model.block_size = train_dataset.get_block_size()
-        config1 = config.model
-        model1 = GPT(config1)
-        config1.n_embd
-        config1.n_head
-        config1.block_size
-        config1.attn_pdrop
-        """
         super().__init__()
         assert config1.n_embd % config1.n_head == 0
         self.c_attn = nn.Linear(config1.n_embd, 3 * config1.n_embd)
@@ -162,111 +151,26 @@ class SelfAttention(nn.Module):
         self.attnmat = None # additional code
 
     def forward(self, x): # input x : 4 * 48
-        """
-        idx = torch.tensor([[9,0,5,3]]).to('cpu')
-        #idx = torch.tensor([[9,0,5,3,3,4]]).to('cpu')
-        b, t = idx.size() # b=1, t=sequence length (4 or 6)
-        pos = torch.arange(0, t, dtype=torch.long, device='cpu').unsqueeze(0)
-        #tok_emb = model1.transformer.wte(idx)
-        #pos_emb = model1.transformer.wpe(pos)
-        tok_emb = model.transformer.wte(idx)
-        pos_emb = model.transformer.wpe(pos)
-        x = tok_emb + pos_emb
-        #heat(x,'token + position')
-        x = model.transformer.drop(x)
-        x1 = x.detach().clone().numpy()
-        heat(x,'token + position')
-        """
         B, T, C = x.size() # (1, 4, 48) or (64, 4, 48) : batch size, sequence length, embedding dimensionality (n_embd)
 
         q, k ,v  = self.c_attn(x).split(self.n_embd, dim=2) # linear model in q,k,v
         q = q.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
         k = k.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
         v = v.view(B, T, self.n_head, C // self.n_head).transpose(1, 2) # (B, nh, T, hs)
-        """
-        SA = SelfAttention(config1)
-        SA.c_attn(x)
-        x @ SA.c_attn.weight.T + SA.c_attn.bias.T   # This equals SA.c_attn(x)
-        q, k, v = SA.c_attn(x).split(SA.n_embd, dim=2) # q = k = v = (1, 4, 48)       
-        
-        # when using direct instance
-        model.transformer.h[0].attn.c_attn(x)
-        a3 = model.transformer.h[0].attn.c_attn.weight
-        a4 = model.transformer.h[0].attn.c_attn.bias
-        x @ a3.T + a4.T  # This equals .c_attn(x)
-        a3_, a4_ = a3.T.detach().clone().numpy(), a4.T.detach().clone().numpy()
-        q, k, v = model.transformer.h[0].attn.c_attn(x).split(model.transformer.h[0].attn.n_embd, dim=2)        
-        q_, k_, v_ = q.detach().clone().numpy(), k.detach().clone().numpy(), v.detach().clone().numpy()
-        
-        heat(q,'query')
-        heat(k,'key')
-        heat(v,'value')
-        
-        q = q.view(B, T, model.transformer.h[0].attn.n_head, C // model.transformer.h[0].attn.n_head).transpose(1, 2) # (B, nh, T, hs) = (1, 3, 4, 16)
-        k = k.view(B, T, model.transformer.h[0].attn.n_head, C // model.transformer.h[0].attn.n_head).transpose(1, 2) # (B, nh, T, hs) = (1, 3, 4, 16)
-        v = v.view(B, T, model.transformer.h[0].attn.n_head, C // model.transformer.h[0].attn.n_head).transpose(1, 2) # (B, nh, T, hs) = (1, 3, 4, 16)
-               
-        q = q.view(B, T, SA.n_head, C // SA.n_head).transpose(1, 2) # (B, nh, T, hs) = (1, 3, 4, 16)
-        k = k.view(B, T, SA.n_head, C // SA.n_head).transpose(1, 2) # (B, nh, T, hs) = (1, 3, 4, 16)
-        v = v.view(B, T, SA.n_head, C // SA.n_head).transpose(1, 2) # (B, nh, T, hs) = (1, 3, 4, 16)
-        """
         att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1))) # QK/sqrt(16), three 4 * 4 attention matrix
         att = att.masked_fill(self.bias[:,:,:T,:T] == 0, float('-inf')) # always masked in decoder-only transformer
         att = F.softmax(att, dim=-1) # attention matrix
         self.attnmat = att.detach().clone() # store attention matrix for heatmap (additional code)        
         att = self.attn_dropout(att)
-        """
-        #q.size() # [1, 3, 4, 16]
-        #k.transpose(-2, -1).size() # [1, 3, 16, 4]
-        #(q @ k.transpose(-2, -1)).size() # [1, 3, 4, 4]
-        att = (q @ k.transpose(-2, -1)) * (1.0 / math.sqrt(k.size(-1))) # QK/sqrt(16)
-        att.size() # three 4 * 4 (attention) matrix      
-        #att = att.masked_fill(SA.bias[:,:,:T,:T] == 0, float('-inf')) # lower tri matrix with -infty
-        att = att.masked_fill(model.transformer.h[0].attn.bias[:,:,:T,:T] == 0, float('-inf'))
-        att = F.softmax(att, dim=-1)
-        #att_ = att.detach().clone().numpy()[0,0,:,:]
-        #SA.n_head
-        #att = SA.attn_dropout(att)
-        att = model.transformer.h[0].attn.attn_dropout(att)
-        att_ = att.detach().clone().numpy()[0,0,:,:]
-        att.size() # (1, 3, 4, 4)
-        v.size() # (1, 3, 4, 16)
-        """
         y = att @ v    # (B, nh, T, T) x (B, nh, T, hs) -> (B, nh, T, hs) # attention heads
         y = y.transpose(1, 2).contiguous().view(B, T, C) # re-assemble all head outputs side by side
         #y.size() # (1, 4, 48)
         #y = self.c_proj(y)
         y = self.resid_dropout(self.c_proj(y))
-        """
-        y = att @ v    # (B, nh, T, T) x (B, nh, T, hs) -> (B, nh, T, hs) # attention heads
-        y.data
-        y = y.transpose(1, 2).contiguous().view(B, T, C) # re-assemble all head outputs side by side
-        
-        model.transformer.h[0].attn.c_proj(y)        
-        a5 = model.transformer.h[0].attn.c_proj.weight
-        a6 = model.transformer.h[0].attn.c_proj.bias
-        y @ a5.T + a6.T 
-        a5_, a6_ = a5.T.detach().clone().numpy(), a6.T.detach().clone().numpy()
-        y = model.transformer.h[0].attn.resid_dropout(model.transformer.h[0].attn.c_proj(y))
-        y_ = y.detach().clone().numpy()
-        
-        y = SA.resid_dropout(SA.c_proj(y))
-        """
         return y # output y : 4 * 48 (the same as imput)
+
 class Block(nn.Module):
     def __init__(self, config1):
-        """
-        config.model = GPT.get_default_config()
-        config.model.model_type = 'gpt-nano'
-        config.model.model_type = 'gpt-supernano7'
-        config.model.vocab_size = train_dataset.get_vocab_size()
-        config.model.block_size = train_dataset.get_block_size()
-        config1 = config.model
-        model1 = GPT(config1)
-        config1.n_embd
-        config1.n_layer
-        config1.resid_pdrop
-        """
         super().__init__()
         self.ln_1 = nn.LayerNorm(config1.n_embd)
         self.attn = SelfAttention(config1) # instantiation of self-attention function
@@ -283,63 +187,14 @@ class Block(nn.Module):
         self.attnmat = None # additional
 
     def forward(self, x):
-        """ for check (for generation)
-        idx = torch.tensor([[9,0,5,3]]).to('cpu') #prompt
-        idx = torch.tensor([[9,0,5,3,3,4]]).to('cpu')
-        b, t = idx.size() # b=1, t=sequence length (4 or 6)
-        pos = torch.arange(0, t, dtype=torch.long, device='cpu').unsqueeze(0)
-        tok_emb = model1.transformer.wte(idx)
-        pos_emb = model1.transformer.wpe(pos)
-        x = tok_emb + pos_emb
-        heat(x,'x')
-        
-        block = Block(config1) # instantiation and initialization
-        
-        block.ln_1(x) 
-        heat(block.attn(block.ln_1(x)), 'attentioned')
-        x1 = x + block.attn(block.ln_1(x))
-        heat(x1, 'skip connected1 (x1)')
-        
-        block.ln_2(x1)
-        heat(block.mlpf(block.ln_2(x1)), 'mlpf')
-        x2 = x1 + block.mlpf(block.ln_2(x1))
-        heat(x2, 'skip connected2 (x2)')
-        
-        
-        # when using direct instance
-        x2 = x + y   # y: attn(x)
-        x3 = model.transformer.h[0].mlp.c_fc(x2)
-        model.transformer.h[0].mlp.c_fc(x2)
-        a7 = model.transformer.h[0].mlp.c_fc.weight
-        a8 = model.transformer.h[0].mlp.c_fc.bias
-        x2 @ a7.T + a8.T
-        a7_, a8_ = a7.T.detach().clone().numpy(), a8.T.detach().clone().numpy()
-        
-        x4 = model.transformer.h[0].mlp.act(x3)
-        x4_ = x4.detach().clone().numpy()
-        model.transformer.h[0].mlp.c_proj(x4)
-        a9 = model.transformer.h[0].mlp.c_proj.weight
-        a10 = model.transformer.h[0].mlp.c_proj.bias
-        x4 @ a9.T + a10.T
-        a9_, a10_ = a9.T.detach().clone().numpy(), a10.T.detach().clone().numpy()
-        
-        x5 = model.transformer.h[0].mlp.dropout(model.transformer.h[0].mlp.c_proj(x4))
-        x5_ = x5.detach().clone().numpy()
-        x6 = x2 + x5
-        x6_ = x6.detach().clone().numpy()
-        heat(x6, 'transformer block output')
-        """
         x = x + self.attn(x) # using instance of SelfAttention.forward(input)
         x = x + self.mlpf(x)
         #x = x + self.attn(self.ln_1(x)) # using instance of SelfAttention.forward(input)
         #x = x + self.mlpf(self.ln_2(x))
         self.attnmat = self.attn.attnmat # additional code
         return x
-class GPT(nn.Module):
-    # Usage: model = GPT(config) # instantiation and initialization of model blocks
-    # logits, loss = model(x, y) # forward function whose arg is (x=idx, y=targets) or (x=d1d2, target=None)
-    #       d1d2d3 = model.generate(d1d2, max_token=3, do_sample=False)
 
+class GPT(nn.Module):
     def get_default_config():
         C = CfgNode()
         C.model_type = 'gpt'
@@ -354,17 +209,6 @@ class GPT(nn.Module):
         return C
 
     def __init__(self, config1):
-        # initializes our GPT model blocks (eg:self-attention) and parameters
-        # blocks: embedding, dropout, layernorm, activation, self-attention... 
-        """ for check
-        config.model = GPT.get_default_config()
-        config.model.model_type = 'gpt-nano'
-        config.model.vocab_size = train_dataset.get_vocab_size()
-        config.model.block_size = train_dataset.get_block_size()
-        config1 = config.model
-        config1.vocab_size
-        config1.block_size
-        """
         super().__init__()
         self.config1 = config1 # additinal code
         
@@ -382,12 +226,6 @@ class GPT(nn.Module):
                 'gpt-supernano5':dict(n_layer=2, n_head=2, n_embd=10),
                 #'gpt-supernano7':dict(n_layer=2, n_head=2, n_embd=4),
             }[config1.model_type])
-        """ for check
-        config1.model_type
-        config1.n_layer
-        config1.n_head
-        config1.n_embd # 48 dimension of token embedding
-        """        
         self.transformer = nn.ModuleDict(dict(
             wte = nn.Embedding(config1.vocab_size, config1.n_embd), # 10, 48 (4 * 48 matrix)
             wpe = nn.Embedding(config1.block_size, config1.n_embd), # 6, 48  (4 * 48 matrix)
@@ -404,7 +242,6 @@ class GPT(nn.Module):
         print("number of parameters: %.f" % (n_params,)) # without the parameter of lm_head (the last layer): vacoab_size * n_embd
     
     def _init_weights(self, module): # initial weights based on random normal variable N(0, 0.02)
-        #module = nn.Module()
         if isinstance(module, nn.Linear):
             torch.nn.init.normal_(module.weight, mean=0.0, std=0.02)
             if module.bias is not None:
@@ -443,19 +280,7 @@ class GPT(nn.Module):
         return optimizer
 
     def forward(self, idx, targets=None, heat_=False): # main function of GPT (in training, evaluation and generation)
-        # modified at heatmap option (original)
         config1 = self.config1
-        
-        """ for check 1 (for generation)
-        idx = torch.tensor([[9,0,5,3]]).to('cpu') #prompt
-        #idx = torch.tensor([[9,0,5,7]]).to('cpu') #prompt
-        #idx = torch.tensor([[0,1,0,1]]).to('cpu') #prompt
-        targets = None
-        """
-        """ for check 2 (for training)
-        idx =     torch.tensor([[ 9, 0, 5,3,3,4]]).to('cpu')
-        targets = torch.tensor([[-1,-1,-1,3,4,1]]).to('cpu')
-        """
         device = idx.device #"cpu"
         b, t = idx.size() # b=1, t=sequence length (4 or 6)
         #assert t <= self.block_size, f"Cannot forward sequence of length {t}, block size is only {self.block_size}"
@@ -465,14 +290,6 @@ class GPT(nn.Module):
         tok_emb = self.transformer.wte(idx) # token embeddings of shape (b, t, n_embd)
         pos_emb = self.transformer.wpe(pos) # position embeddings of shape (1, t, n_embd)
         tok_emb.size(), pos_emb.size() # (4 * 48) or (6 * 48)        
-        """ for check
-        tok_emb = model.transformer.wte(idx)
-        pos_emb = model.transformer.wpe(pos)
-        #heat(tok_emb,'token embedding')
-        #heat(pos_emb,'position embedding')
-        #tok_emb.data
-        #pos_emb.data
-        """
 
         # main model part
         #x = tok_emb + pos_emb
@@ -506,48 +323,14 @@ class GPT(nn.Module):
             logits = self.lm_head(x)
             heat(logits,'logits output (lm_head)')
         
-        """ for check
-        x = tok_emb + pos_emb
-        #heat(x,'token + position')
-        x = model.transformer.drop(x)
-        heat(x,'token + position')
-        for block in model.transformer.h:
-            x = block(x)
-            heat(x,'transformer block')
-        #x = model.transformer.ln_f(x)
-        #heat(x,'layer-norm')
-
-        x @ model.lm_head.weight.T   # This equals logits
-
-        logits = model.lm_head(x6)
-        x6 @ a11.T
-        a11_ = a11.T.detach().clone().numpy()
-
-        logits = model.lm_head(x)
-        logits.data
-        heat(logits,'logits')
-        logits.size()
-        """
         loss = None
         if targets is not None:
             loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1)
-        """
-        logits.view(-1, logits.size(-1))
-        targets.view(-1)
-        targets.size()
-        """
         #logits.data
         return logits, loss
 
     def generate(self, idx, max_new_tokens, temperature=1.0, do_sample=False, top_k=None): # for evaluation
         #usage: d1d2d3 = model.generate(d1d2, ndigit+1, do_sample=False)
-        """ for check
-        idx = torch.tensor([[9,0,5,3]]) # prompt
-        max_new_tokens = 3
-        temperature = 1.0
-        do_sample = False
-        top_k = None
-        """
         for _ in range(max_new_tokens):
             #idx_cond = idx if idx.size(1) <= self.block_size else idx[:, -self.block_size:]
             #logits, _ = self(idx_cond) # model.forward(idx)
@@ -666,10 +449,6 @@ def get_config(): # config for all steps (model, learning)
     # for gpt-supernano4 (original, (1,1,48), #param = 29136) # 97%
     C.trainer.max_iters = 20000 # 5000
     C.trainer.learning_rate = 5e-4
-
-    # for gpt-supernano5 (original, (2,2,10), #param = 2840) # 98%
-    #C.trainer.max_iters = 10000
-    #C.trainer.learning_rate = 5e-3
     return C
 
 config = get_config()
@@ -726,20 +505,6 @@ def batch_end_callback(trainer):
         with torch.no_grad():
             train_score = eval_split(trainer, 'train', max_batches=train_max_batches)
             test_score  = eval_split(trainer, 'test',  max_batches=None)   
-            #"""
-            #### additional code to viz learning process in parameter
-            mat1 = model.transformer.h[0].attn.c_attn.weight.T.to('cpu').detach().numpy().copy()
-            plt.figure(); sns.heatmap(mat1, cmap='Purples'); plt.title(f'attn qkv_weight (iteration {trainer.iter_num})')
-            mat2 = model.transformer.h[0].attn.c_proj.weight.T.to('cpu').detach().numpy().copy()
-            plt.figure(); sns.heatmap(mat2, cmap='Purples'); plt.title(f'attn proj_weight (iteration {trainer.iter_num})')
-            mat3 = model.transformer.h[0].mlp.c_fc.weight.T.to('cpu').detach().numpy().copy()
-            plt.figure(); sns.heatmap(mat3, cmap='Purples'); plt.title(f'mlp act_weight (iteration {trainer.iter_num})')
-            mat4 = model.transformer.h[0].mlp.c_proj.weight.T.to('cpu').detach().numpy().copy()
-            plt.figure(); sns.heatmap(mat4, cmap='Purples'); plt.title(f'mlp proj_weight (iteration {trainer.iter_num})')
-            mat5 = model.lm_head.weight.T.to('cpu').detach().numpy().copy()
-            plt.figure(); sns.heatmap(mat5, cmap='Purples'); plt.title(f'classification weight (iteration {trainer.iter_num})')
-            ####
-            #"""
         score = train_score + test_score
         if score > top_score:
             top_score = score
@@ -748,9 +513,7 @@ def batch_end_callback(trainer):
             torch.save(model.state_dict(), ckpt_path)
         model.train()
 trainer.set_callback('on_batch_end', batch_end_callback)
-
 trainer.run()
-
 
 model.eval();
 with torch.no_grad():
@@ -773,97 +536,13 @@ d3i_pred = (d3 * factors).sum(1)
 d3i_gt = d1i + d2i
 print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 
-
-
-
-
-######### factor decomposition for parameter interpretation #########
-from sklearn.preprocessing import StandardScaler
-from sklearn.decomposition import FactorAnalysis
-import pandas as pd
-
-a3 = model.transformer.h[0].attn.c_attn.weight
-q3 = a3.T[:,0:48]; k3 = a3.T[:,48:96]; v3 = a3.T[:,96:144]
-a5 = model.transformer.h[0].attn.c_proj.weight
-a7 = model.transformer.h[0].mlp.c_fc.weight
-a9 = model.transformer.h[0].mlp.c_proj.weight
-a11 = model.lm_head.weight
-
-df1 = q3    # fac = 2
-df1 = k3    # fac = 2
-df1 = v3    # fac = 4
-df1 = a5.T  # fac = 4
-df1 = a7.T  # fac = 4
-df1 = a9.T  # fac = 2
-df1 = a11.T # fac = 2
-
-n_components = 2
-
-df = df1.detach().clone().numpy()
-sc = StandardScaler(); sc.fit(df); z = sc.transform(df)
-fa = FactorAnalysis(n_components, max_iter = 10000)
-fitted = fa.fit_transform(z)
-loadings = fa.components_
-pred = fitted @ loadings
-error = z - pred
-print(fitted.shape); print(loadings.shape)
-
-np.std(error)
-f_=pd.DataFrame(fitted); print(f_.corr())
-l_=pd.DataFrame(loadings.T); print(l_.corr())
-
-plt.figure()
-plt.subplot(2,2,1); sns.heatmap(z, cmap='Purples'); plt.title('standardized param')
-#plt.subplot(2,3,2); plt.hist(z); plt.title('hist of st. param')
-#plt.subplot(2,3,3); plt.hist(error); plt.title('hist of fitting error')
-plt.subplot(2,2,2); sns.heatmap(pred, cmap='Purples'); plt.title('fitted by factor')
-plt.subplot(2,2,3); sns.heatmap(fitted, cmap='Purples'); plt.title('common factor')
-plt.subplot(2,2,4); sns.heatmap(loadings, cmap='Purples'); plt.title('factor loadings')
-plt.tight_layout()
-plt.show()
-
-#df1 = x4[0,:,:]
-#df = df1.detach().clone().numpy()
-#plt.figure(); sns.heatmap(df, cmap='Purples'); plt.title('activated')
-
-
-
-
-
 ######### visualization of GPT and learning process #########
 # at the learning is finished (main instance is "model")
-
-"""
-for pn, p in model.named_parameters():
-    print(pn)
-    print(p.size())
-    #print(p)
-    if p.dim() > 1: # without biases
-        mat_ = p.T.to('cpu').detach().numpy().copy()
-        plt.figure()
-        sns.heatmap(mat_, cmap='Purples') #Greens, Purples, Reds
-        plt.title(pn)
-
-a1 = model.transformer.wte.weight
-a2 = model.transformer.wpe.weight
-a3 = model.transformer.h[0].attn.c_attn.weight
-a4 = model.transformer.h[0].attn.c_attn.bias
-a5 = model.transformer.h[0].attn.c_proj.weight
-a6 = model.transformer.h[0].attn.c_proj.bias
-a7 = model.transformer.h[0].mlp.c_fc.weight
-a8 = model.transformer.h[0].mlp.c_fc.bias
-a9 = model.transformer.h[0].mlp.c_proj.weight
-a10 = model.transformer.h[0].mlp.c_proj.bias
-a11 = model.lm_head.weight
-"""
-
-##### very short example (transformation process of raw input to correct answer)
 # for generation using forward function:
 set_seed(config.system.seed)
 idx = [[9,0,5,3]]
 idx = [[0,0,0,1]]
 #logits, loss = model(torch.tensor(idx).to('cpu'), heat_=True)
-
 
 #### detailed example
 # note that this is a model WITHOUT layer-normalization
@@ -975,3 +654,4 @@ plt.figure(); sns.heatmap(a11_, cmap='Purples'); plt.title('lm_head.weight')
 heat(logits,'logits output')
 print(logits)
 logits_ = logits.detach().clone().numpy()
+
