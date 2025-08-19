@@ -575,7 +575,7 @@ B, T, C = x.size() # (1, 4, 48) or (64, 4, 48) : batch size, sequence length, em
 #model.transformer.h[0].attn.c_attn(x)
 a3 = model.transformer.h[0].attn.c_attn.weight
 a4 = model.transformer.h[0].attn.c_attn.bias
-x @ a3.T + a4.T  # This equals .c_attn(x)
+#x @ a3.T + a4.T  # This equals .c_attn(x)
 a3_, a4_ = a3.T.detach().clone().numpy(), a4.T.detach().clone().numpy()
 plt.figure(); sns.heatmap(a3_, cmap='Purples'); plt.title('attn.c_attn.weight')
 
@@ -611,7 +611,7 @@ heat(y,'multi-head attention output (weight-ave. of V)')
 #model.transformer.h[0].attn.c_proj(y)        
 a5 = model.transformer.h[0].attn.c_proj.weight
 a6 = model.transformer.h[0].attn.c_proj.bias
-y @ a5.T + a6.T
+#y @ a5.T + a6.T
 a5_, a6_ = a5.T.detach().clone().numpy(), a6.T.detach().clone().numpy()
 y2 = model.transformer.h[0].attn.resid_dropout(model.transformer.h[0].attn.c_proj(y))
 y_2 = y2.detach().clone().numpy()
@@ -625,7 +625,7 @@ heat(x2,'x + attention(x)')
 #model.transformer.h[0].mlp.c_fc(x2)
 a7 = model.transformer.h[0].mlp.c_fc.weight
 a8 = model.transformer.h[0].mlp.c_fc.bias
-x2 @ a7.T + a8.T
+#x2 @ a7.T + a8.T
 a7_, a8_ = a7.T.detach().clone().numpy(), a8.T.detach().clone().numpy()
 plt.figure(); sns.heatmap(a7_, cmap='Purples'); plt.title('mlp.c_fc.weight')
 
@@ -635,7 +635,7 @@ heat(x4,'ReLU activated')
 #model.transformer.h[0].mlp.c_proj(x4)
 a9 = model.transformer.h[0].mlp.c_proj.weight
 a10 = model.transformer.h[0].mlp.c_proj.bias
-x4 @ a9.T + a10.T
+#x4 @ a9.T + a10.T
 a9_, a10_ = a9.T.detach().clone().numpy(), a10.T.detach().clone().numpy()
 plt.figure(); sns.heatmap(a9_, cmap='Purples'); plt.title('mlp.c_proj.weight')
 
@@ -650,10 +650,10 @@ heat(x6, 'transformer-block output (x + mlp(x))')
 # final part from transformer block output to logits output
 logits = model.lm_head(x6)
 a11 = model.lm_head.weight
-x6 @ a11.T
+#x6 @ a11.T
 a11_ = a11.T.detach().clone().numpy()
 plt.figure(); sns.heatmap(a11_, cmap='Purples'); plt.title('lm_head.weight')
 heat(logits,'logits output')
-print(logits)
+#print(logits)
 logits_ = logits.detach().clone().numpy()
 
