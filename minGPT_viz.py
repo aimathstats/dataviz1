@@ -16,8 +16,6 @@ from torch.utils.data import Dataset
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-""" Trains a GPT to add n-digit numbers. """
-
 def set_seed(seed):
     random.seed(seed)
     np.random.seed(seed)
