@@ -512,8 +512,10 @@ def batch_end_callback(trainer):
             ckpt_path = os.path.join(config.system.work_dir, "model.pt")
             torch.save(model.state_dict(), ckpt_path)
         model.train()
-trainer.set_callback('on_batch_end', batch_end_callback)
-trainer.run()
+
+#trainer.set_callback('on_batch_end', batch_end_callback)
+
+#trainer.run()
 
 model.eval();
 with torch.no_grad():
