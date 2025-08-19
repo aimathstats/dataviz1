@@ -657,6 +657,7 @@ logits_ = logits.detach().clone().numpy()
 
 ########################################################
 mat = np.random.rand(5, 5)
+mat = logits
 fig, ax = plt.subplots()
 sns.heatmap(mat, ax=ax, cmap="Blues")
 st.pyplot(fig)
