@@ -531,7 +531,7 @@ with torch.no_grad():
     d1d2d3 = model.generate(d1d2, ndigit+1, do_sample=False) # prediction by GPT with prompt (input sequence)
     d3 = d1d2d3[:, -(ndigit+1):]
     d3 = d3.flip(1) # reverse the digits
-d1d2, d1d2d3 # raw predited value by our (pretrained) GPT (thi includes input seq)
+#d1d2, d1d2d3 # raw predited value by our (pretrained) GPT (thi includes input seq)
 d1i = (d1d2[:,:ndigit] * factors[:,1:]).sum(1)
 d2i = (d1d2[:,ndigit:ndigit*2] * factors[:,1:]).sum(1)
 d3i_pred = (d3 * factors).sum(1)
