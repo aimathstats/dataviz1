@@ -610,7 +610,7 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 #model_2.transformer.load_state_dict(torch.load("modules.pth"))
 
 # 例: GPTのインスタンス化（保存時と同じ構造にする）
-model = GPT(config.model)
+#model = GPT(config.model)
 
 # GitHubリポに同梱したファイルを相対パスでロード
 state = torch.load("data/transformer.pth", map_location="cpu")
