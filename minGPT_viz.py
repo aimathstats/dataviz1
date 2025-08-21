@@ -780,6 +780,13 @@ sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
 st.pyplot(fig20)
 
+cols = st.columns(5)
+cols[0].pyplot(fig1)
+cols[1].pyplot(fig2)
+cols[2].pyplot(fig6)
+cols[3].pyplot(fig7)
+cols[4].pyplot(fig8)
+
 cols = st.columns(4)
 cols[0].pyplot(fig9)
 cols[1].pyplot(fig10)
