@@ -24,7 +24,7 @@ with st.sidebar:
     iters = st.radio("繰り返し数", [10, 500, 1500, 10000], index=0, horizontal=True)
 
 #st.write("idx:", idx)
-#st.write("繰り返し数:", iters)
+st.write("繰り返し数:", iters)
 ############################################
 
 def set_seed(seed):
@@ -463,7 +463,7 @@ def get_config(): # config for all steps (model, learning)
 
 config = get_config()
 config.trainer.max_iters = iters
-print(config.trainer.max_iters)
+st.write("繰り返し数:", config.trainer.max_iters)
 #config.merge_from_args(sys.argv[1:])
 #print(config)
 setup_logging(config)
