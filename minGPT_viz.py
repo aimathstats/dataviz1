@@ -661,8 +661,8 @@ plt.title('mlp.c_proj.weight')
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
-sns.heatmap(x5_, ax=ax, cmap='Blues')
-#heat(x5, ax=ax, cmap="Blues")
+#sns.heatmap(x5_, ax=ax, cmap='Blues')
+heat(x5, cmap="Blues")
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
