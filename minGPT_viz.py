@@ -601,23 +601,22 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 # state save/load
 #torch.save(model.transformer.state_dict(), "modules.pth")
 
-config2 = get_config()
-config2.trainer.max_iters = iters
-st.write("繰り返し数:", config2.trainer.max_iters)
-setup_logging(config2)
-set_seed(config2.system.seed)
-train_dataset = AdditionDataset(config2.data, split='train')
-test_dataset  = AdditionDataset(config2.data, split='test')
-config2.model.vocab_size = train_dataset.get_vocab_size() # 10
-config2.model.block_size = train_dataset.get_block_size() # 6
-model_2 = GPT(config2.model)
+#config2 = get_config()
+#config2.trainer.max_iters = iters
+#st.write("繰り返し数:", config2.trainer.max_iters)
+#setup_logging(config2)
+#set_seed(config2.system.seed)
+#train_dataset = AdditionDataset(config2.data, split='train')
+#test_dataset  = AdditionDataset(config2.data, split='test')
+#config2.model.vocab_size = train_dataset.get_vocab_size() # 10
+#config2.model.block_size = train_dataset.get_block_size() # 6
+#model_2 = GPT(config2.model)
 
-up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
-if up:
-    state = torch.load(up, map_location="cpu")
-    model_2.transformer.load_state_dict(state)
-    st.success("ロード完了！")
-
+#up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
+#if up:
+#    state = torch.load(up, map_location="cpu")
+#    model_2.transformer.load_state_dict(state)
+#    st.success("ロード完了！")
 #model_2.transformer.load_state_dict(torch.load("modules.pth"))
 
 ##########################################################################################
