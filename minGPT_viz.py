@@ -782,6 +782,7 @@ st.pyplot(fig20)
 
 cols = st.columns(5)
 cols[0].pyplot(fig1)
+cols[0].caption("input")   # ← 下にラベル
 cols[1].pyplot(fig2)
 cols[2].pyplot(fig6)
 cols[3].pyplot(fig7)
