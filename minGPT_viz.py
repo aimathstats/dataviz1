@@ -675,12 +675,12 @@ fig1, ax = plt.subplots()
 mat_ = x.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('token + position')
-st.pyplot(fig1)
+#st.pyplot(fig1)
 
 fig2, ax = plt.subplots()
 sns.heatmap(a3_, ax=ax, cmap='Purples')
 plt.title('attn.c_attn.weight')
-st.pyplot(fig2)
+#st.pyplot(fig2)
 
 fig3, ax = plt.subplots()
 sns.heatmap(q3_, cmap='Purples')
@@ -693,102 +693,100 @@ st.pyplot(fig4)
 fig5, ax = plt.subplots()
 sns.heatmap(v3_, cmap='Purples')
 plt.title('value.weight')
-st.pyplot(fig5)
+#st.pyplot(fig5)
 
 fig6, ax = plt.subplots()
 mat_ = q.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('query')
-st.pyplot(fig6)
+#st.pyplot(fig6)
 
 fig7, ax = plt.subplots()
 mat_ = k.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('key')
-st.pyplot(fig7)
+#st.pyplot(fig7)
 
 fig8, ax = plt.subplots()
 mat_ = v.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('value')
-st.pyplot(fig8)
+#st.pyplot(fig8)
 
 fig9, ax = plt.subplots()
 sns.heatmap(att_2, cmap='Oranges')
 plt.title('self-attention matrix')
-st.pyplot(fig9)
+#st.pyplot(fig9)
 
 fig10, ax = plt.subplots()
 mat_ = y.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('multi-head attention output (weight-ave of value)')
-st.pyplot(fig10)
+#st.pyplot(fig10)
 
 fig11, ax = plt.subplots()
 sns.heatmap(a5_, cmap='Purples')
 plt.title('attn.c_proj.weight')
-st.pyplot(fig11)
+#st.pyplot(fig11)
 
 fig12, ax = plt.subplots()
 mat_ = y2.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('final attention output')
-st.pyplot(fig12)
+#st.pyplot(fig12)
 
 fig13, ax = plt.subplots()
 mat_ = x2.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('x + attention(x)')
-st.pyplot(fig13)
+#st.pyplot(fig13)
 
 fig14, ax = plt.subplots()
 sns.heatmap(a7_, ax=ax, cmap='Purples')
 plt.title('mlp.c_fc.weight')
-st.pyplot(fig14)
+#st.pyplot(fig14)
 
 fig15, ax = plt.subplots()
 mat_ = x4.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('ReLU activated')
-st.pyplot(fig15)
+#st.pyplot(fig15)
 
 fig16, ax = plt.subplots()
 sns.heatmap(a9_, ax=ax, cmap='Purples')
 plt.title('mlp.c_proj.weight')
-st.pyplot(fig16)
+#st.pyplot(fig16)
 
 fig17, ax = plt.subplots()
 mat_ = x5.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('mlp output')
-st.pyplot(fig17)
+#st.pyplot(fig17)
 
 fig18, ax = plt.subplots()
 mat_ = x6.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('transformer-block output')
-st.pyplot(fig18)
+#st.pyplot(fig18)
 
 fig19, ax = plt.subplots()
 sns.heatmap(a11_, ax=ax, cmap="Purples")
 plt.title('lm_head.weight')
-st.pyplot(fig19)
+#st.pyplot(fig19)
 
 fig20, ax = plt.subplots()
 mat_ = logits.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
-st.pyplot(fig20)
+#st.pyplot(fig20)
 
 st.subheader("attention; input, embedding, QKV")
 cols = st.columns(5)
-cols[0].pyplot(fig1)
-cols[0].caption("input")   # ← 下にラベル
+cols[0].pyplot(fig1); #cols[0].caption("input")   # ← 下にラベル
 cols[1].pyplot(fig2)
 cols[2].pyplot(fig6)
 cols[3].pyplot(fig7)
 cols[4].pyplot(fig8)
-st.divider()
 
 st.subheader("attention 2: weghited V")
 cols = st.columns(4)
@@ -796,7 +794,6 @@ cols[0].pyplot(fig9)
 cols[1].pyplot(fig10)
 cols[2].pyplot(fig11)
 cols[3].pyplot(fig12)
-st.divider()
 
 st.subheader("NN part")
 cols = st.columns(5)
@@ -805,7 +802,6 @@ cols[1].pyplot(fig14)
 cols[2].pyplot(fig15)
 cols[3].pyplot(fig16)
 cols[4].pyplot(fig17)
-st.divider()
 
 st.subheader("output")
 cols = st.columns(3)
