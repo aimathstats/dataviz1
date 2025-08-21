@@ -661,18 +661,18 @@ plt.title('mlp.c_proj.weight')
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
-#sns.heatmap(x5_, ax=ax, cmap='Blues')
-heat(x5, cmap="Blues")
+mat_ = x5.to('cpu').detach().numpy().copy()[0,:,:]
+sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
-sns.heatmap(x6_, ax=ax, cmap='Blues')
-#heat(x6, ax=ax, cmap="Blues")
+mat_ = x6.to('cpu').detach().numpy().copy()[0,:,:]
+sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
-sns.heatmap(logist, ax=ax, cmap='Blues')
-#heat(logits, ax=ax, cmap="Blues")
+mat_ = logits.to('cpu').detach().numpy().copy()[0,:,:]
+sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
