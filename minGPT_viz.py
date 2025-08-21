@@ -726,7 +726,7 @@ plt.title('x + attention(x)')
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
-sns.heatmap(a7_, cmap='Purples')
+sns.heatmap(a7_, ax=ax, cmap='Purples')
 plt.title('mlp.c_fc.weight')
 st.pyplot(fig)
 
