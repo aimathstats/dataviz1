@@ -780,7 +780,7 @@ sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
 #st.pyplot(fig20)
 
-st.subheader("attention; input, embedding, QKV")
+st.subheader("Attention: input, embedding, QKV")
 cols = st.columns(5)
 cols[0].pyplot(fig1); #cols[0].caption("input")   # ← 下にラベル
 cols[1].pyplot(fig2)
@@ -788,7 +788,7 @@ cols[2].pyplot(fig6)
 cols[3].pyplot(fig7)
 cols[4].pyplot(fig8)
 
-st.subheader("attention 2: weghited V")
+st.subheader("Attention 2: weghited V")
 cols = st.columns(4)
 cols[0].pyplot(fig9)
 cols[1].pyplot(fig10)
@@ -803,7 +803,7 @@ cols[2].pyplot(fig15)
 cols[3].pyplot(fig16)
 cols[4].pyplot(fig17)
 
-st.subheader("output")
+st.subheader("Output: identification")
 cols = st.columns(3)
 cols[0].pyplot(fig18)
 cols[1].pyplot(fig19)
