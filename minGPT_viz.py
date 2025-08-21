@@ -778,4 +778,4 @@ sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
 st.pyplot(fig)
 
-st.write(idex_test)
+st.write(idx_test)
