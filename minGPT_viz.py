@@ -16,6 +16,15 @@ from torch.utils.data import Dataset
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+# 例: ModuleDict を作る
+modules = nn.ModuleDict({
+    "linear1": nn.Linear(10, 20),
+    "linear2": nn.Linear(20, 5),
+})
+
+# state_dict を保存
+torch.save(modules.state_dict(), "modules.pth")
+
 ########## for streamlit ##################
 with st.sidebar:
     raw = st.text_input("4桁の数値", "9053", max_chars=4)
