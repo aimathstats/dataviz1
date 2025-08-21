@@ -16,12 +16,21 @@ from torch.utils.data import Dataset
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+for row in range(2):               # 2行
+    cols = st.columns(5)           # 横に5個
+    for i, col in enumerate(cols):
+        idx = row*5 + i
+        mat = np.random.rand(5, 5)
+        fig, ax = plt.subplots()
+        sns.heatmap(mat, ax=ax, cbar=False)
+        col.pyplot(fig)
+
 ########## for streamlit ##################
 with st.sidebar:
     raw = st.text_input("4桁の数値", "9053", max_chars=4)
     d = ''.join(filter(str.isdigit, raw))[:4]
     idx_test = [[int(c) for c in d]] if len(d)==4 else None
-    iters = st.radio("繰り返し数", [10, 500, 1500, 10000], index=0, horizontal=True)
+    iters = st.radio("繰り返し数", [10, 500, 1500], index=0, horizontal=True)
 
 #st.write("idx:", idx)
 #st.write("繰り返し数:", iters)
