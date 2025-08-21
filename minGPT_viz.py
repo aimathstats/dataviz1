@@ -16,15 +16,6 @@ from torch.utils.data import Dataset
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-for row in range(2):               # 2行
-    cols = st.columns(10)           # 横に5個
-    for i, col in enumerate(cols):
-        idx = row*5 + i
-        mat = np.random.rand(5, 5)
-        fig, ax = plt.subplots()
-        sns.heatmap(mat, ax=ax, cbar=False)
-        col.pyplot(fig)
-
 ########## for streamlit ##################
 with st.sidebar:
     raw = st.text_input("4桁の数値", "9053", max_chars=4)
@@ -724,13 +715,13 @@ st.pyplot(fig8)
 
 fig9, ax = plt.subplots()
 sns.heatmap(att_2, cmap='Oranges')
-plt.title('(masked) self-attention matrix')
+plt.title('self-attention matrix')
 st.pyplot(fig9)
 
 fig10, ax = plt.subplots()
 mat_ = y.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
-plt.title('multi-head attention output (weight-ave. of V)')
+plt.title('multi-head attention output (weight-ave of value)')
 st.pyplot(fig10)
 
 fig11, ax = plt.subplots()
@@ -769,13 +760,13 @@ st.pyplot(fig16)
 fig17, ax = plt.subplots()
 mat_ = x5.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
-plt.title('mlp (FF) output')
+plt.title('mlp output')
 st.pyplot(fig17)
 
 fig18, ax = plt.subplots()
 mat_ = x6.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
-plt.title('transformer-block output (x + mlp(x))')
+plt.title('transformer-block output')
 st.pyplot(fig18)
 
 fig19, ax = plt.subplots()
@@ -788,6 +779,12 @@ mat_ = logits.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
 st.pyplot(fig20)
+
+cols = st.columns(4)
+cols[0].pyplot(fig9)
+cols[1].pyplot(fig10)
+cols[2].pyplot(fig11)
+cols[3].pyplot(fig12)
 
 cols = st.columns(5)
 cols[0].pyplot(fig13)
