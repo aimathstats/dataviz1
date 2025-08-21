@@ -462,6 +462,8 @@ def get_config(): # config for all steps (model, learning)
     return C
 
 config = get_config()
+config.trainer.max_iters = iters
+print(config.trainer.max_iters)
 #config.merge_from_args(sys.argv[1:])
 #print(config)
 setup_logging(config)
