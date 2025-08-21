@@ -17,7 +17,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 for row in range(2):               # 2行
-    cols = st.columns(5)           # 横に5個
+    cols = st.columns(10)           # 横に5個
     for i, col in enumerate(cols):
         idx = row*5 + i
         mat = np.random.rand(5, 5)
