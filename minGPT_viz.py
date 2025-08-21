@@ -21,7 +21,7 @@ with st.sidebar:
     raw = st.text_input("4桁の数値", "9053", max_chars=4)
     d = ''.join(filter(str.isdigit, raw))[:4]
     idx_test = [[int(c) for c in d]] if len(d)==4 else None
-    iters = st.radio("繰り返し数", [500, 1500, 10000], index=0, horizontal=True)
+    iters = st.radio("繰り返し数", [10, 500, 1500, 10000], index=1, horizontal=True)
 
 #st.write("idx:", idx)
 #st.write("繰り返し数:", iters)
