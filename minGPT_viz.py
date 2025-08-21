@@ -440,7 +440,7 @@ def get_config(): # config for all steps (model, learning)
     C = CfgNode()
     C.system = CfgNode()
     C.system.seed = 3407
-    #C.system.work_dir = './out/adder'
+    C.system.work_dir = './out/adder'
     
     C.data = AdditionDataset.get_default_config()
 
