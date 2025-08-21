@@ -16,6 +16,17 @@ from torch.utils.data import Dataset
 import seaborn as sns
 import matplotlib.pyplot as plt
 
+########## for streamlit ##################
+with st.sidebar:
+    raw = st.text_input("4桁の数値", "9053", max_chars=4)
+    d = ''.join(filter(str.isdigit, raw))[:4]
+    idx = [[int(c) for c in d]] if len(d)==4 else None
+    iters = st.radio("繰り返し数", [500, 1500, 10000], index=0, horizontal=True)
+
+st.write("idx:", idx)
+st.write("繰り返し数:", iters)
+############################################
+
 def set_seed(seed):
     random.seed(seed)
     np.random.seed(seed)
@@ -429,7 +440,7 @@ def get_config(): # config for all steps (model, learning)
     C = CfgNode()
     C.system = CfgNode()
     C.system.seed = 3407
-    C.system.work_dir = './out/adder'
+    #C.system.work_dir = './out/adder'
     
     C.data = AdditionDataset.get_default_config()
 
@@ -445,7 +456,8 @@ def get_config(): # config for all steps (model, learning)
     C.trainer.learning_rate = 5e-4 # the model we're using is so small that we can go a bit faster
         
     # for gpt-supernano4 (original, (1,1,48), #param = 29136) # 97%
-    C.trainer.max_iters = 500 # 5000
+    #C.trainer.max_iters = 500 # 5000
+    C.trainer.max_iters = iters
     C.trainer.learning_rate = 5e-4
     return C
 
@@ -540,9 +552,10 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 # at the learning is finished (main instance is "model")
 # for generation using forward function:
 set_seed(config.system.seed)
-idx = [[9,0,5,3]]
-idx = [[0,0,0,1]]
+#idx = [[9,0,5,3]]
+#idx = [[0,0,0,1]]
 #logits, loss = model(torch.tensor(idx).to('cpu'), heat_=True)
+
 
 #### detailed example
 # note that this is a model WITHOUT layer-normalization
