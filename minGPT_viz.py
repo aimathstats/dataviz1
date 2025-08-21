@@ -57,7 +57,12 @@ st.download_button(
     file_name="model_state.pth",
     mime="application/octet-stream",
 )
-
+# ----（おまけ）アップロードして復元 ----
+up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
+if up:
+    state = torch.load(up, map_location="cpu")
+    model.load_state_dict(state)
+    st.success("ロード完了！")
 
 ########## for streamlit ##################
 with st.sidebar:
