@@ -21,9 +21,15 @@ modules = nn.ModuleDict({
     "linear1": nn.Linear(10, 20),
     "linear2": nn.Linear(20, 5),
 })
-
 # state_dict を保存
 torch.save(modules.state_dict(), "modules.pth")
+
+# 同じ構造の ModuleDict を用意してロード
+modules2 = nn.ModuleDict({
+    "linear1": nn.Linear(10, 20),
+    "linear2": nn.Linear(20, 5),
+})
+modules2.load_state_dict(torch.load("modules.pth"))
 
 ########## for streamlit ##################
 with st.sidebar:
