@@ -613,10 +613,12 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 #model = GPT(config.model)
 
 # GitHubリポに同梱したファイルを相対パスでロード
-state = torch.load("data/transformer.pth", map_location="cpu")
-model.transformer.load_state_dict(state)
+state1 = torch.load("data/transformer.pth", map_location="cpu")
+model.transformer.load_state_dict(state1)
+state2 = torch.load("data/lm_head.pth", map_location="cpu")
+model.transformer.load_state_dict(state2)
 model.eval()
-st.success("✅ transformer をロードしました")
+st.success("transformer,lm_headをロード")
 ##########################################################################################
 
 
