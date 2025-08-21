@@ -31,6 +31,32 @@ modules2 = nn.ModuleDict({
 })
 modules2.load_state_dict(torch.load("modules.pth"))
 
+# 例: ModuleDict（好きなモデルに置き換えてOK）
+if "model" not in st.session_state:
+    st.session_state.model = nn.ModuleDict({
+        "linear1": nn.Linear(10, 20),
+        "linear2": nn.Linear(20, 5),
+    })
+model = st.session_state.model
+
+# ---- 1) state_dict をローカル保存（任意） ----
+save_path = "model_state.pth"
+if st.button("state_dict をローカルに保存"):
+    torch.save(model.state_dict(), save_path)
+    st.success(f"保存しました: {os.path.abspath(save_path)}")
+
+# ---- 2) state_dict をダウンロード ----
+buf = io.BytesIO()
+torch.save(model.state_dict(), buf)
+buf.seek(0)
+st.download_button(
+    label="state_dict をダウンロード (.pth)",
+    data=buf,
+    file_name="model_state.pth",
+    mime="application/octet-stream",
+)
+
+
 ########## for streamlit ##################
 with st.sidebar:
     raw = st.text_input("4桁の数値", "9053", max_chars=4)
