@@ -609,14 +609,11 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 #    st.success("ロード完了！")
 #model_2.transformer.load_state_dict(torch.load("modules.pth"))
 
-# 例: GPTのインスタンス化（保存時と同じ構造にする）
-#model = GPT(config.model)
-
 # GitHubリポに同梱したファイルを相対パスでロード
 state1 = torch.load("data/transformer.pth", map_location="cpu")
 model.transformer.load_state_dict(state1)
 state2 = torch.load("data/lm_head.pth", map_location="cpu")
-model.transformer.load_state_dict(state2)
+model.lm_head.load_state_dict(state2)
 model.eval()
 st.success("transformer,lm_headをロード")
 ##########################################################################################
