@@ -554,7 +554,6 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 set_seed(config.system.seed)
 idx = [[9,0,5,3]]
 idx = [[0,0,0,1]]
-idx = idx_test
 #logits, loss = model(torch.tensor(idx).to('cpu'), heat_=True)
 
 
@@ -565,7 +564,8 @@ idx = idx_test
 
 # attention part
 set_seed(config.system.seed)
-idx = torch.tensor([[9,0,5,3]]).to('cpu')
+#idx = torch.tensor([[9,0,5,3]]).to('cpu')
+idx = torch.tensor(idx_test).to('cpu')
 plt.rcdefaults()
 
 b, t = idx.size() # b=1, t=sequence length (4 or 6)
