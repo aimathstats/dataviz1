@@ -19,50 +19,40 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 # 例: ModuleDict を作る
-modules = nn.ModuleDict({
-    "linear1": nn.Linear(10, 20),
-    "linear2": nn.Linear(20, 5),
-})
+#modules = nn.ModuleDict({
+#    "linear1": nn.Linear(10, 20),
+#    "linear2": nn.Linear(20, 5),
+#})
 # state_dict を保存
-torch.save(modules.state_dict(), "modules.pth")
+#torch.save(modules.state_dict(), "modules.pth")
 
 # 同じ構造の ModuleDict を用意してロード
-modules2 = nn.ModuleDict({
-    "linear1": nn.Linear(10, 20),
-    "linear2": nn.Linear(20, 5),
-})
-modules2.load_state_dict(torch.load("modules.pth"))
+#modules2 = nn.ModuleDict({
+#    "linear1": nn.Linear(10, 20),
+#    "linear2": nn.Linear(20, 5),
+#})
+#modules2.load_state_dict(torch.load("modules.pth"))
 
 # 例: ModuleDict（好きなモデルに置き換えてOK）
-if "model" not in st.session_state:
-    st.session_state.model = nn.ModuleDict({
-        "linear1": nn.Linear(10, 20),
-        "linear2": nn.Linear(20, 5),
-    })
-model = st.session_state.model
+#if "model" not in st.session_state:
+#    st.session_state.model = nn.ModuleDict({
+#        "linear1": nn.Linear(10, 20),
+#        "linear2": nn.Linear(20, 5),
+#    })
+#model = st.session_state.model
 
 # ---- 1) state_dict をローカル保存（任意） ----
-save_path = "model_state.pth"
-if st.button("state_dict をローカルに保存"):
-    torch.save(model.state_dict(), save_path)
-    st.success(f"保存しました: {os.path.abspath(save_path)}")
+#save_path = "model_state.pth"
+#if st.button("state_dict をローカルに保存"):
+#    torch.save(model.state_dict(), save_path)
+#    st.success(f"保存しました: {os.path.abspath(save_path)}")
 
-# ---- 2) state_dict をダウンロード ----
-buf = io.BytesIO()
-torch.save(model.state_dict(), buf)
-buf.seek(0)
-st.download_button(
-    label="state_dict をダウンロード (.pth)",
-    data=buf,
-    file_name="model_state.pth",
-    mime="application/octet-stream",
-)
 # ----（おまけ）アップロードして復元 ----
-up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
-if up:
-    state = torch.load(up, map_location="cpu")
-    model.load_state_dict(state)
-    st.success("ロード完了！")
+#up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
+#if up:
+#    state = torch.load(up, map_location="cpu")
+#    model.load_state_dict(state)
+#    st.success("ロード完了！")
 
 ########## for streamlit ##################
 with st.sidebar:
@@ -619,6 +609,14 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 #    st.success("ロード完了！")
 #model_2.transformer.load_state_dict(torch.load("modules.pth"))
 
+# 例: GPTのインスタンス化（保存時と同じ構造にする）
+model = GPT(config.model)
+
+# GitHubリポに同梱したファイルを相対パスでロード
+state = torch.load("data/transformer.pth", map_location="cpu")
+model.transformer.load_state_dict(state)
+model.eval()
+st.success("✅ transformer をロードしました")
 ##########################################################################################
 
 
