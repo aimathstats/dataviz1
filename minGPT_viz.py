@@ -680,114 +680,119 @@ logits_ = logits.detach().clone().numpy()
 
 
 ##### for streamlit
-fig, ax = plt.subplots()
+fig1, ax = plt.subplots()
 mat_ = x.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('token + position')
-st.pyplot(fig)
+st.pyplot(fig1)
 
-fig, ax = plt.subplots()
+fig2, ax = plt.subplots()
 sns.heatmap(a3_, ax=ax, cmap='Purples')
 plt.title('attn.c_attn.weight')
-st.pyplot(fig)
+st.pyplot(fig2)
 
-fig, ax = plt.subplots()
+fig3, ax = plt.subplots()
 sns.heatmap(q3_, cmap='Purples')
 plt.title('query.weight')
-st.pyplot(fig)
-fig, ax = plt.subplots()
+st.pyplot(fig3)
+fig4, ax = plt.subplots()
 sns.heatmap(k3_, cmap='Purples')
 plt.title('key.weight')
-st.pyplot(fig)
-fig, ax = plt.subplots()
+st.pyplot(fig4)
+fig5, ax = plt.subplots()
 sns.heatmap(v3_, cmap='Purples')
 plt.title('value.weight')
-st.pyplot(fig)
+st.pyplot(fig5)
 
-fig, ax = plt.subplots()
+fig6, ax = plt.subplots()
 mat_ = q.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('query')
-st.pyplot(fig)
+st.pyplot(fig6)
 
-fig, ax = plt.subplots()
+fig7, ax = plt.subplots()
 mat_ = k.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('key')
-st.pyplot(fig)
+st.pyplot(fig7)
 
-fig, ax = plt.subplots()
+fig8, ax = plt.subplots()
 mat_ = v.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('value')
-st.pyplot(fig)
+st.pyplot(fig8)
 
-fig, ax = plt.subplots()
+fig9, ax = plt.subplots()
 sns.heatmap(att_2, cmap='Oranges')
 plt.title('(masked) self-attention matrix')
-st.pyplot(fig)
+st.pyplot(fig9)
 
-fig, ax = plt.subplots()
+fig10, ax = plt.subplots()
 mat_ = y.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('multi-head attention output (weight-ave. of V)')
-st.pyplot(fig)
+st.pyplot(fig10)
 
-fig, ax = plt.subplots()
+fig11, ax = plt.subplots()
 sns.heatmap(a5_, cmap='Purples')
 plt.title('attn.c_proj.weight')
-st.pyplot(fig)
+st.pyplot(fig11)
 
-fig, ax = plt.subplots()
+fig12, ax = plt.subplots()
 mat_ = y2.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('final attention output')
-st.pyplot(fig)
+st.pyplot(fig12)
 
-fig, ax = plt.subplots()
+fig13, ax = plt.subplots()
 mat_ = x2.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('x + attention(x)')
-st.pyplot(fig)
+st.pyplot(fig13)
 
-fig, ax = plt.subplots()
+fig14, ax = plt.subplots()
 sns.heatmap(a7_, ax=ax, cmap='Purples')
 plt.title('mlp.c_fc.weight')
-st.pyplot(fig)
+st.pyplot(fig14)
 
-fig, ax = plt.subplots()
+fig15, ax = plt.subplots()
 mat_ = x4.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('ReLU activated')
-st.pyplot(fig)
+st.pyplot(fig15)
 
-fig, ax = plt.subplots()
+fig16, ax = plt.subplots()
 sns.heatmap(a9_, ax=ax, cmap='Purples')
 plt.title('mlp.c_proj.weight')
-st.pyplot(fig)
+st.pyplot(fig16)
 
-fig, ax = plt.subplots()
+fig17, ax = plt.subplots()
 mat_ = x5.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('mlp (FF) output')
-st.pyplot(fig)
+st.pyplot(fig17)
 
-fig, ax = plt.subplots()
+fig18, ax = plt.subplots()
 mat_ = x6.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('transformer-block output (x + mlp(x))')
-st.pyplot(fig)
+st.pyplot(fig18)
 
-fig, ax = plt.subplots()
+fig19, ax = plt.subplots()
 sns.heatmap(a11_, ax=ax, cmap="Blues")
 plt.title('lm_head.weight')
-st.pyplot(fig)
+st.pyplot(fig19)
 
-fig, ax = plt.subplots()
+fig20, ax = plt.subplots()
 mat_ = logits.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
-st.pyplot(fig)
+st.pyplot(fig20)
+
+cols = st.columns(10)
+cols[0].pyplot(fig1)
+cols[1].pyplot(fig2)
+cols[2].pyplot(fig3)
 
 st.write(idx)
 st.write(idx_test)
