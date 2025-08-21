@@ -512,7 +512,6 @@ def batch_end_callback(trainer):
         model.train()
 
 #trainer.set_callback('on_batch_end', batch_end_callback)
-
 #trainer.run()
 
 model.eval();
@@ -536,6 +535,7 @@ d3i_pred = (d3 * factors).sum(1)
 d3i_gt = d1i + d2i
 print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 
+
 ######### visualization of GPT and learning process #########
 # at the learning is finished (main instance is "model")
 # for generation using forward function:
@@ -552,8 +552,6 @@ idx = [[0,0,0,1]]
 # attention part
 set_seed(config.system.seed)
 idx = torch.tensor([[9,0,5,3]]).to('cpu')
-#idx = torch.tensor([[9,1,5,2]]).to('cpu')
-#idx = torch.tensor([[9,1,5,3]]).to('cpu')
 plt.rcdefaults()
 
 b, t = idx.size() # b=1, t=sequence length (4 or 6)
@@ -655,9 +653,26 @@ heat(logits,'logits output')
 #print(logits)
 logits_ = logits.detach().clone().numpy()
 
-########################################################
-mat = np.random.rand(5, 5)
-mat = a11_
+
+#####
 fig, ax = plt.subplots()
-sns.heatmap(mat, ax=ax, cmap="Blues")
+sns.heatmap(a9_, ax=ax, cmap='Purples')
+plt.title('mlp.c_proj.weight')
+st.pyplot(fig)
+
+fig, ax = plt.subplots()
+heat(x5, ax=ax, cmap="Blues")
+st.pyplot(fig)
+
+fig, ax = plt.subplots()
+heat(x6, ax=ax, cmap="Blues")
+st.pyplot(fig)
+
+fig, ax = plt.subplots()
+heat(logits, ax=ax, cmap="Blues")
+st.pyplot(fig)
+
+fig, ax = plt.subplots()
+sns.heatmap(a11_, ax=ax, cmap="Blues")
+plt.title('lm_head.weight')
 st.pyplot(fig)
