@@ -779,7 +779,7 @@ plt.title('transformer-block output (x + mlp(x))')
 st.pyplot(fig18)
 
 fig19, ax = plt.subplots()
-sns.heatmap(a11_, ax=ax, cmap="Blues")
+sns.heatmap(a11_, ax=ax, cmap="Purples")
 plt.title('lm_head.weight')
 st.pyplot(fig19)
 
@@ -789,10 +789,17 @@ sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
 st.pyplot(fig20)
 
-cols = st.columns(10)
-cols[0].pyplot(fig1)
-cols[1].pyplot(fig2)
-cols[2].pyplot(fig3)
+cols = st.columns(5)
+cols[0].pyplot(fig13)
+cols[1].pyplot(fig14)
+cols[2].pyplot(fig15)
+cols[3].pyplot(fig16)
+cols[4].pyplot(fig17)
+
+cols = st.columns(3)
+cols[0].pyplot(fig18)
+cols[1].pyplot(fig19)
+cols[2].pyplot(fig20)
 
 st.write(idx)
 st.write(idx_test)
