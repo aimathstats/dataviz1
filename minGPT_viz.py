@@ -470,6 +470,7 @@ test_dataset  = AdditionDataset(config.data, split='test')
 
 config.model.vocab_size = train_dataset.get_vocab_size() # 10
 config.model.block_size = train_dataset.get_block_size() # 6
+
 model = GPT(config.model)
 
 trainer = Trainer(config.trainer, model, train_dataset)
@@ -521,6 +522,7 @@ def batch_end_callback(trainer):
             torch.save(model.state_dict(), ckpt_path)
         model.train()
 
+### skip learning for viz
 #trainer.set_callback('on_batch_end', batch_end_callback)
 #trainer.run()
 
@@ -545,8 +547,7 @@ d3i_pred = (d3 * factors).sum(1)
 d3i_gt = d1i + d2i
 print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 
-##########################################################################################
-# GitHubファイル（google colabで学習済み）を相対パスでロード(GPTのインスタンス"model"はconfigが全て同じ必要)
+############ GitHubファイル（google colabで学習済み）を相対パスでロード(GPTのインスタンス"model"はconfigが全て同じ必要)
 if "state1" not in st.session_state:
     st.session_state.state1 = torch.load("data/transformer.pth", map_location="cpu")
 if "state2" not in st.session_state:
@@ -559,16 +560,16 @@ model.lm_head.load_state_dict(st.session_state.state2)
 #model.lm_head.load_state_dict(state2)
 model.eval()
 
+
 ######### visualization of GPT and learning process #########
 # at the learning is finished (main instance is "model")
 # for generation using forward function:
 set_seed(config.system.seed)
 idx = [[9,0,5,3]]
-idx = [[0,0,0,1]]
+#idx = [[0,0,0,1]]
 #logits, loss = model(torch.tensor(idx).to('cpu'), heat_=True)
 
-
-#### detailed example
+######### detailed example
 # note that this is a model WITHOUT layer-normalization
 # eg. 90 + 53 = 143: this is from [9,0,5,3] to reversed [3,4,1], then 3 is correct answer
 # with minGPT-supernano4 (layer=1, head=1, emb=48)
@@ -679,115 +680,95 @@ heat(logits,'logits output')
 logits_ = logits.detach().clone().numpy()
 
 
-##### for streamlit
+################################# for streamlit
 fig1, ax = plt.subplots()
 mat_ = x.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('token + position')
-#st.pyplot(fig1)
 
 fig2, ax = plt.subplots()
 sns.heatmap(a3_, ax=ax, cmap='Purples')
 plt.title('attn.c_attn.weight')
-#st.pyplot(fig2)
 
 fig3, ax = plt.subplots()
 sns.heatmap(q3_, cmap='Purples')
 plt.title('query.weight')
-#st.pyplot(fig3)
 fig4, ax = plt.subplots()
 sns.heatmap(k3_, cmap='Purples')
 plt.title('key.weight')
-#st.pyplot(fig4)
 fig5, ax = plt.subplots()
 sns.heatmap(v3_, cmap='Purples')
 plt.title('value.weight')
-#st.pyplot(fig5)
 
 fig6, ax = plt.subplots()
 mat_ = q.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('query')
-#st.pyplot(fig6)
 
 fig7, ax = plt.subplots()
 mat_ = k.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('key')
-#st.pyplot(fig7)
 
 fig8, ax = plt.subplots()
 mat_ = v.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('value')
-#st.pyplot(fig8)
 
 fig9, ax = plt.subplots()
 sns.heatmap(att_2, cmap='Oranges')
 plt.title('self-attention matrix')
-#st.pyplot(fig9)
 
 fig10, ax = plt.subplots()
 mat_ = y.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('multi-head attention output (weight-ave of value)')
-#st.pyplot(fig10)
 
 fig11, ax = plt.subplots()
 sns.heatmap(a5_, cmap='Purples')
 plt.title('attn.c_proj.weight')
-#st.pyplot(fig11)
 
 fig12, ax = plt.subplots()
 mat_ = y2.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('final attention output')
-#st.pyplot(fig12)
 
 fig13, ax = plt.subplots()
 mat_ = x2.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('x + attention(x)')
-#st.pyplot(fig13)
 
 fig14, ax = plt.subplots()
 sns.heatmap(a7_, ax=ax, cmap='Purples')
 plt.title('mlp.c_fc.weight')
-#st.pyplot(fig14)
 
 fig15, ax = plt.subplots()
 mat_ = x4.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('ReLU activated')
-#st.pyplot(fig15)
 
 fig16, ax = plt.subplots()
 sns.heatmap(a9_, ax=ax, cmap='Purples')
 plt.title('mlp.c_proj.weight')
-#st.pyplot(fig16)
 
 fig17, ax = plt.subplots()
 mat_ = x5.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('mlp output')
-#st.pyplot(fig17)
 
 fig18, ax = plt.subplots()
 mat_ = x6.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('transformer-block output')
-#st.pyplot(fig18)
 
 fig19, ax = plt.subplots()
 sns.heatmap(a11_, ax=ax, cmap="Purples")
 plt.title('lm_head.weight')
-#st.pyplot(fig19)
 
 fig20, ax = plt.subplots()
 mat_ = logits.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
-#st.pyplot(fig20)
 
 st.subheader("Attention: input, embedding, QKV")
 cols = st.columns(5)
@@ -817,6 +798,3 @@ cols = st.columns(3)
 cols[0].pyplot(fig18)
 cols[1].pyplot(fig19)
 cols[2].pyplot(fig20)
-
-#st.write(idx)
-#st.write(idx_test)
