@@ -612,8 +612,14 @@ config2.model.vocab_size = train_dataset.get_vocab_size() # 10
 config2.model.block_size = train_dataset.get_block_size() # 6
 model_2 = GPT(config2.model)
 
-model_2.transformer.load_state_dict(torch.load("modules.pth"))
-model = model_2
+up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
+if up:
+    state = torch.load(up, map_location="cpu")
+    model_2.transformer.load_state_dict(state)
+    st.success("ロード完了！")
+
+#model_2.transformer.load_state_dict(torch.load("modules.pth"))
+
 ##########################################################################################
 
 
