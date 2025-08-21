@@ -1,6 +1,4 @@
 import streamlit as st # for streamlit
-import io
-
 import os
 import sys
 import json
@@ -18,51 +16,12 @@ from torch.utils.data import Dataset
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-# 例: ModuleDict を作る
-#modules = nn.ModuleDict({
-#    "linear1": nn.Linear(10, 20),
-#    "linear2": nn.Linear(20, 5),
-#})
-# state_dict を保存
-#torch.save(modules.state_dict(), "modules.pth")
-
-# 同じ構造の ModuleDict を用意してロード
-#modules2 = nn.ModuleDict({
-#    "linear1": nn.Linear(10, 20),
-#    "linear2": nn.Linear(20, 5),
-#})
-#modules2.load_state_dict(torch.load("modules.pth"))
-
-# 例: ModuleDict（好きなモデルに置き換えてOK）
-#if "model" not in st.session_state:
-#    st.session_state.model = nn.ModuleDict({
-#        "linear1": nn.Linear(10, 20),
-#        "linear2": nn.Linear(20, 5),
-#    })
-#model = st.session_state.model
-
-# ---- 1) state_dict をローカル保存（任意） ----
-#save_path = "model_state.pth"
-#if st.button("state_dict をローカルに保存"):
-#    torch.save(model.state_dict(), save_path)
-#    st.success(f"保存しました: {os.path.abspath(save_path)}")
-
-# ----（おまけ）アップロードして復元 ----
-#up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
-#if up:
-#    state = torch.load(up, map_location="cpu")
-#    model.load_state_dict(state)
-#    st.success("ロード完了！")
-
 ########## for streamlit ##################
 with st.sidebar:
     raw = st.text_input("4桁の数値", "9053", max_chars=4)
     d = ''.join(filter(str.isdigit, raw))[:4]
     idx_test = [[int(c) for c in d]] if len(d)==4 else None
     iters = st.radio("繰り返し数", [10, 500, 1500], index=0, horizontal=True)
-
-#st.write("idx:", idx)
-#st.write("繰り返し数:", iters)
 ############################################
 
 def set_seed(seed):
@@ -588,36 +547,12 @@ d3i_gt = d1i + d2i
 print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 
 ##########################################################################################
-# state save/load
-#torch.save(model.transformer.state_dict(), "modules.pth")
-
-#config2 = get_config()
-#config2.trainer.max_iters = iters
-#st.write("繰り返し数:", config2.trainer.max_iters)
-#setup_logging(config2)
-#set_seed(config2.system.seed)
-#train_dataset = AdditionDataset(config2.data, split='train')
-#test_dataset  = AdditionDataset(config2.data, split='test')
-#config2.model.vocab_size = train_dataset.get_vocab_size() # 10
-#config2.model.block_size = train_dataset.get_block_size() # 6
-#model_2 = GPT(config2.model)
-
-#up = st.file_uploader("state_dict をアップロードして読み込み", type=["pth"])
-#if up:
-#    state = torch.load(up, map_location="cpu")
-#    model_2.transformer.load_state_dict(state)
-#    st.success("ロード完了！")
-#model_2.transformer.load_state_dict(torch.load("modules.pth"))
-
-# GitHubリポに同梱したファイルを相対パスでロード
+# GitHubファイル（google colabで学習済み）を相対パスでロード(GPTのインスタンス"model"はconfigが全て同じ必要)
 state1 = torch.load("data/transformer.pth", map_location="cpu")
-model.transformer.load_state_dict(state1)
 state2 = torch.load("data/lm_head.pth", map_location="cpu")
+model.transformer.load_state_dict(state1)
 model.lm_head.load_state_dict(state2)
 model.eval()
-st.success("transformer,lm_headをロード")
-##########################################################################################
-
 
 ######### visualization of GPT and learning process #########
 # at the learning is finished (main instance is "model")
@@ -878,5 +813,5 @@ cols[0].pyplot(fig18)
 cols[1].pyplot(fig19)
 cols[2].pyplot(fig20)
 
-st.write(idx)
-st.write(idx_test)
+#st.write(idx)
+#st.write(idx_test)
