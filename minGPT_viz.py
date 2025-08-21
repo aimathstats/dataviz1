@@ -453,16 +453,15 @@ def get_config(): # config for all steps (model, learning)
     C.trainer.learning_rate = 5e-4 # the model we're using is so small that we can go a bit faster
         
     # for gpt-supernano4 (original, (1,1,48), #param = 29136) # 97%
-    #C.trainer.max_iters = 500 # 5000
-    C.trainer.max_iters = iters
+    C.trainer.max_iters = 10 # 5000
+    #C.trainer.max_iters = iters
     C.trainer.learning_rate = 5e-4
     return C
 
 config = get_config()
 config.trainer.max_iters = iters
-st.write("繰り返し数:", config.trainer.max_iters)
+#st.write("繰り返し数:", config.trainer.max_iters)
 #config.merge_from_args(sys.argv[1:])
-#print(config)
 setup_logging(config)
 set_seed(config.system.seed)
 
