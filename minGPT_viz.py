@@ -597,6 +597,14 @@ d3i_pred = (d3 * factors).sum(1)
 d3i_gt = d1i + d2i
 print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 
+##########################################################################################
+# state save/load
+torch.save(model.transformer.state_dict(), "modules.pth")
+model_2 = GPT(config.model)
+model_2.transformer.load_state_dict(torch.load("modules.pth"))
+#model = model_2
+##########################################################################################
+
 
 ######### visualization of GPT and learning process #########
 # at the learning is finished (main instance is "model")
