@@ -657,13 +657,12 @@ logits_ = logits.detach().clone().numpy()
 ##### for streamlit
 fig, ax = plt.subplots()
 mat_ = x.to('cpu').detach().numpy().copy()[0,:,:]
-plt.figure()
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('token + position')
 st.pyplot(fig)
 
 fig, ax = plt.subplots()
-sns.heatmap(a3_,  ax=ax, cmap='Purples')
+sns.heatmap(a3_, ax=ax, cmap='Purples')
 plt.title('attn.c_attn.weight')
 st.pyplot(fig)
 
