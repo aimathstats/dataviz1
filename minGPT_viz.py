@@ -547,10 +547,16 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 
 ##########################################################################################
 # GitHubファイル（google colabで学習済み）を相対パスでロード(GPTのインスタンス"model"はconfigが全て同じ必要)
-state1 = torch.load("data/transformer.pth", map_location="cpu")
-state2 = torch.load("data/lm_head.pth", map_location="cpu")
-model.transformer.load_state_dict(state1)
-model.lm_head.load_state_dict(state2)
+if "state1" not in st.session_state:
+    st.session_state.state1 = torch.load("data/transformer.pth", map_location="cpu")
+if "state2" not in st.session_state:
+    st.session_state.state2 = torch.load("data/lm_head.pth", map_location="cpu")
+model.transformer.load_state_dict(st.session_state.state1)
+model.lm_head.load_state_dict(st.session_state.state2)
+#state1 = torch.load("data/transformer.pth", map_location="cpu")
+#state2 = torch.load("data/lm_head.pth", map_location="cpu")
+#model.transformer.load_state_dict(state1)
+#model.lm_head.load_state_dict(state2)
 model.eval()
 
 ######### visualization of GPT and learning process #########
