@@ -20,11 +20,11 @@ import matplotlib.pyplot as plt
 with st.sidebar:
     raw = st.text_input("4桁の数値", "9053", max_chars=4)
     d = ''.join(filter(str.isdigit, raw))[:4]
-    idx = [[int(c) for c in d]] if len(d)==4 else None
+    idx_test = [[int(c) for c in d]] if len(d)==4 else None
     iters = st.radio("繰り返し数", [500, 1500, 10000], index=0, horizontal=True)
 
-st.write("idx:", idx)
-st.write("繰り返し数:", iters)
+#st.write("idx:", idx)
+#st.write("繰り返し数:", iters)
 ############################################
 
 def set_seed(seed):
@@ -552,8 +552,9 @@ print("%d + %d = %d but true is %d" % (d1i, d2i, d3i_pred, d3i_gt))
 # at the learning is finished (main instance is "model")
 # for generation using forward function:
 set_seed(config.system.seed)
-#idx = [[9,0,5,3]]
-#idx = [[0,0,0,1]]
+idx = [[9,0,5,3]]
+idx = [[0,0,0,1]]
+idx = idx_test
 #logits, loss = model(torch.tensor(idx).to('cpu'), heat_=True)
 
 
@@ -776,3 +777,5 @@ mat_ = logits.to('cpu').detach().numpy().copy()[0,:,:]
 sns.heatmap(mat_, ax=ax, cmap='Blues') # Blues, Oranges, coolwarm
 plt.title('logits output')
 st.pyplot(fig)
+
+st.write(idex_test)
