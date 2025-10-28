@@ -16,6 +16,12 @@ from scholarly import scholarly
 import pandas as pd
 import matplotlib.pyplot as plt
 
+###
+author_gen = scholarly.search_author("Albert Einstein")
+author = next(author_gen)
+print(author)
+###
+
 st.title("Google Scholar Citation Dashboard（ID直指定版）")
 
 url = st.text_input("研究者のScholarプロフィールURLを入力してください（例：https://scholar.google.com/citations?user=XXXX）")
