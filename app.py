@@ -8,6 +8,75 @@ from pytrends.request import TrendReq
 
 st.set_page_config(layout="wide")
 
+import streamlit as st
+
+# ページ設定
+st.set_page_config(page_title="Google Scholar Dashboard", layout="wide")
+
+# タイトル
+st.markdown(
+    """
+    <h1 style='text-align: center; color: #2E86C1;'>Google Scholar 研究者ダッシュボード</h1>
+    <p style='text-align: center; color: gray;'>複数の研究者の引用動向を同時にチェックできます。</p>
+    """,
+    unsafe_allow_html=True
+)
+
+# レイアウト設定：2列または3列まで対応可能
+col_num = st.radio("画面分割数を選択してください（上部に一瞬出るだけ）", [2, 3], horizontal=True, label_visibility="collapsed")
+
+# 入力欄
+st.write("### 研究者プロフィールURL（Google ScholarのプロフィールURLを貼ってください）")
+if col_num == 2:
+    col1, col2 = st.columns(2, gap="medium")
+    with col1:
+        url1 = st.text_input("研究者1のURLを入力", "https://scholar.google.com/citations?user=xxxxxxxx")
+    with col2:
+        url2 = st.text_input("研究者2のURLを入力", "https://scholar.google.com/citations?user=yyyyyyyy")
+else:
+    col1, col2, col3 = st.columns(3, gap="medium")
+    with col1:
+        url1 = st.text_input("研究者1のURLを入力", "https://scholar.google.com/citations?user=xxxxxxxx")
+    with col2:
+        url2 = st.text_input("研究者2のURLを入力", "https://scholar.google.com/citations?user=yyyyyyyy")
+    with col3:
+        url3 = st.text_input("研究者3のURLを入力", "https://scholar.google.com/citations?user=zzzzzzzz")
+
+# 表示ボタン
+st.write("")
+clicked = st.button("📊 ダッシュボードを表示")
+
+# クリック後の画面分割表示
+if clicked:
+    st.markdown("---")
+
+    if col_num == 2:
+        col1, col2 = st.columns(2, gap="medium")
+        with col1:
+            st.markdown("#### 👩‍🔬 研究者 1")
+            st.components.v1.iframe(url1, height=800)
+        with col2:
+            st.markdown("#### 👨‍🔬 研究者 2")
+            st.components.v1.iframe(url2, height=800)
+    else:
+        col1, col2, col3 = st.columns(3, gap="medium")
+        with col1:
+            st.markdown("#### 研究者 1")
+            st.components.v1.iframe(url1, height=800)
+        with col2:
+            st.markdown("#### 研究者 2")
+            st.components.v1.iframe(url2, height=800)
+        with col3:
+            st.markdown("#### 研究者 3")
+            st.components.v1.iframe(url3, height=800)
+
+    st.markdown("---")
+    st.caption("※ Google Scholarの埋め込みには数秒かかることがあります。")
+
+
+
+
+###########################################
 import matplotlib.pyplot as plt
 from sympy import symbols, sin, pi, latex, simplify
 from mpl_toolkits.mplot3d import Axes3D
