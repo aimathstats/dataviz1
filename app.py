@@ -9,30 +9,72 @@ from pytrends.request import TrendReq
 st.set_page_config(layout="wide")
 
 ##########################################
+import re
+import time
 import streamlit as st
 from scholarly import scholarly
 import pandas as pd
 import matplotlib.pyplot as plt
 
-st.title("Google Scholar Citation Dashboard")
+st.title("Google Scholar Citation Dashboard（ID直指定版）")
 
-query = st.text_input("研究者名を入力してください:")
-if st.button("データ取得"):
-    author = next(scholarly.search_author(query))
-    filled = scholarly.fill(author)
-    st.write(f"総引用数: {filled['citedby']}")
-    st.write(f"h-index: {filled['hindex']}")
-    
-    # 論文ごとの引用推移を整形
+url = st.text_input("研究者のScholarプロフィールURLを入力してください（例：https://scholar.google.com/citations?user=XXXX）")
+
+def extract_user_id(profile_url: str) -> str | None:
+    m = re.search(r"[?&]user=([a-zA-Z0-9_-]+)", profile_url)
+    return m.group(1) if m else None
+
+def get_author_by_id(user_id: str):
+    # 必要に応じてタイムアウト/リトライを設定
+    scholarly.set_timeout(60)
+    # scholarly.set_retries(3)  # バージョンにより未対応のことあり
+    author = scholarly.search_author_id(user_id)
+    # 取得過多を避けるためsectionsを限定
+    author = scholarly.fill(author, sections=["basics", "indices", "counts", "publications"])
+    return author
+
+def citations_per_year_df(author_dict) -> pd.DataFrame:
     data = []
-    for pub in filled['publications']:
-        pub_data = scholarly.fill(pub)
-        if 'cites_per_year' in pub_data:
-            for year, count in pub_data['cites_per_year'].items():
-                data.append({"year": year, "count": count})
-    df = pd.DataFrame(data)
-    chart = df.groupby("year").sum().plot(kind="bar")
-    st.pyplot(chart.figure)
+    pubs = author_dict.get("publications", [])
+    for pub in pubs:
+        try:
+            filled_pub = scholarly.fill(pub, sections=["citations"])
+            cpy = filled_pub.get("cites_per_year", {})
+            # 過剰アクセスを避けるため小休止（特に大量論文の人）
+            time.sleep(0.2)
+            for y, c in cpy.items():
+                data.append({"year": int(y), "count": int(c)})
+        except Exception:
+            continue
+    if not data:
+        return pd.DataFrame(columns=["year", "count"])
+    df = pd.DataFrame(data).groupby("year", as_index=False)["count"].sum()
+    return df.sort_values("year")
+
+if st.button("データ取得"):
+    user_id = extract_user_id(url)
+    if not user_id:
+        st.error("URL から user ID を抽出できませんでした。`?user=XXXX` を含むURLを入力してください。")
+    else:
+        try:
+            author = get_author_by_id(user_id)
+            st.subheader(f"📘 {author.get('name','N/A')}")
+            st.write(f"総引用数: {author.get('citedby','N/A')}")
+            st.write(f"h-index: {author.get('hindex','N/A')} / i10-index: {author.get('i10index','N/A')}")
+
+            df = citations_per_year_df(author)
+            if not df.empty:
+                fig, ax = plt.subplots(figsize=(8, 4))
+                ax.bar(df["year"], df["count"])
+                ax.set_title("年ごとの引用数（全論文合計）")
+                ax.set_xlabel("年")
+                ax.set_ylabel("引用数")
+                st.pyplot(fig)
+            else:
+                st.warning("引用の年次データを取得できませんでした。")
+
+        except Exception as e:
+            st.error(f"取得中にエラー: {e}\n（CAPTCHA/レート制限、同意ページ、ネットワーク不安定などが原因の可能性）")
 
 ######################################
 # ページ設定
