@@ -8,8 +8,33 @@ from pytrends.request import TrendReq
 
 st.set_page_config(layout="wide")
 
+##########################################
 import streamlit as st
+from scholarly import scholarly
+import pandas as pd
+import matplotlib.pyplot as plt
 
+st.title("Google Scholar Citation Dashboard")
+
+query = st.text_input("研究者名を入力してください:")
+if st.button("データ取得"):
+    author = next(scholarly.search_author(query))
+    filled = scholarly.fill(author)
+    st.write(f"総引用数: {filled['citedby']}")
+    st.write(f"h-index: {filled['hindex']}")
+    
+    # 論文ごとの引用推移を整形
+    data = []
+    for pub in filled['publications']:
+        pub_data = scholarly.fill(pub)
+        if 'cites_per_year' in pub_data:
+            for year, count in pub_data['cites_per_year'].items():
+                data.append({"year": year, "count": count})
+    df = pd.DataFrame(data)
+    chart = df.groupby("year").sum().plot(kind="bar")
+    st.pyplot(chart.figure)
+
+######################################
 # ページ設定
 st.set_page_config(page_title="Google Scholar Dashboard", layout="wide")
 
