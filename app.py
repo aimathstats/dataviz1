@@ -30,9 +30,9 @@ st.write("### 研究者プロフィールURL（Google Scholarのプロフィー�
 if col_num == 2:
     col1, col2 = st.columns(2, gap="medium")
     with col1:
-        url1 = st.text_input("研究者1のURLを入力", "https://scholar.google.com/citations?user=xxxxxxxx")
+        url1 = st.text_input("研究者1のURLを入力", "https://scholar.google.co.jp/citations?user=xxxxxxxx")
     with col2:
-        url2 = st.text_input("研究者2のURLを入力", "https://scholar.google.com/citations?user=yyyyyyyy")
+        url2 = st.text_input("研究者2のURLを入力", "https://scholar.google.co.jp/citations?user=yyyyyyyy")
 else:
     col1, col2, col3 = st.columns(3, gap="medium")
     with col1:
