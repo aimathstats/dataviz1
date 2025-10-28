@@ -18,3 +18,4 @@ numpy
 sympy
 torch
 seaborn
+scholarly
