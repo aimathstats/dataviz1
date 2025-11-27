@@ -25,15 +25,15 @@ for movie in movie_list:
 
 if st.button("推薦を表示"):
     # 新しい行として追加
-    user_series = pd.Series(user_input)
-    real2_with_user = pd.concat([real2, user_series.to_frame().T], ignore_index=True)
+    user_series = pd.Series(user_input) #ひとまずスライダー入力をseries形式に保存
+    real2_with_user = pd.concat([real2, user_series.to_frame().T], ignore_index=True) #Seriesをdfに変換
 
     # 初期化
     n, D = real2_with_user.shape
     U = np.random.normal(1, 0.25, (n, M))
     V = np.random.normal(1, 0.25, (D, M))
 
-    # 学習
+    # 学習（誤差逆伝播法）
     for _ in range(E):
         error = real2_with_user.values - np.dot(U, V.T)
         error[np.isnan(real2_with_user.values)] = 0
@@ -46,8 +46,8 @@ if st.button("推薦を表示"):
     user_pred = pd.Series(pred_matrix[-1], index=real2_with_user.columns)
 
     # すでに評価した映画を除外
-    rated = ~user_series.isna()
-    recs = user_pred[~rated].sort_values(ascending=False).head(3)
+    rated = ~user_series.isna() # 評価済みをブールで取得（~はブールの否定演算子で、T/Fを反転）
+    recs = user_pred[~rated].sort_values(ascending=False).head(3) # 未評価映画のスコアの高い順に並べ替えて、上位３つ取得して格納
 
     st.subheader("あなたに推薦の映画")
     for i, (movie, score) in enumerate(recs.items(), 1):
