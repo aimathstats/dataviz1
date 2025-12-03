@@ -28,7 +28,7 @@ if 'ad_type' not in st.session_state:
 st.title("Web広告のABテスト")
 st.write("広告AまたはBをそれぞれ確率1/2で表示する")
 st.subheader(f"あなたの広告：**{st.session_state.ad_type}**")
-st.video(ad_images[st.session_state.ad_type], width=200, autoplay=True)
+st.video(ad_images[st.session_state.ad_type], width=200, autoplay=True, loop=True)
 #st.image(ad_images[st.session_state.ad_type], width=200)
 
 #st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
