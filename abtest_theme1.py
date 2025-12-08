@@ -18,7 +18,7 @@ ad_images = {
 if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
 
-st.title("レストラン注文画面")
+st.title("レストランQR注文画面")
 st.write("以下はメニュー画面の一部")
 st.image(ad_images[st.session_state.ad_type], width=200)
 st.write("【おすすめ】ミートソーススパゲティ 900円（税込み）")
