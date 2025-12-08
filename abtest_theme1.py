@@ -55,6 +55,9 @@ if st.button("評価を送信（記録）して画面更新"):
         del st.session_state['ad_type']
     st.rerun()
 
+
+st.markdown("<br>" * 15, unsafe_allow_html=True)
+
 # データ処理と分析
 st.divider()
 st.write("※ 以下に示されるデータ分析はユーザーから見えません")
