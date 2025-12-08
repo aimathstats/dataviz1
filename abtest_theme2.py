@@ -20,9 +20,9 @@ if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
     st.session_state.start_time = time.time()
 
-st.title("Web広告のABテスト")
-st.write("広告AまたはBをそれぞれ確率1/2で表示する")
-st.subheader(f"あなたの広告：**{st.session_state.ad_type}**")
+st.title("テーマ2のABテスト")
+#st.write("サムネ画像AまたはBをそれぞれ確率1/2で表示")
+#st.subheader(f"サムネ画像：**{st.session_state.ad_type}**")
 st.image(ad_images[st.session_state.ad_type], width=200)
 #st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
 
