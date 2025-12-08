@@ -18,10 +18,10 @@ ad_images = {
 if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
 
-st.title("テーマ1のABテスト")
-st.write("メニュー画面")
+st.title("イタリアンレストランQR注文画面")
+st.write("以下はメニュー画面の一部")
 st.image(ad_images[st.session_state.ad_type], width=200)
-st.write("ミートソーススパゲティ 900円（税込み）")
+st.write("【おすすめ】ミートソーススパゲティ 900円（税込み）")
 
 # 食べたい度の入力（0〜10のスライダー）
 rating = st.slider(
@@ -56,7 +56,7 @@ if st.button("評価を送信（記録）して画面更新"):
     st.rerun()
 
 
-st.markdown("<br>" * 15, unsafe_allow_html=True)
+st.markdown("<br>" * 20, unsafe_allow_html=True)
 
 # データ処理と分析
 st.divider()
