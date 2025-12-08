@@ -18,10 +18,10 @@ ad_images = {
 if 'ad_type' not in st.session_state:
     st.session_state.ad_type = random.choice(['A', 'B'])
 
-st.title("テーマ2のABテスト")
-st.write("Youtubeサムネ画像")
+st.title("Youtubeサムネ画像")
+st.write("Youtube動画を物色していると...")
 st.image(ad_images[st.session_state.ad_type], width=200)
-st.write("１週間3000円で生活してみた！貧乏大学生")
+st.write("【貧乏大学生】１週間3000円で生活してみた！")
 
 # 見たい度の入力（0〜10のスライダー）
 rating = st.slider(
@@ -56,7 +56,7 @@ if st.button("評価を送信（記録）して画面更新"):
     st.rerun()
 
 
-st.markdown("<br>" * 15, unsafe_allow_html=True)
+st.markdown("<br>" * 20, unsafe_allow_html=True)
 
 # データ処理と分析
 st.divider()
