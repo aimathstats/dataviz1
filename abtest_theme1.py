@@ -24,6 +24,7 @@ st.title("テーマ1のABテスト")
 #st.write("画像AまたはBをそれぞれ確率1/2で表示する")
 #st.subheader(f"画像：**{st.session_state.ad_type}**")
 st.image(ad_images[st.session_state.ad_type], width=200)
+st.write("ミートソーススパゲティ 900円（税込み）")
 
 # 滞在時間の記録
 if st.button("滞在完了（記録）して画面更新"):
