@@ -23,6 +23,9 @@ st.write("Youtube動画を物色していると...")
 st.image(ad_images[st.session_state.ad_type], width=200)
 st.write("【貧乏大学生】１週間3000円で生活してみた！")
 
+
+st.divider()
+
 # 見たい度の入力（0〜10のスライダー）
 rating = st.slider(
     "このサムネの動画を実際に見てみたい度合いは？（10段階）",
