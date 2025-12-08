@@ -7,18 +7,13 @@ from scipy.stats import ttest_ind, sem, t
 import matplotlib.pyplot as plt
 
 # データ保存用ファイル（最初は存在しなくても通る）
-DATA_FILE = 'ab_test_data.csv'
+DATA_FILE = 'ab_test_data_theme1.csv'
 
 # 広告画像のパス
 ad_images = {
     'A': 'data/ad_A.png',
     'B': 'data/ad_B.png'
 }
-
-#ad_images = {
-#    'A': 'data/movA.mp4',
-#    'B': 'data/movB.mp4'
-#}
 
 # 広告のランダム表示と計測開始（セッション状態に保存）
 if 'ad_type' not in st.session_state:
@@ -29,8 +24,6 @@ st.title("Web広告のABテスト")
 st.write("広告AまたはBをそれぞれ確率1/2で表示する")
 st.subheader(f"あなたの広告：**{st.session_state.ad_type}**")
 st.image(ad_images[st.session_state.ad_type], width=200)
-#st.write("このページに滞在した時間を記録します。「滞在完了」ボタンを押すと記録されます。")
-#st.video(ad_images[st.session_state.ad_type], width=200, autoplay=True, loop=True)
 
 # 滞在時間の記録
 if st.button("滞在完了（記録）して画面更新"):
