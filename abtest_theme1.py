@@ -23,6 +23,9 @@ st.write("以下はメニュー画面の一部")
 st.image(ad_images[st.session_state.ad_type], width=200)
 st.write("【おすすめ】ミートソーススパゲティ 900円（税込み）")
 
+
+st.divider()
+
 # 食べたい度の入力（0〜10のスライダー）
 rating = st.slider(
     "このミートソーススパゲティをどのくらい食べたいですか？",
