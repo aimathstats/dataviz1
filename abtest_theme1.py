@@ -10,7 +10,7 @@ DATA_FILE = 'ab_test_data_theme1.csv'
 
 # 広告画像のパス
 ad_images = {
-    'A': 'data/ad_A2.png',
+    'A': 'data/abtest1.png',
     'B': 'data/ad_B.png'
 }
 
