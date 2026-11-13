@@ -84,7 +84,8 @@ if os.path.exists(DATA_FILE):
         st.pyplot(fig1)
     with col2:
         fig2, ax2 = plt.subplots()
-        ax2.boxplot([a_data, b_data], labels=['A', 'B'])
+#        ax2.boxplot([a_data, b_data], labels=['A', 'B'])
+        ax2.boxplot([a_data, b_data], tick_labels=['A', 'B'])
         ax2.set_ylabel("Duration (second)")
         ax2.set_title("Boxplot of Stay Duration")
         st.pyplot(fig2)
